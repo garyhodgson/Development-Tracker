@@ -1,0 +1,49 @@
+<% include '/templates/includes/header.gtpl' %>
+
+<%
+	def activities = request.activities
+	def paging = request.paging
+%>
+<script>
+jQuery(function() {	
+	jQuery("table tr:even").addClass("oddrow");
+});
+</script>
+
+<h2 class="pageTitle"><%=request.pageTitle?:"Activities"%></h2>
+
+<nav>
+	<ul>
+		<a href="/"><li>Home</li></a>
+	</ul>
+</nav>
+
+<div class="content">
+	<table border=0 cellspacing="0" cellpadding="5px" id="activityTable">
+		<tr>
+			<th class="title">Title</th>
+			<th class="date">Created</th>
+		</tr>
+		<% request.activities?.each { activity ->
+		%>
+		<tr>
+			<% if (activity.type == enums.ActivityType.NewDevelopment) {%>
+				<td><a href="/userinfo/${activity.by}">${activity.by}</a> created a new development called <a href="${activity.link}">${activity.title}</a></td>
+			<% } else if (activity.type == enums.ActivityType.DevelopmentUpdated) {%>
+				<td><a href="${activity.link}">${activity.title}</a> was updated by <a href="/userinfo/${activity.by}">${activity.by}</a></td>
+			<% } else if (activity.type == enums.ActivityType.NewUser) {%>
+				<td>New User: <a href="/userinfo/${activity.by}">${activity.by}</a></td>
+			<% } else {%>
+				<td><a href="${activity.link}">${activity.title}</a></td>
+			<%} %>		
+	
+			<td>${activity.created?:''}</td>
+		</tr>
+		<% } %>
+	</table>
+	<% if (request.activities) include '/templates/includes/paging.gtpl' %>
+</div>
+
+
+
+<% include '/templates/includes/footer.gtpl' %>
