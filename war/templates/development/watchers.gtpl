@@ -12,7 +12,7 @@
 		<br>
 		
 		<% if (user) { %> 
-			<% if ((session.userinfo?.watchedDevelopments?:[]).contains(development.id.toString())) { %>
+			<% if ((session.userinfo?.watchedDevelopments?:[]).contains(development.id)) { %>
 				<a href="/development/unwatch/<%=development.id%>"><li>Unwatch</li> </a> 
 			<% } else { %> 
 				<a href="/development/watch/<%=development.id%>"><li>Watch</li> </a> 

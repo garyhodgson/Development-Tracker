@@ -14,8 +14,7 @@ if (params.namespace){
 	//strip subdomain
 	def host = headers.Host.replaceAll(subdomain, "")
 	
-	log.info "headers.Host: ${headers.Host}"
-	
+	log.info "headers.Host: ${headers.Host}"	
 	log.info "host: ${host}"
 	
 	if (params.namespace == "default"){

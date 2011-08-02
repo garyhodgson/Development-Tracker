@@ -7,24 +7,33 @@ import entity.UserInfo
 
 log.info "postlogin"
 
-session = session?:request.getSession(true)
-
 if (!user){
-	session.message = "No User Logged In"
+	request.session.message = "No User Logged In"
 	redirect params.continue?:"/"
 	return
 }
 
-def query = new Query("userinfo")
-query.addFilter("userId", Query.FilterOperator.EQUAL, user.userId)
+// For SSO
+def acsid = request.cookies.find{ it.name == 'ACSID'}
+if (acsid){
+	acsid.setDomain('.development-tracker.info')
+	acsid.setPath('/')
+	response.addCookie(acsid)
+}
 
-def userinfo = dao.ofy().find(UserInfo.class,user.userId)
+def userinfo
+
+namespace.of("") {
+	userinfo = dao.ofy().find(UserInfo.class,user.userId)
+}
 
 if (!userinfo){
 	redirect  "/access/first"
 	return
 }
 
-session.setAttribute("userinfo", userinfo)
+request.session.setAttribute("userinfo", userinfo)
+
+
 
 redirect params.continue?:"/"

@@ -9,15 +9,19 @@ import entity.UserInfo
 session = session?:request.getSession(true)
 
 log.info "Showing User Info"
-log.info params.toString()
+
 if (!params.username){
 	session.message = "No Username given."
 	redirect '/'
 	return
 }
 
-UserInfo userinfo = dao.ofy().query(UserInfo.class).filter('username', params.username).get()
-
+UserInfo userinfo
+def userinfoKey
+namespace.of("") {
+	userinfo = dao.ofy().query(UserInfo.class).filter('username', params.username).get()
+	userinfoKey = new Key(UserInfo.class, userinfo.userId)
+}
 if (!userinfo){
 	session.message = "Unable to find user with username ${params.username}."
 	redirect '/userinfos'
@@ -36,17 +40,17 @@ if (userinfo.watchedDevelopments){
 
 def collaborations = []
 
-dao.ofy().query(Collaboration.class).filter('userInfo', new Key(UserInfo.class, userinfo.userId)).list().each { 
+
+dao.ofy().query(Collaboration.class).filter('userInfo', userinfoKey).list().each {
 
 	def collaborationDevelopment = dao.ofy().find(it.development)
 	if (collaborationDevelopment){
 		def role = it.role == enums.Role.Other ? it.otherRole : it.role
 		collaborations << [developmentId:collaborationDevelopment.id, developmentTitle: collaborationDevelopment.title, role: it.role]
 	}
-	
 }
 
-request.collaborations = collaborations 
+request.collaborations = collaborations
 
 request.pageTitle = "User Info: ${userinfo.username}"
 

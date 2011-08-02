@@ -1,5 +1,9 @@
 <% include '/templates/includes/htmlHeader.gtpl' %>
 
+<% if (request.session.getAttribute('message') != null) { %>
+	<div class="message"><%=request.session.getAttribute('message')?:''%></div>
+<% request.session.setAttribute('message',null) } %>
+	
 <div class="index-container bordered site-default-bg">
 
 	<div class="left" style="width: 45%">

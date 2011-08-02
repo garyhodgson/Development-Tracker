@@ -17,10 +17,10 @@ class namespaceFilter implements Filter {
 
 		if (NamespaceManager.get() == null) {
 			def subdomain = request.properties.serverName.split(/\./).getAt(0)
+
 			def namespace = namespaceMap.find{it.value.contains(subdomain)}?.getKey()?:'default'
+
 			NamespaceManager.set(namespace);
-		} else {
-			//println "NamespaceManager.get(): " + NamespaceManager.get()
 		}
 
 		chain.doFilter(request, response);

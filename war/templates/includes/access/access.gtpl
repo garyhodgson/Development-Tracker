@@ -1,7 +1,7 @@
 
 <%	if (users.isUserLoggedIn()) {%>
 
-<a href="${users.createLogoutURL(app.AppProperties.LAUNCH_URL)}"><span id="signout-link" class="access hover-link">Sign Out</span></a>
+<a href="/access/logout"><span id="signout-link" class="access hover-link">Sign Out</span></a>
 
 <%
 	if (users.isUserAdmin()) {

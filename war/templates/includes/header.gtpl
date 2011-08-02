@@ -16,11 +16,9 @@
 <div class="container bordered">
 
 
-<% session = session?:request.getSession(true) %>
-
-	<% if (session.getAttribute('message') != null) { %>
-	<div class="message"><%=session.getAttribute('message')?:''%></div>
-	<% session.setAttribute('message',null) } %>
+	<% if (request.session.getAttribute('message') != null) { %>
+	<div class="message"><%=request.session.getAttribute('message')?:''%></div>
+	<% request.session.setAttribute('message',null) } %>
 	
 
 

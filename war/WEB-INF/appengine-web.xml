@@ -1,7 +1,7 @@
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
     <application>development-tracker</application>
     
-    <version>2</version>
+    <version>3</version>
 
     <!-- Enable concurrent requests by default to serve requests in parallel -->
     <threadsafe>true</threadsafe>
@@ -14,7 +14,7 @@
         <property name="java.util.logging.config.file" value="WEB-INF/logging.properties" />
     </system-properties>
     
-    <sessions-enabled>true</sessions-enabled>
+	<sessions-enabled>true</sessions-enabled>
 
     <!-- Uncomment this section if you want your application to be able to receive XMPP messages -->
     <!-- And create a file named jabber.groovy in /WEB-INF/groovy -->

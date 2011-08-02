@@ -17,41 +17,46 @@ if (!params.username){
 	return
 }
 
-if (dao.ofy().query(UserInfo.class).filter('username', params.username).countAll() != 0) {
-	session.message = "Username already taken. Please choose another."
-	forward: "/templates/access/first.gtpl"
-	return
-}
+def userinfo
 
-def userinfo = new UserInfo(userId:user.getUserId(), created: new Date(), updated: new Date())
-
-params.each { k, v ->
-	//sanitise
-	if (v) {
-		userinfo[k] = StringEscapeUtils.escapeHtml v
+namespace.of("") {
+	
+	if (dao.ofy().query(UserInfo.class).filter('username', params.username).countAll() != 0) {
+		session.message = "Username already taken. Please choose another."
+		forward: "/templates/access/first.gtpl"
+		return
 	}
+
+	userinfo = new UserInfo(userId:user.getUserId(), created: new Date(), updated: new Date())
+
+	params.each { k, v ->
+		//sanitise
+		if (v) {
+			userinfo[k] = StringEscapeUtils.escapeHtml v
+		}
+	}
+
+	//checkboxes
+	[
+		'useGravatar',
+		'contactOnDevelopmentComment',
+		'contactOnDevelopmentWatch',
+		'acceptTermsOfUse',
+		'githubIdVisible',
+		'thingiverseIdVisible',
+		'reprapWikiIdVisible'
+	].each {
+		userinfo[it] = params[it]?true:false
+	}
+
+
+	if (params.useGravatar){
+		// saves having to generate it every time.
+		userinfo.gravatarHash = UserInfo.calculateGravatarHash(userinfo.email)
+	}
+
+	dao.ofy().put(userinfo)
 }
-
-//checkboxes
-[
-	'useGravatar',
-	'contactOnDevelopmentComment',
-	'contactOnDevelopmentWatch',
-	'acceptTermsOfUse',
-	'githubIdVisible',
-	'thingiverseIdVisible',
-	'reprapWikiIdVisible'
-].each {
-	userinfo[it] = params[it]?true:false
-}
-
-
-if (params.useGravatar){
-	// saves having to generate it every time.
-	userinfo.gravatarHash = UserInfo.calculateGravatarHash(userinfo.email)
-}
-
-dao.ofy().put(userinfo)
 
 dao.ofy().put(new Activity(type:enums.ActivityType.NewUser, title:"${userinfo.username}",by:userinfo.username, created: new Date(), link :"/userinfo/${userinfo.username}"))
 

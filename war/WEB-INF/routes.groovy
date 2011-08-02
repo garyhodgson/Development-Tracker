@@ -26,9 +26,6 @@ get "/development/add",  forward: {
 post "/development/add", forward:  "/development/add.groovy"
 get "/development/exists/@title", forward: "/development/exists.groovy?title=@title"
 
-get "/development/test",  forward: "/development/test.groovy"
-get "/development/test@id",  forward: "/development/test@id.groovy"
-
 get "/development/edit/@id",  forward: {
 	to "/development/prepareEdit.groovy?id=@id"
 	to("/templates/static/maintenance.gtpl").on(DATASTORE)      .not(ENABLED)
@@ -54,7 +51,6 @@ get "/access/first", forward: {
 get "/access/login", forward: "/templates/access/login.gtpl"
 get "/access/login?continue=@continue", forward: "/templates/access/login.gtpl?continue=@continue"
 get "/access/postLogin", forward: "/access/postLogin.groovy"
-
 get "/access/logout", forward: "/access/logout.groovy"
 
 post "/userinfo/add", forward: {

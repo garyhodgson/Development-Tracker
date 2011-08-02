@@ -17,35 +17,39 @@ if (!users.isUserLoggedIn()){
 	return
 }
 
-UserInfo userinfo = dao.ofy().query(UserInfo.class).filter('username', params.username).get()
+namespace.of("") {
 
-if (!userinfo || (userinfo.userId != user.userId && !users.isUserAdmin())){
-	session.message = "No permission to edit userinfo for ${params.username}. If you feel this is in error please contact <a href=\"mailto:support@development-tracker.info\">support</a>."
-	redirect '/'
-	return
-}
 
-params.each {
-	k, v ->
-	//sanitise
-	if (v) {
-		userinfo[k] = StringEscapeUtils.escapeHtml v
+	UserInfo userinfo = dao.ofy().query(UserInfo.class).filter('username', params.username).get()
+
+	if (!userinfo || (userinfo.userId != user.userId && !users.isUserAdmin())){
+		session.message = "No permission to edit userinfo for ${params.username}. If you feel this is in error please contact <a href=\"mailto:support@development-tracker.info\">support</a>."
+		redirect '/'
+		return
 	}
-}
 
-//checkboxes
-[	'useGravatar',
-	'contactOnDevelopmentComment',
-	'contactOnDevelopmentWatch',
-	'acceptTermsOfUse',
-	'githubIdVisible',
-	'thingiverseIdVisible',
-	'reprapWikiIdVisible'].each {
+	params.each { k, v ->
+		//sanitise
+		if (v) {
+			userinfo[k] = StringEscapeUtils.escapeHtml v
+		}
+	}
+
+	//checkboxes
+	[
+		'useGravatar',
+		'contactOnDevelopmentComment',
+		'contactOnDevelopmentWatch',
+		'acceptTermsOfUse',
+		'githubIdVisible',
+		'thingiverseIdVisible',
+		'reprapWikiIdVisible'
+	].each {
 		userinfo[it] = params[it]?true:false
+	}
+
+	userinfo.updated = new Date()
+
+	dao.ofy().put(userinfo)
 }
-
-userinfo.updated = new Date()
-
-dao.ofy().put(userinfo)
-
 redirect "/userinfo/${params.username}"

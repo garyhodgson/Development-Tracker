@@ -1,9 +1,10 @@
 package development
 
-import java.util.List;
+import java.util.List
 
 import org.apache.commons.lang.StringEscapeUtils
 
+import com.google.appengine.api.NamespaceManager
 import com.google.appengine.api.datastore.Text
 import com.google.appengine.api.files.FileServiceFactory
 import com.google.appengine.api.images.ImagesServiceFactory
@@ -14,7 +15,7 @@ import entity.Collaboration
 import entity.Development
 import entity.Relationship
 import entity.UserInfo
-import enums.SpecificationUnit;
+import enums.SpecificationUnit
 import exceptions.ValidationException
 
 
@@ -24,7 +25,7 @@ public static def generateThumbnail(def imageURL) {
 
 	URL url = new URL(imageURL)
 	def image
-	
+
 	try {
 		def response = url.get()
 
@@ -74,7 +75,7 @@ public static void processRelationships(def relationships, def params, def fromD
 			def description = (params.relationshipDescription instanceof String) ? params.relationshipDescription : params.relationshipDescription[i]
 			r.description = StringEscapeUtils.escapeHtml(description)
 		}
-		
+
 		if (params.relationshipId){
 			def relationshipId = (params.relationshipId instanceof String) ? params.relationshipId : params.relationshipId[i]
 			if (!relationshipId.isEmpty() && relationshipId.isLong()){
@@ -97,7 +98,7 @@ public static void processCollaborations(def collaborations, def params, def fro
 	def collaboratorRole = (params.collaboratorRole instanceof String)? [params.collaboratorRole]: params.collaboratorRole
 
 	collaboratorRole.eachWithIndex { role, i ->
-		
+
 		def collaboration = new Collaboration()
 
 		def collaboratorName = (params.collaboratorName instanceof String) ? params.collaboratorName : params.collaboratorName[i]
@@ -108,7 +109,15 @@ public static void processCollaborations(def collaborations, def params, def fro
 			list.addAll(params.collaboratorIsUsername)
 			collaboration.isUsername = list.contains(i.toString())
 			if (collaboration.isUsername){
-				collaboration.userInfo = ObjectifyService.begin().query(UserInfo.class).filter('username', collaboratorName).getKey()
+				def userinfoKey
+				String oldNamespace = NamespaceManager.get();
+				NamespaceManager.set("");
+				try {
+					userinfoKey = ObjectifyService.begin().query(UserInfo.class).filter('username', collaboratorName).getKey()
+				} finally {
+					NamespaceManager.set(oldNamespace);
+				}
+				collaboration.userInfo = userinfoKey
 			}
 		}
 
@@ -124,7 +133,7 @@ public static void processCollaborations(def collaborations, def params, def fro
 			list.addAll(params.collaboratorMayEdit)
 			collaboration.mayEdit = list.contains(i.toString())
 		}
-		
+
 		if (params.collaboratorId){
 			def collaboratorId = (params.collaboratorId instanceof String) ? params.collaboratorId : params.collaboratorId[i]
 			if (!collaboratorId.isEmpty() && collaboratorId.isLong()){
@@ -197,16 +206,16 @@ public static void processParameters(def development, def params){
 					break;
 				case 'imageURL':
 					if (development.imageURL != value) {
-						
+
 						def thumbnailFile = generateThumbnail(value)
 						if (thumbnailFile){
-							
+
 							// Delete existing thumbnail
 							if (development.thumbnailPath){
 								def file = FileServiceFactory.getFileService().fromPath(development.thumbnailPath)
 								file.delete()
 							}
-						
+
 							development.thumbnailPath = thumbnailFile.getFullPath()
 							development.thumbnailServingUrl = ImagesServiceFactory.getImagesService().getServingUrl(thumbnailFile.blobKey)
 						}
@@ -255,7 +264,7 @@ public static void processParameters(def development, def params){
 				case 'collaboratorMayEdit':
 				case 'collaboratorId':
 				case 'collaboratorRoleOther':
-					//	Do nothing
+				//	Do nothing
 					break
 				default:
 				//sanitise and store
@@ -286,17 +295,24 @@ public static void processParameters(def development, def params){
 					}
 			}
 		}
-		
+
 		// process deletions where no key was passed
-		
-		['categories','goals', 'tags', 'projectVendor', 'specificationName','specificationValue'].each {
+
+		[
+			'categories',
+			'goals',
+			'tags',
+			'projectVendor',
+			'specificationName',
+			'specificationValue'
+		].each {
 			if (!params[it] && development[it]){
 				println "deleting ${it}"
 				development[it].clear()
 			}
 		}
-		
-		
+
+
 	}
 }
 

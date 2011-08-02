@@ -1,5 +1,11 @@
 package access
-import javax.servlet.*
+
+import javax.servlet.Filter
+import javax.servlet.FilterChain
+import javax.servlet.FilterConfig
+import javax.servlet.ServletException
+import javax.servlet.ServletRequest
+import javax.servlet.ServletResponse
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpSession
 
@@ -16,38 +22,46 @@ class securityFilter implements Filter {
 	FilterConfig filterConfig
 
 	def userinfoExceptionsList = [
-		'/',
 		'/favicon.ico',
 		'/access/first',
 		'/access/logout',
 		'/access/postLogin',
-		'/userinfo/add'
+		'/userinfo/add',
+		'/userinfo/exists/',
+		'/development/exists/'
 	]
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		
+
 		def namespace = NamespaceManager.get()
 		def subdomain = request.properties.serverName.split(/\./).getAt(0)
 		def requestURI = request.getRequestURI()
 		UserService userService = UserServiceFactory.getUserService();
-
 		HttpSession session = ((HttpServletRequest) request).getSession(true);
+
+		if (namespace == 'default' && (request.getRequestURI() != '/' && !request.getRequestURI().startsWith('/start/'))){
+			// We should not go anywhere apart from home
+			session.setAttribute("message", "Please choose your preferred project/vendor.");
+			response.sendRedirect("/");
+			return
+		}
 
 		if (userService.isUserLoggedIn() && !session.getAttribute('userinfo')){
 
-			if (!requestURI.startsWith("/userinfo/exists/")){
-				if (!userinfoExceptionsList.contains(requestURI)){
+			if (!userinfoExceptionsList.contains(requestURI)){
+
+				NamespaceManager.set("");
+				try {
 					Objectify ofy = ObjectifyService.begin();
 					def userinfo = ofy.find(UserInfo.class, userService.currentUser.userId)
-					if (!userinfo) {
-						println("SecurityFilter: Unable to find userinfo for a logged in user. requestURI:${requestURI}")
-						session.setAttribute "message", "Unable to find userinfo. If you feel this is in error please contact <a href=\"mailto:support@development-tracker.info\">support</a>"
-						response.sendRedirect("/access/first")
-						return
+					if (userinfo) {
+						session.setAttribute("userinfo", userinfo)
+					} else {
+						System.err.println("SecurityFilter: Unable to find userinfo for a logged in user:${userService.currentUser.userId} and requestURI: ${requestURI}")
 					}
-
-					session.setAttribute("userinfo", userinfo)
+				} finally {
+					NamespaceManager.set(namespace);
 				}
 			}
 		}

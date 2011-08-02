@@ -16,7 +16,7 @@ if (!params.id){
 	return
 }
 
-request.development = dao.ofy().get(Development.class, params.id as int)
+request.development = dao.ofy().get(Development.class, params.id as Long)
 def fromKey = new Key(Development.class, params.id as int)
 
 request.relationships = dao.ofy().query(Relationship.class).filter('from', fromKey).list()
