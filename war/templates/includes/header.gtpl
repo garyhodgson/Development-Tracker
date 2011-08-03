@@ -20,7 +20,3 @@
 	<div class="message"><%=request.session.getAttribute('message')?:''%></div>
 	<% request.session.setAttribute('message',null) } %>
 	
-
-
-
-

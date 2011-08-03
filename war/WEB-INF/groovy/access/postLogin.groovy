@@ -13,12 +13,15 @@ if (!user){
 	return
 }
 
-// For SSO
-def acsid = request.cookies.find{ it.name == 'ACSID'}
-if (acsid){
-	acsid.setDomain('.development-tracker.info')
-	acsid.setPath('/')
-	response.addCookie(acsid)
+if (request.serverName.endsWith("development-tracker.info")){
+	request.cookies.find{ it.name == 'ACSID' && !it.value.isEmpty() }.each { c->
+
+		c.setDomain(".development-tracker.info")
+		log.info("adding sso cookie: ${c.getDomain()}")
+		c.setPath('/')
+		c.setMaxAge(-1)
+		response.addCookie(c)
+	}
 }
 
 def userinfo
@@ -33,7 +36,5 @@ if (!userinfo){
 }
 
 request.session.setAttribute("userinfo", userinfo)
-
-
 
 redirect params.continue?:"/"
