@@ -15,7 +15,6 @@ if (!params.searchField){
 	return
 }
 
-
 Query<Development> query = dao.ofy().query(Development.class)
 
 if (params.value){

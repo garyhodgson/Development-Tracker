@@ -3,14 +3,6 @@
 
 <a href="/access/logout"><span id="signout-link" class="access hover-link">Sign Out</span></a>
 
-<%
-	if (users.isUserAdmin()) {
-%>
-<span class="access"><a href="/_ah/admin">admin</a> </span>
-<%
-	}
-%>
-
 <span class="access signed-in"> <%
  	if (session.getAttribute("userinfo") != null
  				&& session.getAttribute("userinfo").username != null) {

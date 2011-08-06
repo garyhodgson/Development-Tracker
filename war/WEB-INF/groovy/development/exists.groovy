@@ -4,11 +4,21 @@ import entity.Development
 
 log.info "Checking Development"
 
-if (!params.title){
-	log.warn "title parameter missing from Development exists check"
+if (!params.field){
+	log.warning "field parameter missing from Development exists check"
 	return
 }
 
-out << (dao.ofy().query(Development.class).filter('title', params.title).countAll() != 0)
+if (!params.value){
+	return
+}
+
+log.info "Checking for existence of development with ${params.field} of ${params.value}"
+
+def result = dao.ofy().query(Development.class).filter(params.field, params.value).get()
+
+if (result){
+	out << result.id
+}
 
 return

@@ -14,6 +14,7 @@ jQuery(function() {
 	jQuery("table tr:even").addClass("oddrow");
 	jQuery('table td:nth-child(1)').addClass('label-column')
 	jQuery('table td:nth-child(2)').addClass('value-column')
+
 });
 </script>
 

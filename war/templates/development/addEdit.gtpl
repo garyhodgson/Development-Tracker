@@ -14,6 +14,7 @@
 
 		var titleIsValid = false
 		var originalTitle = '${development?.title?:''}'
+		var	originalSourceURL = '${development?.sourceURL?:''}'
 		var isEditing = <%println (request.getAttribute('action')=="/development/update")? 'true': 'false'%>
 		
 		function validate() {
@@ -44,26 +45,6 @@
 				jQuery("#licenseOtherRow").show()
 			} else {
 				jQuery("#licenseOtherRow").hide()
-			}
-		})
-
-		jQuery("#source").change(function() {
-			switch(jQuery(this).val())
-			{
-				case 'reprapwiki':
-					jQuery("#sourceURLMessage").text('e.g. http://reprap.org/wiki/Prusa_Mendel')
-				  	break;
-				case 'github':
-					jQuery("#sourceURLMessage").text('e.g. https://github.com/amsler/skeinforge')
-				  break;
-				case 'thingiverse':
-					jQuery("#sourceURLMessage").text('e.g. http://www.thingiverse.com/thing:6713')
-				  break;
-				case 'blog':
-					jQuery("#sourceURLMessage").text('e.g. http://garyhodgson.com/reprap/prusa-mendel-visual-instructions')
-				  break;
-				default:
-					jQuery("#sourceURLMessage").text('Enter the URL of the main page containing the development.')
 			}
 		})
 		
@@ -196,7 +177,7 @@
 			if (jQuery(this).val() == "") {
 				jQuery('#titleMessage')
 						.text("Title is required.")
-				//jQuery('#titleMessage').effect('highlight', null,500, null)
+				jQuery('#titleMessage').effect('highlight', null,500, null)
 				titleIsValid = false
 				validate()
 			} else {
@@ -207,16 +188,33 @@
 					validate()
 				} else {
 				
-					jQuery.get('/development/exists/' + jQuery(this).val(),
+					jQuery.get('/development/exists/title/' + jQuery(this).val(),
 						function(data) {
-							if (data == "true") {
-								titleIsValid = false
-								jQuery('#titleMessage').html("<span class='red bold'>A development with this name already exists. Please choose another.</span>")
-								validate()
-							} else {
+							if (data == "") {
 								titleIsValid = true
 								jQuery('#titleMessage').html("")
 								validate()
+							} else {
+								titleIsValid = false
+								jQuery('#titleMessage').html("<span class='red'>A development with this name already exists. (<a href='/development/"+data+"' title='Open in new page' target='_blank'>view</a>). Please check if this will be a duplicate or please choose another title.</span>")
+								validate()
+							}
+						})
+				}
+			}
+		})
+		
+		jQuery('input[name=sourceURL]').blur(function() {
+
+			if (jQuery(this).val() != ""){
+				if (isEditing && (jQuery(this).val() != originalSourceURL)){
+				} else {
+					jQuery.get('/development/exists/sourceURL/' + encodeURIComponent(jQuery(this).val()),
+						function(data) {
+							if (data == "") {
+								jQuery('#sourceURLMessage').html("")
+							} else {								
+								jQuery('#sourceURLMessage').html("<span class='red'>A development with this URL already exists. (<a href='/development/"+data+"' title='Open in new page' target='_blank'>view</a>). Please check if this will a duplicate.</span>")
 							}
 						})
 				}

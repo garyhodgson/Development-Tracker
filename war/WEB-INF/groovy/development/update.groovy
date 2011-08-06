@@ -2,9 +2,8 @@ package development
 
 import static development.developmentHelper.*
 
+import com.google.appengine.api.datastore.Text
 import com.googlecode.objectify.Key
-import com.googlecode.objectify.Objectify
-import com.googlecode.objectify.ObjectifyService
 
 import entity.Activity
 import entity.Collaboration
@@ -30,26 +29,27 @@ if (!development) {
 }
 
 try {
+
 	processParameters(development, params)
 	validateDevelopment(development)
-	
+
 	development.updated = new Date()
 	dao.ofy().put(development);
-	
+
 	def relationships = []
 	processRelationships(relationships, params, developmentKey)
 	validateRelationships(relationships)
-	
+
 	def existingRelationships = dao.ofy().query(Relationship.class).filter('from', developmentKey).list()
 	def relationshipsToBeDeleted = existingRelationships - relationships
 	relationshipsToBeDeleted.each { dao.ofy().delete(it) }
 	relationships.each { dao.ofy().put(it) }
-	
+
 	def collaborations = []
 	processCollaborations(collaborations, params, developmentKey)
-	
+
 	validateCollaborations(collaborations)
-	
+
 	def existingCollaborations = dao.ofy().query(Collaboration.class).filter('development', developmentKey).list()
 	def collaborationsToBeDeleted = existingCollaborations - collaborations
 	collaborationsToBeDeleted.each { dao.ofy().delete(it) }
@@ -60,7 +60,7 @@ try {
 	request.action = '/development/update'
 	forward '/templates/development/addEdit.gtpl'
 	return
-} 
+}
 
 dao.ofy().put(new Activity(type:enums.ActivityType.DevelopmentUpdated, title:"${development.title}",by:development.createdBy, created: new Date(), link :"/development/${development.id}"))
 

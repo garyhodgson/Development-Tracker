@@ -20,15 +20,17 @@ get "/activities", forward: "/activities/list.groovy"
 
 get "/development/add",  forward: {
 	to "/development/prepareAdd.groovy"
-	to("/templates/static/maintenance.gtpl").on(DATASTORE)      .not(ENABLED)
+	to("/templates/static/maintenance.gtpl").on(DATASTORE)		.not(ENABLED)
 	to("/templates/static/readonly.gtpl")   .on(DATASTORE_WRITE).not(ENABLED)
 }
 post "/development/add", forward:  "/development/add.groovy"
-get "/development/exists/@title", forward: "/development/exists.groovy?title=@title"
+
+get "/development/exists/@field/", forward: "/development/exists.groovy?field=@field&value="
+get "/development/exists/@field/@value", forward: "/development/exists.groovy?field=@field&value=@value"
 
 get "/development/edit/@id",  forward: {
 	to "/development/prepareEdit.groovy?id=@id"
-	to("/templates/static/maintenance.gtpl").on(DATASTORE)      .not(ENABLED)
+	to("/templates/static/maintenance.gtpl").on(DATASTORE)		.not(ENABLED)
 	to("/templates/static/readonly.gtpl")   .on(DATASTORE_WRITE).not(ENABLED)
 }
 post "/development/update", forward: "/development/update.groovy"

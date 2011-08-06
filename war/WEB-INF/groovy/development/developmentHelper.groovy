@@ -290,8 +290,7 @@ public static void processParameters(def development, def params){
 					break
 				default:
 					if (development[key]) {
-						println "deleting ${key}"
-						development[key].clear()
+						development[key] = null
 					}
 			}
 		}
@@ -307,8 +306,7 @@ public static void processParameters(def development, def params){
 			'specificationValue'
 		].each {
 			if (!params[it] && development[it]){
-				println "deleting ${it}"
-				development[it].clear()
+				development[it] = null
 			}
 		}
 
