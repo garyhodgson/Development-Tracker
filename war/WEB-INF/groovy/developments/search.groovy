@@ -23,13 +23,13 @@ if (params.value){
 	
 	if (values.size() > 1){
 		query.filter("$params.searchField IN ", values)
-		request.pageTitle = "Developments where ${params.searchField.toLowerCase()} includes ${values}"
+		request.pageTitle = "Developments where ${params.searchField} includes ${values}"
 	} else {
 		query.filter("$params.searchField = ", params.value)
 		
 		def conjunction = (params.searchField.endsWith('ies'))?'includes': 'is'
 		
-		request.pageTitle = "Developments where ${params.searchField.toLowerCase()} ${conjunction} ${params.value}"
+		request.pageTitle = "Developments where ${params.searchField} ${conjunction} ${params.value}"
 	}
 } else {
 	request.pageTitle = "Developments with field ${params.searchField}"

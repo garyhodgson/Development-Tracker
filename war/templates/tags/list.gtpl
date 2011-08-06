@@ -23,7 +23,7 @@
 		<% request.tags?.each { tag, count -> 
 		%>
 		<tr>
-			<td><a href="/developments/tags/${tag.toLowerCase()}">${tag}</a></td>
+			<td><a href="/developments/tags/${tag}">${tag}</a></td>
 			<td>${count}</td>
 		</tr>
 		<% } %>
