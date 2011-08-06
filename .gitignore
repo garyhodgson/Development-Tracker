@@ -1,6 +1,6 @@
 build
 war/WEB-INF/classes
-war/WEB-INF/lib
+war/WEB-INF/lib/*.jar
 war/WEB-INF/appengine-generated
 .classpath
 .externalToolBuilders

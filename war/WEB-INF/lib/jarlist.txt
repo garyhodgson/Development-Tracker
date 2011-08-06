@@ -1,0 +1,15 @@
+appengine-api-1.0-sdk-1.5.2.jar
+appengine-api-labs-1.5.2.jar
+appengine-jsr107cache-1.5.2.jar
+commons-lang-2.5.jar
+datanucleus-appengine-1.0.9.final.jar
+datanucleus-core-1.1.5.jar
+datanucleus-jpa-1.1.5.jar
+gaelyk-1.0.jar
+geronimo-jpa_3.0_spec-1.1.1.jar
+geronimo-jta_1.1_spec-1.1.1.jar
+groovy-all-1.8.0.jar
+jarlist.txt
+jdo2-api-2.3-eb.jar
+jsr107cache-1.1.jar
+objectify-562.jar

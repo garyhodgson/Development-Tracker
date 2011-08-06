@@ -10,13 +10,14 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpSession
 
 import com.google.appengine.api.NamespaceManager
-import com.google.appengine.api.users.UserService
-import com.google.appengine.api.users.UserServiceFactory
 import com.googlecode.objectify.Objectify
 import com.googlecode.objectify.ObjectifyService
 
+import groovyx.gaelyk.GaelykBindings
+
 import entity.UserInfo
 
+@GaelykBindings
 class securityFilter implements Filter {
 
 	FilterConfig filterConfig
@@ -37,7 +38,7 @@ class securityFilter implements Filter {
 		def namespace = NamespaceManager.get()
 		def subdomain = request.properties.serverName.split(/\./).getAt(0)
 		def requestURI = request.getRequestURI()
-		UserService userService = UserServiceFactory.getUserService();
+		//UserService userService = UserServiceFactory.getUserService();
 		HttpSession session = ((HttpServletRequest) request).getSession(true);
 
 		if (namespace == 'default' && (request.getRequestURI() != '/' && !request.getRequestURI().startsWith('/start/'))){
@@ -47,14 +48,14 @@ class securityFilter implements Filter {
 			return
 		}
 
-		if (userService.isUserLoggedIn() && !session.getAttribute('userinfo')){
+		if (users.isUserLoggedIn() && !session.getAttribute('userinfo')){
 
 			if (!userinfoExceptionsList.contains(requestURI)){
 
 				NamespaceManager.set("");
 				try {
 					Objectify ofy = ObjectifyService.begin();
-					def userinfo = ofy.find(UserInfo.class, userService.currentUser.userId)
+					def userinfo = ofy.find(UserInfo.class, users.currentUser.userId)
 					if (userinfo) {
 						session.setAttribute("userinfo", userinfo)
 					} else {
