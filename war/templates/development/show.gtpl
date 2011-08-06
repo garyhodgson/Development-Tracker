@@ -73,7 +73,7 @@ jQuery(function() {
 				<tr>
 					<td>Source</td>
 					<td>${development.source?.capitalize()?:''} <% if (development.source && development.sourceURL){ %>
-						&nbsp;&colon;&nbsp; <% } %> <% if (development.sourceURL){ %> <a href="${development.sourceURL}"
+						&nbsp;&colon;&nbsp; <% } %> <% if (development.sourceURL){ %> <a target="_blank" href="${development.sourceURL}"
 						title="${development.sourceURL}"
 					>${development.sourceURL}</a> <% } %>
 					</td>
