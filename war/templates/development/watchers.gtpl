@@ -7,7 +7,7 @@
 
 <nav>
 	<ul>
-		<a href="/"><li>Home</li></a>
+		<a href="/developments"><li>Developments</li> </a>
 		<a href="/development/<%=development.id%>"><li>Back</li> </a> 
 		<br>
 		

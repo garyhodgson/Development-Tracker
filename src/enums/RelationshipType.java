@@ -1,7 +1,7 @@
 package enums;
 
 
-enum RelationshipType {
+public enum RelationshipType {
 
 	DerivedFrom("Derived From"),
 	RelatedTo("Related To"),
@@ -25,10 +25,7 @@ enum RelationshipType {
 	}
 
 	RelationshipType() {
-	}
-
-	public String toString() {
-		return (title != null) ? title : this.name();
+		this.title = name();
 	}
 	
 }

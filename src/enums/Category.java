@@ -1,7 +1,7 @@
 package enums;
 
 
-enum Category {
+public enum Category {
 
 	Concept,
 	Documentation,
@@ -16,8 +16,6 @@ enum Category {
 	Process,
 	Toolchain;
 
-
-
 	protected String title = null;
 
 	Category(String title) {
@@ -25,9 +23,6 @@ enum Category {
 	}
 
 	Category() {
-	}
-
-	public String toString() {
-		return (title != null) ? title : this.name();
+		this.title = name();
 	}
 }

@@ -1,6 +1,6 @@
 package enums;
 
-enum Role {
+public enum Role {
 	
 	Author,
 	Contributer,
@@ -13,9 +13,6 @@ enum Role {
 	}
 	
 	Role(){
-	}
-
-	public String toString(){
-		return (title != null) ? title : this.name();
+		this.title = name();
 	}
 }

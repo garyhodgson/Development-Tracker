@@ -1,6 +1,6 @@
 package enums;
 
-enum Goal {
+public enum Goal {
 
 	Economise(null, "Reducing costs."),
 	Simplify(null, "Reducing complexity."),
@@ -23,10 +23,7 @@ enum Goal {
 	}
 
 	Goal() {
-	}
-
-	public String toString() {
-		return (title != null) ? title : this.name();
+		this.title = name();
 	}
 	
 }

@@ -283,7 +283,7 @@
 
 						<tr id="descriptionRow">
 							<td>Description</td>
-							<td><textarea rows="5" cols="47" id="description" name="description"><%=development?.description?.getValue()?:'' %></textarea>
+							<td><textarea rows="5" cols="47" id="description" name="description"><%=development?.description?:'' %></textarea>
 							</td>
 							<td><span id="descriptionMessage"></span></td>
 						</tr>
@@ -310,9 +310,9 @@
 							<td>Status</td>
 							<td>
 								<% enums.Status.eachWithIndex { key, i -> 
-								def checked = (development?.status && development?.status == key.name()) ?  'checked=checked':''
+								def checked = (development?.status && development?.status == key) ?  'checked=checked':''
 										if (i % 2 == 0) print "<br>"
-								%> <input type="radio" value="${key.name()}" id="status_${key.name()}" name="status" <%=checked%> />&nbsp;${key}
+								%> <input type="radio" value="${key}" id="status_${key}" name="status" <%=checked%> />&nbsp;${key.title}
 								<% } %>
 							</td>
 							<td id="message"></td>
@@ -336,7 +336,7 @@
 									<% enums.License.each { 
 										def selected = (development?.license && development?.license == it) ? 'selected=selected':''
 									%>
-									<option ${selected} value="${it.name()}" title="${it.description}">${it.title}</option>
+									<option ${selected} value="${it}" title="${it.description?:it.title}">${it.title}</option>
 									<% } %>
 							</select></td>
 							<td><span id="licenseMessage"></span></td>
@@ -362,7 +362,7 @@
 									def selected = (development?.developmentType && development?.developmentType == key.name()) ? 'checked=checked':''
 									
 								%> 
-									<input class="${className}" type="radio" value="${key.name()}" id="developmentType_${key.name()}" name="developmentType" <%=selected%> />&nbsp;${key}
+									<input class="${className}" type="radio" value="${key}" id="developmentType_${key}" name="developmentType" <%=selected%> />&nbsp;${key.title}
 							 
 							<% if(i % 2 == 1){ print "<br>" }
 							} %>
@@ -390,9 +390,9 @@
 											checked = 'checked=checked'
 										}
 									} 
-								%> <input type="checkbox" title="${key.description?:''}" value="${key.name()}" id="projectVendor_${key}"
+								%> <input type="checkbox" title="${key.description?:''}" value="${key}" id="projectVendor_${key}"
 								name="projectVendor" <%=checked%>
-							/>&nbsp;${key} <% if(i % 2 == 1){ print "<br>" }
+							/>&nbsp;${key.title} <% if(i % 2 == 1){ print "<br>" }
 								} %>
 							</td>
 							<td><span id="projectVendorMessage"></span></td>
@@ -412,12 +412,12 @@
 								<% enums.Category.eachWithIndex { key, i -> 
 								def devCats = development?.categories?:[]
 								
-							%> <input type="checkbox" value="${key.name()}" name="categories"
+							%> <input type="checkbox" value="${key}" name="categories"
 								<%=devCats.contains(key.name())? 'checked=checked':''%>
-							/>&nbsp;${key} <% if(i % 2 == 1){ print "<br>" }
+							/>&nbsp;${key.title} <% if(i % 2 == 1){ print "<br>" }
 							} %>
 							</td>
-							<td>Category missing?<br>Use Tags, or contact <a href="mailto:support@development-tracker.info">support</a><span
+							<td>Category missing?<br>Use Tags, or contact <a href="mailto:${app.AppProperties.SUPPORT_EMAIL}">support</a><span
 								id="categoriesMessage"
 							></span>
 							</td>
@@ -439,7 +439,7 @@
 								<% enums.Goal.eachWithIndex { key, i -> 
 								def devGoals = development?.goals?:[]
 								
-							%> <input type="checkbox" title="${key.description?:key}" value="${key.name()}" id="goals_${key}" name="goals"
+							%> <input type="checkbox" title="${key.description?:key.title}" value="${key}" id="goals_${key}" name="goals"
 								<%=devGoals.contains(key.name())? 'checked=checked':''%>
 							/>&nbsp;${key} <% if(i % 2 == 1){ print "<br>" }
 							} %>
@@ -456,7 +456,7 @@
 
 						<tr id="goalsDescriptionRow">
 							<td>Goals Description</td>
-							<td><textarea rows="3" cols="47" id="goalsDescription" name="goalsDescription"><%=development?.goalsDescription?.getValue()?:'' %></textarea>
+							<td><textarea rows="3" cols="47" id="goalsDescription" name="goalsDescription"><%=development?.goalsDescription?:'' %></textarea>
 							</td>
 							<td><span id="goalsDescriptionMessage"></span></td>
 						</tr>
@@ -480,7 +480,7 @@
 							<td class="linkType"><select name="relationshipType">
 									<% enums.RelationshipType.each { key -> 
 									def selected = (r.type == key) ? 'selected=selected':'' %>
-									<option value="${key.name()}" label="${key}" <%=selected%> />
+									<option value="${key}" label="${key.title}" <%=selected%> />
 									<% } %>
 							</select></td>
 							<td class="linkDescription"><input type="text" id="relationshipDescription" name="relationshipDescription" value="${r.description}"/></td>
@@ -502,7 +502,7 @@
 							<input type="hidden" id="relationshipId" name="relationshipId" />
 							<td class="linkType"><select name="relationshipType">
 									<% enums.RelationshipType.each { key -> %>									
-									<option value="${key.name()}" label="${key}" />
+									<option value="${key}" label="${key.title}" />
 									<% } %>
 							</select>
 							</td>
@@ -538,7 +538,7 @@
 								<select id="collaboratorRole" name="collaboratorRole">
 									<% enums.Role.each { key -> 
 									def selected = (c.role == key) ? 'selected=selected':'' %>
-									<option value="${key.name()}" label="${key}" <%=selected%> />
+									<option value="${key}" label="${key.title}" <%=selected%> />
 									<% } %>
 								</select>
 								<input type="text" id="collaboratorRoleOther" name="collaboratorRoleOther" value="${c.otherRole?:''}" />
@@ -565,7 +565,7 @@
 							<input type="hidden" id="collaboratorId" name="collaboratorId" />
 							<td class="linkType"><select id="collaboratorRole" name="collaboratorRole">
 									<% enums.Role.each { key -> %>
-									<option value="${key.name()}" label="${key}" />
+									<option value="${key}" label="${key.title}" />
 									<% } %>
 							</select>
 							<input type="text" id="collaboratorRoleOther" name="collaboratorRoleOther" />
@@ -631,9 +631,9 @@
 							<td>Specification Units</td>
 							<td><select id="specificationUnit" name="specificationUnit">
 									<% enums.SpecificationUnit.each { 
-										def selected = (development?.specificationUnit && development?.specificationUnit == it.name()) ? 'selected=selected':''
+										def selected = (development?.specificationUnit && development?.specificationUnit == it) ? 'selected=selected':''
 									%>
-									<option ${selected} value="${it.name()}">${it}</option>
+									<option ${selected} value="${it}">${it.title}</option>
 									<% } %>
 							</select></td>
 							<td><span id="specificationUnitMessage"></span></td>

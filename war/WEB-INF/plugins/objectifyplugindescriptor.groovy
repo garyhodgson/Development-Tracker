@@ -1,5 +1,5 @@
 import com.googlecode.objectify.ObjectifyService
-import com.googlecode.objectify.helper.DAOBase
+import com.googlecode.objectify.util.DAOBase
 
 /*
  * File Name: objectifyplugindescriptor.groovy
@@ -35,16 +35,19 @@ import com.googlecode.objectify.helper.DAOBase
  * want. Just change 'dao' below to your preferred variable name.
  * 
  */
-public class DAO extends DAOBase
-{
+public class DAO extends DAOBase {
 	// Register your POJOs here
-    static {
+	static {
 		ObjectifyService.register(entity.Development.class);
 		ObjectifyService.register(entity.UserInfo.class);
 		ObjectifyService.register(entity.Relationship.class);
 		ObjectifyService.register(entity.Activity.class);
 		ObjectifyService.register(entity.Collaboration.class);
-    }
+
+		//ObjectifyService.register(info.developmenttracker.entity.DiffLog.class);
+		ObjectifyService.register(entity.DiffLog.class);
+
+	}
 }
 
 /*
@@ -53,6 +56,6 @@ public class DAO extends DAOBase
  * 
  */
 binding {
-    // an instance of class DAO from objectify library
-    dao = new DAO()
+	// an instance of class DAO from objectify library
+	dao = new DAO()
 }

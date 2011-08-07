@@ -59,7 +59,7 @@ class securityFilter implements Filter {
 					if (userinfo) {
 						session.setAttribute("userinfo", userinfo)
 					} else {
-						System.err.println("SecurityFilter: Unable to find userinfo for a logged in user:${userService.currentUser.userId} and requestURI: ${requestURI}")
+						System.err.println("SecurityFilter: Unable to find userinfo for a logged in user:${users.currentUser.userId} and requestURI: ${requestURI}")
 					}
 				} finally {
 					NamespaceManager.set(namespace);

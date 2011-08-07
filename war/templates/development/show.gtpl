@@ -1,9 +1,8 @@
-
 <% 
 	import org.apache.commons.lang.StringEscapeUtils
 	def development = request.getAttribute("development") 
-	def relationships = request?.getAttribute('relationships')
-	def collaborations = request?.getAttribute('collaborations')
+	def relationships = request.getAttribute('relationships')
+	def collaborations = request.getAttribute('collaborations')
 %>
 <% include '/templates/includes/header.gtpl' %>
 
@@ -22,21 +21,28 @@ jQuery(function() {
 
 <nav>
 	<ul>
-		<a href="/"><li>Home</li></a>
 		<a href="/developments"><li>Developments</li> </a>
 		<br>
-		
+		<% if (request.history?:false) { %> 
+			<a href="/development/<%=development.id%>"><li>Back</li> </a>
+			<br>
+		<% } %>		
 		<a href="/development/<%=development.id%>/watchers"><li>Watchers</li> </a> 
-		<% if (user) { %> 
+		<% if (user && !request.history?:false) { %> 
 			<% if ((session.userinfo?.watchedDevelopments?:[]).contains(development.id)) { %>
 				<a href="/development/unwatch/<%=development.id%>"><li>Unwatch</li> </a> 
 			<% } else { %> 
 				<a href="/development/watch/<%=development.id%>"><li>Watch</li> </a> 
 			<% } %> <br> 
+		<% } %>		
+			
+		<% if (user && !request.history?:false) { %> 
 			<%if (users.isUserAdmin() || session.userinfo?.username == development.createdBy) { %>
 				<a href="/development/edit/<%=development.id%>"><li>Edit</li> </a>
 			<% } %> 
 		<% } %>		
+		
+		<a href="/development/<%=development.id%>/history"><li>History</li> </a>
 	</ul>
 </nav>
 
@@ -65,7 +71,7 @@ jQuery(function() {
 				</tr>
 				<tr>
 					<td>Description</td>
-					<% def text = development.description?development.description.getValue():""
+					<% def text = development.description?development.description:""
 						def rows = text.length() < 512 ? 4 : 10 %>
 					<td><textarea readonly="readonly" contenteditable="false" style="width: 100%" rows="${rows}">${text}</textarea>
 					</td>
@@ -80,7 +86,7 @@ jQuery(function() {
 				</tr>
 				<tr>
 					<td>Status</td>
-					<% def status = (development.status && development.status == enums.Status.Other.name()) ?  development.statusOther?:'' : development.status?:'' %>
+					<% def status = (development.status && development.status == enums.Status.Other) ?  development.statusOther?:'' : development.status?:'' %>
 					<td>${status}</td>
 				</tr>
 				<tr>
@@ -90,7 +96,7 @@ jQuery(function() {
 				</tr>
 				<tr>
 					<td>Development Type</td>
-					<% def developmentType = (development.developmentType && development.developmentType == enums.DevelopmentType.Other.name()) ?  development.developmentTypeOther?:'' : development.developmentType?:''%>
+					<% def developmentType = (development.developmentType && development.developmentType == enums.DevelopmentType.Other) ?  development.developmentTypeOther?:'' : development.developmentType?:''%>
 					<td>${developmentType}</td>
 				</tr>
 				<tr>
@@ -108,7 +114,7 @@ jQuery(function() {
 				<% if (development.goalsDescription) { %>
 				<tr>
 					<td>Goals Description</td>
-					<% def goalsDescriptionText = development.goalsDescription?development.goalsDescription.getValue():""
+					<% def goalsDescriptionText = development.goalsDescription?development.goalsDescription:""
 						def goalsDescriptionRows = goalsDescriptionText.length() < 1024 ? 2 : 4 %>
 					<td><textarea readonly="readonly" contenteditable="false" style="width: 100%" rows="${goalsDescriptionRows}">${goalsDescriptionText}</textarea>
 					</td>
@@ -125,18 +131,18 @@ jQuery(function() {
 					<td>Project/Vendor</td>
 					<td>
 						<% development.projectVendor?.each{
-							def projectVendor = (it == enums.ProjectVendor.Other.name()) ?  development.projectVendorOther?:'' : it %> <a
+							def projectVendor = (it == enums.ProjectVendor.Other) ?  development.projectVendorOther?:'' : it %> <a
 						href="/developments/projectVendor/${projectVendor}"
 					>${projectVendor}</a> <% } %>
 					</td>
 				</tr>
 				<tr>
 					<td>Registered</td>
-					<td>${development.created?:''}<% if (development.createdBy) { %> by <a href="/userinfo/${development.createdBy}">${development.createdBy}</a><% } %></td>
+					<td><span title="${development.created}">${development.created?prettyTime.format(development.created):''}</span><% if (development.createdBy) { %> by <a href="/userinfo/${development.createdBy}">${development.createdBy}</a><% } %></td>
 				</tr>
 				<tr>
 					<td>Updated</td>
-					<td>${development.updated?:''}</td>
+					<td><span title="${development.updated}">${development.updated?prettyTime.format(development.updated):''}</span></td>
 				</tr>
 
 			</table>
@@ -193,7 +199,7 @@ jQuery(function() {
 			<% if (development?.specificationUnit) { %>
 				<tr>
 					<td>Specification Units</td>
-					<td>${development?.specificationUnit}</td>
+					<td>${development?.specificationUnit.title}</td>
 				</tr>			
 			<% } %>			
 			

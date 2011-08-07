@@ -1,0 +1,28 @@
+<!-- Indices written at Sun, 7 Aug 2011 19:21:51 UTC -->
+
+<datastore-indexes autoGenerate="true">
+
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="DiffLog" ancestor="true" source="auto">
+        <property name="on" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Development" ancestor="false" source="auto">
+        <property name="categories" direction="asc"/>
+        <property name="title" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Development" ancestor="false" source="auto">
+        <property name="tags" direction="asc"/>
+        <property name="title" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Development" ancestor="false" source="auto">
+        <property name="createdBy" direction="asc"/>
+        <property name="title" direction="asc"/>
+    </datastore-index>
+</datastore-indexes>

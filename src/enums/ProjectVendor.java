@@ -1,6 +1,6 @@
 package enums;
 
-enum ProjectVendor {
+public enum ProjectVendor {
 	
 	Any("Any","Suitable for any project or vendor.", null),
 	RepRap("RepRap","Creator of Darwin, Mendel and Huxley printers, plus many variations.","http://reprap.org"),
@@ -24,9 +24,6 @@ enum ProjectVendor {
 	}
 
 	ProjectVendor() {
-	}
-
-	public String toString() {
-		return (title != null) ? title : this.name();
+		this.title = name();
 	}
 }

@@ -1,6 +1,6 @@
 package enums;
 
-enum ActivityType {
+public enum ActivityType {
 	NewDevelopment("New Development"),
 	DevelopmentUpdated("Development Updated"),
 	NewUser("New User"),
@@ -13,9 +13,7 @@ enum ActivityType {
 	}
 	
 	ActivityType(){
+		this.title = name();
 	}
 
-	public String toString(){
-		return (title != null) ? title : this.name();
-	}
 }

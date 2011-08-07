@@ -18,6 +18,8 @@ get "/developments/@searchField",  forward: "/developments/search.groovy?searchF
 
 get "/activities", forward: "/activities/list.groovy"
 
+get "/development/test",  forward: "/development/test.groovy"
+
 get "/development/add",  forward: {
 	to "/development/prepareAdd.groovy"
 	to("/templates/static/maintenance.gtpl").on(DATASTORE)		.not(ENABLED)
@@ -42,6 +44,8 @@ get "/development/validateSyncURL/@syncURL",  forward: "/sync/validateRepRapWiki
 
 get "/development/sync/@id",  forward: "/sync/controller.groovy?id=@id"
 get "/development/@id/watchers",  forward: "/development/watchers.groovy?id=@id"
+get "/development/@id/history",  forward: "/history/history.groovy?id=@id"
+get "/development/@id/history/@diffLogId",  forward: "/history/history.groovy?id=@id&diffLogId=@diffLogId"
 get "/development/@id",  forward: "/development/show.groovy?id=@id"
 
 

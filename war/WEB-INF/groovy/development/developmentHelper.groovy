@@ -1,11 +1,13 @@
 package development
 
+import java.text.SimpleDateFormat
 import java.util.List
+
+import name.fraser.neil.plaintext.diff_match_patch
 
 import org.apache.commons.lang.StringEscapeUtils
 
 import com.google.appengine.api.NamespaceManager
-import com.google.appengine.api.datastore.Text
 import com.google.appengine.api.files.FileServiceFactory
 import com.google.appengine.api.images.ImagesServiceFactory
 import com.googlecode.objectify.Key
@@ -15,9 +17,8 @@ import entity.Collaboration
 import entity.Development
 import entity.Relationship
 import entity.UserInfo
-import enums.SpecificationUnit
+import enums.*
 import exceptions.ValidationException
-
 
 public static def generateThumbnail(def imageURL) {
 
@@ -28,9 +29,7 @@ public static def generateThumbnail(def imageURL) {
 
 	try {
 		def response = url.get()
-
 		if (response.responseCode != 200) return null
-
 		image = response.content.image
 	} catch (SocketTimeoutException ste){
 		System.err.println(ste.getLocalizedMessage())
@@ -47,6 +46,13 @@ public static def generateThumbnail(def imageURL) {
 	}
 
 	return file
+}
+
+public static def createDiffLogPatch(def a, def b){
+	def dmp = new diff_match_patch();
+	def diffs = dmp.diff_lineMode(a.toString(), b.toString(), 1);
+	dmp.diff_cleanupSemantic(diffs)
+	return dmp.patch_toText(dmp.patch_make(diffs))
 }
 
 public static void processRelationships(def relationships, def params, def fromDevelopmentKey){
@@ -121,9 +127,9 @@ public static void processCollaborations(def collaborations, def params, def fro
 			}
 		}
 
-		collaboration.role = enums.Role.valueOf(role)
+		collaboration.role = Role.valueOf(role)
 
-		if ((collaboration.role == enums.Role.Other) && params.collaboratorRoleOther){
+		if ((collaboration.role == Role.Other) && params.collaboratorRoleOther){
 			def collaboratorRoleOther = (params.collaboratorRoleOther instanceof String) ? params.collaboratorRoleOther : params.collaboratorRoleOther[i]
 			collaboration.otherRole = StringEscapeUtils.escapeHtml(collaboratorRoleOther)
 		}
@@ -170,19 +176,21 @@ public static void processParameters(def development, def params){
 				case 'categories':
 					def categories = []
 					if (value instanceof String){
-						categories << StringEscapeUtils.escapeHtml(value)
+						categories << Category.valueOf(value)
 					} else {
-						value.each { categories << StringEscapeUtils.escapeHtml(it) }
+						value.each { categories << Category.valueOf(it) }
 					}
 					development.categories = categories
 					break
-
+				case 'status':
+					development.status = Status.valueOf(value)
+					break
 				case 'goals':
 					def goals = []
 					if (value instanceof String){
-						goals << StringEscapeUtils.escapeHtml(value)
+						goals << Goal.valueOf(value)
 					} else {
-						value.each { g -> goals << StringEscapeUtils.escapeHtml(g) }
+						value.each { g -> goals << Goal.valueOf(g) }
 					}
 					development.goals = goals
 					break
@@ -194,33 +202,18 @@ public static void processParameters(def development, def params){
 				case 'projectVendor':
 					def projectVendor = []
 					if (value instanceof String){
-						projectVendor << StringEscapeUtils.escapeHtml(value)
+						projectVendor << ProjectVendor.valueOf(value)
 					} else {
-						value.each { projectVendor << it }
+						value.each { projectVendor << ProjectVendor.valueOf(it) }
 					}
 					development.projectVendor = projectVendor
 					break
 				case 'description':
 				case 'goalsDescription':
-					development[key] = StringEscapeUtils.escapeHtml(value) as Text
+					development[key] = StringEscapeUtils.escapeHtml(value)
 					break;
 				case 'imageURL':
-					if (development.imageURL != value) {
-
-						def thumbnailFile = generateThumbnail(value)
-						if (thumbnailFile){
-
-							// Delete existing thumbnail
-							if (development.thumbnailPath){
-								def file = FileServiceFactory.getFileService().fromPath(development.thumbnailPath)
-								file.delete()
-							}
-
-							development.thumbnailPath = thumbnailFile.getFullPath()
-							development.thumbnailServingUrl = ImagesServiceFactory.getImagesService().getServingUrl(thumbnailFile.blobKey)
-						}
-						development.imageURL = params.imageURL
-					}
+					development.imageURL = StringEscapeUtils.escapeHtml(params.imageURL)
 					break
 				case 'specificationName':
 					def specificationName = []
@@ -246,10 +239,14 @@ public static void processParameters(def development, def params){
 					}
 					break
 				case 'license':
-					development.license = enums.License.valueOf(value)
+					development.license = License.valueOf(value)
 					break
 				case 'licenseOther':
 					development.licenseOther = StringEscapeUtils.escapeHtml(value)
+					break
+				case 'updated':
+				case 'created':
+					development[key] = (new SimpleDateFormat("E MMM dd kk:mm:ss z yyyy")).parse(StringEscapeUtils.escapeHtml(value))
 					break
 				case 'relationshipType':
 				case 'relationshipTo':

@@ -1,6 +1,6 @@
 package enums;
 
-enum DevelopmentType {
+public enum DevelopmentType {
 
 	Part, Printer, Document, Technique, Tool, Other;
 
@@ -11,9 +11,6 @@ enum DevelopmentType {
 	}
 
 	DevelopmentType() {
-	}
-
-	public String toString() {
-		return (title != null) ? title : this.name();
+		this.title = name();
 	}
 }

@@ -34,7 +34,7 @@ def key = new Key<Development>(Development.class, params.id as int)
 def development = dao.ofy().get(key);
 
 request.development = development
-request.collaborations = dao.ofy().query(Collaboration.class).filter('development', key).list()
+request.collaborations = dao.ofy().query(Collaboration.class).ancestor(key).list()
 
 def mayEdit = (development.createdBy == userinfo.username);
 
@@ -51,7 +51,7 @@ if (!mayEdit){
 	return
 }
 
-request.relationships = dao.ofy().query(Relationship.class).filter('from', key).list()
+request.relationships = dao.ofy().query(Relationship.class).ancestor(key).list()
 
 request.pageTitle = "Edit Development: ${development.title}"
 request.action="/development/update"

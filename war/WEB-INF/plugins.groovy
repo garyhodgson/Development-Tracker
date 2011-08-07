@@ -16,3 +16,4 @@
  */
 
 install objectifyplugindescriptor	// objectify support
+install prettytime

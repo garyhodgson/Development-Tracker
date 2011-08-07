@@ -8,13 +8,13 @@ def categoryStats = [:]
 
 enums.Category.each {
 	def count = dao.ofy().query(Development.class).filter('categories', it.name()).countAll()
-	
-	categoryStats[it.name()] = ['id':it, 'title':it.name(), 'count':count]
+
+	categoryStats[it] = ['id':it, 'title':it.title, 'count':count]
 }
 
 request.categoryStats = categoryStats
 request.pageTitle = "Categories"
-session.route = "/categories"
+request.session.route = "/categories"
 
 
 forward '/templates/categories/list.gtpl'

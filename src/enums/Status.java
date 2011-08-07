@@ -1,6 +1,6 @@
 package enums;
 
-enum Status {
+public enum Status {
 
 	Working, Concept, Experimental, WorkInProgress("Work In Progress"), Abandoned, Other;
 
@@ -11,9 +11,6 @@ enum Status {
 	}
 
 	Status() {
-	}
-
-	public String toString() {
-		return (title != null) ? title : this.name();
+		this.title = name();
 	}
 }

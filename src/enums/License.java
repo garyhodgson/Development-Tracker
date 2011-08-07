@@ -1,6 +1,6 @@
 package enums;
 
-enum License {
+public enum License {
 	
 	Unknown("Unknown", "License Unknown", ""),
 	PD("Public Domain", "Public Domain", ""),
@@ -35,7 +35,8 @@ enum License {
 		this.description = description;
 	}
 	
-	public String toString(){
-		return (title != null) ? title : this.name();
+	License(){
+		this.title = name();
 	}
+	
 }
