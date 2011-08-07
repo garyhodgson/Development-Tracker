@@ -4,6 +4,8 @@ public enum Role {
 	
 	Author,
 	Contributer,
+	Tester,
+	Writer,
 	Other;
 	
 	protected String title = null;

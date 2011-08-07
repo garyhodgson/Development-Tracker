@@ -58,7 +58,7 @@ class Development implements Serializable {
 	String toString() {
 		StringBuilder sb = new StringBuilder()
 		this.properties.sort().each {
-			if (!['metaClass', 'subdomain', 'class', 'thumbnailPath', 'thumbnailServingUrl'].contains(it.key) && it.value){
+			if (!['metaClass', 'subdomain', 'class', 'thumbnailPath', 'thumbnailServingUrl', 'imageURL'].contains(it.key) && it.value){
 				sb.append("${it.key.capitalize()}: ${it.value}\n")
 			}
 		}

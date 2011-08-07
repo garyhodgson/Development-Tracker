@@ -2,7 +2,7 @@ package enums;
 
 public enum Status {
 
-	Working, Concept, Experimental, WorkInProgress("Work In Progress"), Abandoned, Other;
+	Working, Concept, Experimental, WorkInProgress("Work In Progress"), Abandoned, Obsolete, Other;
 
 	protected String title = null;
 
