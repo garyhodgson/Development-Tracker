@@ -20,10 +20,6 @@ jQuery(function() {
 
 <div class="content">
 	<table border=0 cellspacing="0" cellpadding="5px" id="activityTable">
-		<tr>
-			<th class="title">Title</th>
-			<th class="date">Created</th>
-		</tr>
 		<% request.activities?.each { activity ->
 		%>
 		<tr>
@@ -37,7 +33,7 @@ jQuery(function() {
 				<td><a href="${activity.link}">${activity.title}</a></td>
 			<%} %>		
 	
-			<td>${activity.created?:''}</td>
+			<td>${prettyTime.format(activity.created)?:''}</td>
 		</tr>
 		<% } %>
 	</table>

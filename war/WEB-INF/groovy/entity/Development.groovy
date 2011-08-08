@@ -1,14 +1,12 @@
 package entity
+
 import javax.persistence.Id
 import javax.persistence.PrePersist
 
+import com.googlecode.objectify.annotation.AlsoLoad
 import com.googlecode.objectify.annotation.Unindexed
 
-import enums.Goal
-import enums.License
-import enums.ProjectVendor
-import enums.SpecificationUnit
-import enums.Status
+import enums.*
 
 class Development implements Serializable {
 
@@ -30,14 +28,14 @@ class Development implements Serializable {
 	String sourceURL
 	Status status
 	String statusOther
-	String developmentType
+	DevelopmentType developmentType
 	String developmentTypeOther
-	List<String> categories
-	List<String> goals
+	List<Category> categories
+	List<Goal> goals
 	String goalsOther
 	String goalsDescription
 	List<String> tags
-	List<String> projectVendor
+	List<ProjectVendor> projectVendor
 	String projectVendorOther
 	List<String> specificationName
 	List<String> specificationValue
@@ -58,7 +56,14 @@ class Development implements Serializable {
 	String toString() {
 		StringBuilder sb = new StringBuilder()
 		this.properties.sort().each {
-			if (!['metaClass', 'subdomain', 'class', 'thumbnailPath', 'thumbnailServingUrl', 'imageURL'].contains(it.key) && it.value){
+			if (![
+				'metaClass',
+				'subdomain',
+				'class',
+				'thumbnailPath',
+				'thumbnailServingUrl',
+				'imageURL'
+			].contains(it.key) && it.value){
 				sb.append("${it.key.capitalize()}: ${it.value}\n")
 			}
 		}

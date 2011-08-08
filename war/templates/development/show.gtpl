@@ -86,7 +86,7 @@ jQuery(function() {
 				</tr>
 				<tr>
 					<td>Status</td>
-					<% def status = (development.status && development.status == enums.Status.Other) ?  development.statusOther?:'' : development.status?:'' %>
+					<% def status = (development.status && development.status == enums.Status.Other) ?  development.statusOther?:'' : development.status.title %>
 					<td>${status}</td>
 				</tr>
 				<tr>
@@ -96,19 +96,22 @@ jQuery(function() {
 				</tr>
 				<tr>
 					<td>Development Type</td>
-					<% def developmentType = (development.developmentType && development.developmentType == enums.DevelopmentType.Other) ?  development.developmentTypeOther?:'' : development.developmentType?:''%>
+					<% def developmentType = (development.developmentType && development.developmentType == enums.DevelopmentType.Other) ?  development.developmentTypeOther?:'' : development.developmentType.title %>
 					<td>${developmentType}</td>
 				</tr>
 				<tr>
 					<td>Categories</td>
 					<td>
-						<% development.categories?.each{ %> <a href="/developments/categories/${it}">${it}</a> <% } %>
+						<% development.categories?.each{ %> <a href="/developments/categories/${it}">${it.title}</a> <% } %>
 					</td>
 				</tr>
 				<tr>
 					<td>Goals</td>
 					<td>
-						<% development.goals?.each{ %> <a href="/developments/goals/${it}">${it}</a> <% } %>
+						<% development.goals?.each{ %> <a href="/developments/goals/${it}">${it.title}</a> <% } %>
+
+						<% if (development.goalsOther){ %> ${development.goalsOther} <% } %>
+						
 					</td>
 				</tr>
 				<% if (development.goalsDescription) { %>

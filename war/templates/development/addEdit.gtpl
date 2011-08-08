@@ -359,7 +359,7 @@
 								<% enums.DevelopmentType.eachWithIndex { key, i ->
 									
 									def className = (i % 2 == 1)? 'rightCol':'leftCol'
-									def selected = (development?.developmentType && development?.developmentType == key.name()) ? 'checked=checked':''
+									def selected = (development?.developmentType && development?.developmentType == key) ? 'checked=checked':''
 									
 								%> 
 									<input class="${className}" type="radio" value="${key}" id="developmentType_${key}" name="developmentType" <%=selected%> />&nbsp;${key.title}
@@ -386,7 +386,7 @@
 								
 									def checked = ''
 									if (development?.projectVendor?:null){
-										if (development.projectVendor.contains(key.name())){
+										if (development.projectVendor.contains(key)){
 											checked = 'checked=checked'
 										}
 									} 
@@ -413,7 +413,7 @@
 								def devCats = development?.categories?:[]
 								
 							%> <input type="checkbox" value="${key}" name="categories"
-								<%=devCats.contains(key.name())? 'checked=checked':''%>
+								<%=devCats.contains(key)? 'checked=checked':''%>
 							/>&nbsp;${key.title} <% if(i % 2 == 1){ print "<br>" }
 							} %>
 							</td>
@@ -440,7 +440,7 @@
 								def devGoals = development?.goals?:[]
 								
 							%> <input type="checkbox" title="${key.description?:key.title}" value="${key}" id="goals_${key}" name="goals"
-								<%=devGoals.contains(key.name())? 'checked=checked':''%>
+								<%=devGoals.contains(key)? 'checked=checked':''%>
 							/>&nbsp;${key} <% if(i % 2 == 1){ print "<br>" }
 							} %>
 							</td>

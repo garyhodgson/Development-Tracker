@@ -4,6 +4,7 @@ package enums;
 public enum Category {
 
 	Concept,
+	Commercial,
 	Documentation,
 	Electronics,
 	Extruder,
