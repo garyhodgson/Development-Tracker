@@ -55,9 +55,9 @@ jQuery(function() {
 
 	<ul class="tabs">
 		<li><a href="#">Core</a></li>
-		<li><a href="#">Connections</a></li>
-		<li><a href="#">Collaborators</a></li>
-		<li><a href="#">Specification</a></li>
+		<li><a href="#">Connections <span class="heading-count">(${relationships?.size()?:0})</span></a></li>
+		<li><a href="#">Collaborators <span class="heading-count">(${collaborations?.size()?:0})</span></a></li>
+		<li><a href="#">Specification <span class="heading-count">(${development.specificationName?.size()?:0})</span></a></li>
 	</ul>
 
 	<!-- tab "panes" -->
@@ -96,7 +96,7 @@ jQuery(function() {
 				</tr>
 				<tr>
 					<td>Development Type</td>
-					<% def developmentType = (development.developmentType && development.developmentType == enums.DevelopmentType.Other) ?  development.developmentTypeOther?:'' : development.developmentType.title %>
+					<% def developmentType = (development.developmentType && development.developmentType == enums.DevelopmentType.Other) ?  development.developmentTypeOther?:'' : development.developmentType?.title %>
 					<td>${developmentType}</td>
 				</tr>
 				<tr>
