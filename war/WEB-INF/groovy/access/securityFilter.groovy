@@ -31,6 +31,13 @@ class securityFilter implements Filter {
 		'/userinfo/exists/',
 		'/development/exists/'
 	]
+	
+	def namespaceExceptionsList = [
+		'/about',
+		'/faq',
+		'future',
+		'/start',
+		'/']
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -41,7 +48,7 @@ class securityFilter implements Filter {
 		//UserService userService = UserServiceFactory.getUserService();
 		HttpSession session = ((HttpServletRequest) request).getSession(true);
 
-		if (namespace == 'default' && (request.getRequestURI() != '/' && !request.getRequestURI().startsWith('/start/'))){
+		if (namespace == 'default' && (request.getRequestURI() != '/' && !namespaceExceptionsList.find{request.getRequestURI().startsWith(it)})){
 			// We should not go anywhere apart from home
 			session.setAttribute("message", "Please choose your preferred project/vendor.");
 			response.sendRedirect("/");

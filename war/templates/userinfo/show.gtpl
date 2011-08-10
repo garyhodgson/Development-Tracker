@@ -36,9 +36,9 @@
 <div class="content thumbnailed">
 	<ul class="tabs" id="flowtabs">
 		<li><a id="t1" class="links_with_history" href="#details">Details</a></li>
-		<li><a id="t2" class="links_with_history" href="#developments">Developments Registered (${request.userDevelopments?.size()?:0})</a></li>
-		<li><a id="t3" class="links_with_history" href="#watching">Watching (${request.watchedDevelopments?.size()?:0})</a></li>
-		<li><a id="t4" class="links_with_history" href="#collaborations">Collaborations (${request.collaborations?.size()?:0})</a></li>
+		<li><a id="t2" class="links_with_history" href="#developments">Developments Registered <span class="heading-count">(${request.userDevelopments?.size()?:0})</span></a></li>
+		<li><a id="t3" class="links_with_history" href="#watching">Watching <span class="heading-count">(${request.watchedDevelopments?.size()?:0})</span></a></li>
+		<li><a id="t4" class="links_with_history" href="#collaborations">Collaborations <span class="heading-count">(${request.collaborations?.size()?:0})</span></a></li>
 	</ul>
 
 	<!-- tab "panes" -->
