@@ -21,7 +21,7 @@ jQuery(function() {
 
 <nav>
 	<ul>
-		<a href="/developments"><li>Developments</li> </a>
+		<a href="/developments/latest"><li>Developments</li> </a>
 		<br>
 		<% if (request.history?:false) { %> 
 			<a href="/development/<%=development.id%>"><li>Back</li> </a>

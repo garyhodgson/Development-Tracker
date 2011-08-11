@@ -1,12 +1,21 @@
 package developments
-import entity.Development
 
+import static paging.pagingHelper.*
+import entity.Development
 
 log.info "Retrieving Latest Developments"
 
-def limit = params.count?: 10 
+def totalCount = dao.ofy().query(Development.class).countAll()
 
-request.developments = dao.ofy().query(Development.class).limit(limit as int).order('-created').list() 
+def (offset,limit) = getOffsetAndLimit(params, totalCount)
+
+
+request.developments = dao.ofy().query(Development.class).order('-created').offset(offset).limit(limit).list()
+
+def resultsetCount = request.developments.size()
+
+request.paging = createPaging(totalCount, limit, offset, resultsetCount)
+
 request.pageTitle = "Latest Developments"
 
 forward '/templates/developments/list.gtpl'

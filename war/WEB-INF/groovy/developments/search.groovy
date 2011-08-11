@@ -1,21 +1,18 @@
 package developments
 
 import com.googlecode.objectify.Query
-
 import entity.Development
-
-
-session = session?:request.getSession(true)
+import static paging.pagingHelper.*
 
 log.info "Searching for Developments: ${params}"
 
 if (!params.searchField){
-	session.message = "Search Field not found."
+	request.session.message = "Search Field not found."
 	redirect '/developments'
 	return
 }
 
-Query<Development> query = dao.ofy().query(Development.class)
+def query = dao.ofy().query(Development.class)
 
 if (params.value){
 	
@@ -35,6 +32,13 @@ if (params.value){
 	request.pageTitle = "Developments with field ${params.searchField}"
 }
 
-request.developments = query.order('title').list()
+def totalCount = query.countAll()
+def (offset,limit) = getOffsetAndLimit(params, totalCount)
+
+request.developments = query.order('title').offset(offset).limit(limit).list()
+
+def resultsetCount = request.developments.size()
+
+request.paging = createPaging(totalCount, limit, offset, resultsetCount)
 
 forward '/templates/developments/list.gtpl'
