@@ -5,10 +5,12 @@ public enum RelationshipType {
 
 	DerivedFrom("Derived From"),
 	RelatedTo("Related To"),
+	DesignedFor("Designed For"),
 	PartOf("Part Of"),
 	ConsistsOf("Consists Of"),
 	InspiredBy("Inspired By"),
 	EvolvedFrom("Evolved From"),
+	InAnswerTo("In Answer To"),
 	Link("Link"),
 	Other("Other");
 	

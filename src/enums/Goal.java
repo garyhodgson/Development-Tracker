@@ -11,6 +11,9 @@ public enum Goal {
 	Reliability("Reliability", "Producing consistent, repeatable results."),
 	Speed("Speed", "Doing it faster."),
 	Accuracy("Accuracy", "Improved precision."),
+	Maintainability("Maintainability", "Easier to keep running."), 
+	Improvement("Improvement", "A stepwise update to a previous design."), 
+	Size("Size", "Smaller, or bigger"),
 	Other("Other", "Define your own goal.");
 	
 	protected String title = null;
