@@ -13,8 +13,8 @@
 	jQuery(function() {
 
 		var titleIsValid = false
-		var originalTitle = '${development?.title?:''}'
-		var	originalSourceURL = '${development?.sourceURL?:''}'
+		var originalTitle = "${development?.title?:''}"
+		var	originalSourceURL = "${development?.sourceURL?:''}"
 		var isEditing = <%println (request.getAttribute('action')=="/development/update")? 'true': 'false'%>
 		
 		function validate() {

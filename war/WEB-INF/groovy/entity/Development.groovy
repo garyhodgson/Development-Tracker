@@ -3,7 +3,6 @@ package entity
 import javax.persistence.Id
 import javax.persistence.PrePersist
 
-import com.googlecode.objectify.annotation.AlsoLoad
 import com.googlecode.objectify.annotation.Unindexed
 
 import enums.*

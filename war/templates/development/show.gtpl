@@ -67,7 +67,7 @@ jQuery(function() {
 			<table border=0 cellspacing="0" cellpadding="5px">
 				<tr>
 					<td>Title</td>
-					<td>${development.title}</td>
+					<td>${development.title?:''}</td>
 				</tr>
 				<tr>
 					<td>Description</td>
@@ -86,7 +86,7 @@ jQuery(function() {
 				</tr>
 				<tr>
 					<td>Status</td>
-					<% def status = (development.status && development.status == enums.Status.Other) ?  development.statusOther?:'' : development.status.title %>
+					<% def status = (development.status && development.status == enums.Status.Other) ?  development.statusOther?:'' : development.status?.title?:'' %>
 					<td>${status}</td>
 				</tr>
 				<tr>
@@ -96,19 +96,19 @@ jQuery(function() {
 				</tr>
 				<tr>
 					<td>Development Type</td>
-					<% def developmentType = (development.developmentType && development.developmentType == enums.DevelopmentType.Other) ?  development.developmentTypeOther?:'' : development.developmentType?.title %>
+					<% def developmentType = (development.developmentType && development.developmentType == enums.DevelopmentType.Other) ?  development.developmentTypeOther?:'' : development.developmentType?.title?:'' %>
 					<td>${developmentType}</td>
 				</tr>
 				<tr>
 					<td>Categories</td>
 					<td>
-						<% development.categories?.each{ %> <a href="/developments/categories/${it}">${it.title}</a> <% } %>
+						<% development.categories?.each{ %> <a href="/developments/categories/${it}">${it.title?:''}</a> <% } %>
 					</td>
 				</tr>
 				<tr>
 					<td>Goals</td>
 					<td>
-						<% development.goals?.each{ %> <a href="/developments/goals/${it}">${it.title}</a> <% } %>
+						<% development.goals?.each{ %> <a href="/developments/goals/${it}">${it.title?:''}</a> <% } %>
 
 						<% if (development.goalsOther){ %> ${development.goalsOther} <% } %>
 						
@@ -157,7 +157,7 @@ jQuery(function() {
 				<%  relationships?.each { r ->
 				%>
 				<tr>
-					<td class="linkType">${r.type}</td>
+					<td class="linkType">${r.type.title}</td>
 					<td class="linkDescription">
 						<% if (r.to){ %>
 							<a href="/development/${r.to.name}">${r.description?:'Link'}</a>
@@ -181,7 +181,7 @@ jQuery(function() {
 					<% if (c.role == enums.Role.Other && c.otherRole){ %>
 						${c.otherRole}
 					<% } else { %>
-						${c.role}
+						${c.role.title}
 					<% }  %>
 					</td>
 					<td class="linkDescription">
@@ -202,7 +202,7 @@ jQuery(function() {
 			<% if (development?.specificationUnit) { %>
 				<tr>
 					<td>Specification Units</td>
-					<td>${development?.specificationUnit.title}</td>
+					<td>${development?.specificationUnit?.title?:''}</td>
 				</tr>			
 			<% } %>			
 			
