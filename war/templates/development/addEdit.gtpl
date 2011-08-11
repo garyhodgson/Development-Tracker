@@ -1,5 +1,6 @@
 <%
 	import org.apache.commons.lang.StringEscapeUtils
+	import enums.*
 	def development = request?.getAttribute('development')  
 	def relationships = request?.getAttribute('relationships')
 	def collaborations = request?.getAttribute('collaborations')
@@ -32,11 +33,12 @@
 			}
 		}
 		
-		jQuery("#status").change(function() {
-			if (jQuery(this).val() == 'other') {
+		jQuery("input[name=status]").change(function() {
+			if (jQuery("input[name='status']:checked").val() == 'Other') {
 				jQuery("#statusOtherRow").show()
 			} else {
 				jQuery("#statusOtherRow").hide()
+				jQuery("#statusOther").val('')
 			}
 		})
 		
@@ -45,30 +47,25 @@
 				jQuery("#licenseOtherRow").show()
 			} else {
 				jQuery("#licenseOtherRow").hide()
+				jQuery("#licenseOther").val('')
 			}
 		})
 		
-		jQuery("#developmentType_Other").change(function() {
-			if (jQuery(this).attr('checked')) {
+		jQuery("input[name=developmentType]").change(function() {
+			if (jQuery("input[name='developmentType']:checked").val() == 'Other') {
 				jQuery("#developmentTypeOtherRow").show()
 			} else {
 				jQuery("#developmentTypeOtherRow").hide()
+				jQuery("#developmentTypeOther").val('')
 			}
 		})
-		
-		jQuery("#status_Other").change(function() {
-			if (jQuery(this).attr('checked')) {
-				jQuery("#statusOtherRow").show()
-			} else {
-				jQuery("#statusOtherRow").hide()
-			}
-		})
-		
+				
 		jQuery("#goals_Other").change(function() {
 			if (jQuery(this).attr('checked')) {
 				jQuery("#goalsOtherRow").show()
 			} else {
 				jQuery("#goalsOtherRow").hide()
+				jQuery("#goalsOther").val('')
 			}
 		})
 		
@@ -77,6 +74,7 @@
 				jQuery("#projectVendorOtherRow").show()
 			} else {
 				jQuery("#projectVendorOtherRow").hide()
+				jQuery("#projectVendorOther").val('')
 			}
 		})
 		
@@ -223,11 +221,11 @@
 		
 		jQuery("#license").change();
 		jQuery("#projectVendor_Other").change()
-		jQuery("#goals_Other").change()
-		jQuery("#status_Other").change()
-		jQuery("#developmentType_Other").change()
+		jQuery("#goals_Other").change()		
 		jQuery("select[name=collaboratorRole]").change()
 		jQuery('input[name=title]').blur()
+		jQuery('input[name=status]').change()
+		jQuery('input[name=developmentType]').change()
 		jQuery('input[name=collaboratorIsUsername]').change()
 
 	});
@@ -309,13 +307,25 @@
 						<tr id="statusRow">
 							<td>Status</td>
 							<td>
-								<% enums.Status.eachWithIndex { key, i -> 
-								def checked = (development?.status && development?.status == key) ?  'checked=checked':''
-										if (i % 2 == 0) print "<br>"
-								%> <input type="radio" value="${key}" id="status_${key}" name="status" <%=checked%> />&nbsp;${key.title}
-								<% } %>
+								<div class="left">
+									<%  
+										def count = Status.values().length -1
+										def c1 = (count)/2 as int
+										Status.values()[0..c1].each { key ->
+										def checked = (development?.status && development?.status == key) ?  'checked=checked':'' %>
+									<input type="radio" value="${key}" id="status_${key}" name="status" <%=checked%> />&nbsp;${key.title}
+									<br>
+									<%  } %>
+								</div>
+								<div class="left">					
+									<% Status.values()[c1+1..count].each { key ->
+										def checked = (development?.status && development?.status == key) ?  'checked=checked':'' %>
+									<input type="radio" value="${key}" id="status_${key}" name="status" <%=checked%> />&nbsp;${key.title}
+									<br>
+									<% } %>
+								</div>
 							</td>
-							<td id="message"></td>
+							<td><span id="statusMessage"></span></td>
 						</tr>
 
 						<tr id="statusOtherRow">
@@ -356,16 +366,23 @@
 						<tr id="developmentTypeRow">
 							<td>Development Type</td>
 							<td>
-								<% enums.DevelopmentType.eachWithIndex { key, i ->
-									
-									def className = (i % 2 == 1)? 'rightCol':'leftCol'
-									def selected = (development?.developmentType && development?.developmentType == key) ? 'checked=checked':''
-									
-								%> 
-									<input class="${className}" type="radio" value="${key}" id="developmentType_${key}" name="developmentType" <%=selected%> />&nbsp;${key.title}
-							 
-							<% if(i % 2 == 1){ print "<br>" }
-							} %>
+								<div class="left">
+									<%  
+										count = DevelopmentType.values().length -1
+										c1 = (count)/2 as int
+										DevelopmentType.values()[0..c1].each { key ->
+										def selected = (development?.developmentType && development?.developmentType == key) ? 'checked=checked':'' %>
+									<input type="radio" value="${key}" id="developmentType_${key}" name="developmentType" <%=selected%> />&nbsp;${key.title}
+									<br>
+									<%  } %>
+								</div>
+								<div class="left">					
+									<% DevelopmentType.values()[c1+1..count].each { key ->
+										def selected = (development?.developmentType && development?.developmentType == key) ? 'checked=checked':'' %>
+									<input type="radio" value="${key}" id="developmentType_${key}" name="developmentType" <%=selected%> />&nbsp;${key.title}
+									<br>
+									<% } %>
+								</div>
 							</td>
 							<td><span id="developmentTypeMessage"></span>
 							</td>
@@ -382,18 +399,24 @@
 						<tr id="projectVendorRow">
 							<td>Project/Vendor</td>
 							<td>
-								<% enums.ProjectVendor.eachWithIndex { key, i ->
-								
-									def checked = ''
-									if (development?.projectVendor?:null){
-										if (development.projectVendor.contains(key)){
-											checked = 'checked=checked'
-										}
-									} 
-								%> <input type="checkbox" title="${key.description?:''}" value="${key}" id="projectVendor_${key}"
-								name="projectVendor" <%=checked%>
-							/>&nbsp;${key.title} <% if(i % 2 == 1){ print "<br>" }
-								} %>
+								<div class="left">
+									<%  
+										count = ProjectVendor.values().length -1
+										c1 = (count)/2 as int
+										def projVendors = development?.projectVendor?:[]
+										ProjectVendor.values()[0..c1].each { key ->
+										def checked = projVendors.contains(key) ? 'checked=checked':'' %>
+									<input type="checkbox" title="${key.description?:''}" value="${key}" id="projectVendor_${key}" name="projectVendor" <%=checked%>/>&nbsp;${key.title}
+									<br>
+									<%  } %>
+								</div>
+								<div class="left">					
+									<% ProjectVendor.values()[c1+1..count].each { key ->
+									def checked = projVendors.contains(key) ? 'checked=checked':''  %>
+									<input type="checkbox" title="${key.description?:''}" value="${key}" id="projectVendor_${key}" name="projectVendor" <%=checked%>/>&nbsp;${key.title}
+									<br>
+									<% } %>
+								</div>
 							</td>
 							<td><span id="projectVendorMessage"></span></td>
 						</tr>
@@ -409,13 +432,32 @@
 						<tr id="categoriesRow">
 							<td>Category</td>
 							<td>
-								<% enums.Category.eachWithIndex { key, i -> 
-								def devCats = development?.categories?:[]
+								<div class="left">
+									<%  count = Category.values().length -1
+										c1 = (count)/3 as int
+										c2 = (count)/3 * 2 as int
+										def devCats = development?.categories?:[]
+										Category.values()[0..c1].each { key ->
+										def checked = (development?.categories && development?.projectVendor == key) ? 'checked=checked':'' %>
+									<input type="checkbox" value="${key}" name="categories" <%=devCats.contains(key)? 'checked=checked':''%>/>&nbsp;${key.title}
+									<br>
+									<%  } %>
+								</div>
+								<div class="left">					
+									<% Category.values()[c1+1..c2].each { key ->
+									def checked = (development?.projectVendor && development?.projectVendor == key) ? 'checked=checked':'' %>
+									<input type="checkbox" value="${key}" name="categories" <%=devCats.contains(key)? 'checked=checked':''%>/>&nbsp;${key.title}
+									<br>
+									<% } %>
+								</div>
+								<div class="left">					
+									<% Category.values()[c2+1..count].each { key ->
+									def checked = (development?.projectVendor && development?.projectVendor == key) ? 'checked=checked':'' %>
+									<input type="checkbox" value="${key}" name="categories" <%=devCats.contains(key)? 'checked=checked':''%>/>&nbsp;${key.title}
+									<br>
+									<% } %>
+								</div>
 								
-							%> <input type="checkbox" value="${key}" name="categories"
-								<%=devCats.contains(key)? 'checked=checked':''%>
-							/>&nbsp;${key.title} <% if(i % 2 == 1){ print "<br>" }
-							} %>
 							</td>
 							<td>Category missing?<br>Use Tags, or contact <a href="mailto:${app.AppProperties.SUPPORT_EMAIL}">support</a><span
 								id="categoriesMessage"
@@ -436,13 +478,28 @@
 						<tr id="goalsRow">
 							<td>Goals</td>
 							<td>
-								<% enums.Goal.eachWithIndex { key, i -> 
-								def devGoals = development?.goals?:[]
-								
-							%> <input type="checkbox" title="${key.description?:key.title}" value="${key}" id="goals_${key}" name="goals"
-								<%=devGoals.contains(key)? 'checked=checked':''%>
-							/>&nbsp;${key} <% if(i % 2 == 1){ print "<br>" }
-							} %>
+								<div class="left">
+									<% count = Goal.values().length -1
+										c1 = (count)/3 as int
+										c2 = (count)/3 * 2 as int
+										def devGoals = development?.goals?:[]
+										Goal.values()[0..c1].each { key -> %>
+									<input type="checkbox" title="${key.description?:key.title}" value="${key}" id="goals_${key}" name="goals" <%=devGoals.contains(key)? 'checked=checked':''%>/>&nbsp;${key}
+									<br>
+									<%  } %>
+								</div>
+								<div class="left">					
+									<% Goal.values()[c1+1..c2].each { key ->%>
+									<input type="checkbox" title="${key.description?:key.title}" value="${key}" id="goals_${key}" name="goals" <%=devGoals.contains(key)? 'checked=checked':''%>/>&nbsp;${key}
+									<br>
+									<% } %>
+								</div>
+								<div class="left">					
+									<% Goal.values()[c2+1..count].each { key ->%>
+									<input type="checkbox" title="${key.description?:key.title}" value="${key}" id="goals_${key}" name="goals" <%=devGoals.contains(key)? 'checked=checked':''%>/>&nbsp;${key}
+									<br>
+									<% } %>
+								</div>
 							</td>
 							<td><span id="goalsMessage"></span></td>
 						</tr>
