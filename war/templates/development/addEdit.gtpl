@@ -175,7 +175,6 @@
 			if (jQuery(this).val() == "") {
 				jQuery('#titleMessage')
 						.text("Title is required.")
-				jQuery('#titleMessage').effect('highlight', null,500, null)
 				titleIsValid = false
 				validate()
 			} else {
