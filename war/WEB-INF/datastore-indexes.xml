@@ -10,19 +10,56 @@
 
     <!-- Used 1 time in query history -->
     <datastore-index kind="Development" ancestor="false" source="auto">
+        <property name="createdBy" direction="asc"/>
+        <property name="title" direction="asc"/>
+    </datastore-index>
+    
+    
+    <!-- Used 5 times in query history -->
+    <datastore-index kind="Development" ancestor="false" source="auto">
+        <property name="status" direction="asc"/>
+        <property name="title" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 2 times in query history -->
+    <datastore-index kind="Development" ancestor="false" source="auto">
+        <property name="tags" direction="asc"/>
+        <property name="title" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 2 times in query history -->
+    <datastore-index kind="Development" ancestor="false" source="auto">
+        <property name="source" direction="asc"/>
+        <property name="title" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Development" ancestor="false" source="auto">
+        <property name="license" direction="asc"/>
+        <property name="title" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 3 times in query history -->
+    <datastore-index kind="Development" ancestor="false" source="auto">
+        <property name="projectVendor" direction="asc"/>
+        <property name="title" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Development" ancestor="false" source="auto">
         <property name="categories" direction="asc"/>
         <property name="title" direction="asc"/>
     </datastore-index>
 
     <!-- Used 1 time in query history -->
     <datastore-index kind="Development" ancestor="false" source="auto">
-        <property name="tags" direction="asc"/>
+        <property name="goal" direction="asc"/>
         <property name="title" direction="asc"/>
     </datastore-index>
 
     <!-- Used 1 time in query history -->
     <datastore-index kind="Development" ancestor="false" source="auto">
-        <property name="createdBy" direction="asc"/>
+        <property name="developmentType" direction="asc"/>
         <property name="title" direction="asc"/>
     </datastore-index>
 </datastore-indexes>

@@ -18,7 +18,7 @@
 		
 		<br><br>
 		<div class="small-note">
-			Searches title, description, specification names and values, and collaborator names.
+			Searches title, description, goal description, specification keys and values, and collaborator names.
 		</div>
 		<div class="small-note">
 			For other fields please see the <a href="/developments/browse">browse</a> functionality. 

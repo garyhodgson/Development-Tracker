@@ -32,7 +32,7 @@ if (memcache[memcacheKey]) {
 		case 'status':
 			values = Status.values()
 			break
-		case 'goal':
+		case 'goals':
 			values = Goal.values()
 			break
 		case 'projectVendor':
