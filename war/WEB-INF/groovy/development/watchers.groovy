@@ -3,8 +3,6 @@ package development
 import entity.Development
 import entity.UserInfo
 
-log.info "Showing Watchers of Development ${params.id}"
-
 if (!params.id){
 	request.session.message = "No Id given."
 	redirect '/developments'

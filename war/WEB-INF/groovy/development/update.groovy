@@ -14,7 +14,6 @@ import entity.DiffLog
 import entity.Relationship
 import exceptions.ValidationException
 
-log.info "Update Development"
 
 if (!params.id){
 	request.session.message = "No Id given."
@@ -124,5 +123,8 @@ if (updateImageURL){
 }
 
 dao.ofy().put(new Activity(type:enums.ActivityType.DevelopmentUpdated, title:"${development.title}",by:development.createdBy, created: new Date(), link :"/development/${development.id}"))
+
+// Extreme, but ensures all searches and browse data is up to date
+memcache.clearAll()
 
 redirect params.referer?:"/development/${development.id}"

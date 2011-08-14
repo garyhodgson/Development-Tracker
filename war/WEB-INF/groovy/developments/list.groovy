@@ -3,7 +3,6 @@ package developments
 import static paging.pagingHelper.*
 import entity.Development
 
-log.info "Retrieving Developments"
 
 def totalCount = dao.ofy().query(Development.class).countAll()
 

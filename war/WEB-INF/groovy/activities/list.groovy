@@ -3,11 +3,9 @@ package activities
 import static paging.pagingHelper.*
 import entity.Activity
 
-log.info "Retrieving Activities"
-
 def totalCount = dao.ofy().query(Activity.class).countAll()
 
-def (offset,limit) = getOffsetAndLimit(params)
+def (offset,limit) = getOffsetAndLimit(params, totalCount)
 
 if (offset > totalCount){
 	request.session.message = "Offset too large"

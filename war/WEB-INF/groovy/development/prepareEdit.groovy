@@ -7,25 +7,22 @@ import entity.Development
 import entity.Relationship
 import entity.UserInfo
 
-log.info "Editing Development"
-
-session = session?:request.getSession(true)
 
 if (!users.isUserLoggedIn()){
-	session.message = "Must be logged in to edit."
+	request.session.message = "Must be logged in to edit."
 	redirect "/templates/access/login.gtpl?continue=/development/edit/${params.id}"
 	return
 }
 
 def userinfo = session.userinfo
 if (!userinfo){
-	session.message = "Unable to identify user. Please contact <a href=\"mailto:support@development-tracker.info\">support</a>."
+	request.session.message = "Unable to identify user. Please contact <a href=\"mailto:support@development-tracker.info\">support</a>."
 	redirect params.referer?:"/development/${params.id}"
 	return
 }
 
 if (!params.id){
-	session.message = "No Id given."
+	request.session.message = "No Id given."
 	redirect params.referer?:"/development/${params.id}"
 	return
 }
@@ -46,7 +43,7 @@ request.collaborations.each {
 }
 
 if (!mayEdit){
-	session.message = "You do not have permission to edit this Development."
+	request.session.message = "You do not have permission to edit this Development."
 	redirect params.referer?:"/development/${params.id}"
 	return
 }

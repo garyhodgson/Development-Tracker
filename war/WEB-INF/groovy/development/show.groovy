@@ -11,8 +11,6 @@ import entity.Development
 import entity.Relationship
 import enums.Source
 
-log.info "Showing Development"
-
 if (!params.id){
 	request.session.message = "No Id given."
 	redirect '/developments'
@@ -44,7 +42,7 @@ def getGithubSupplementary(def url){
 	if (!m.matches() && m[0].size() != 3 ) return null
 
 	//check memcache first
-	def memcacheKey = "GithubSupplementary:${m[0][1]}-${m[0][2]}"
+	def memcacheKey = "${MemcacheKeys.GITHUB_SUPPLEMENTARY}:${m[0][1]}-${m[0][2]}"
 	if (memcache[memcacheKey]) {
 		return memcache[memcacheKey]
 	}

@@ -1,44 +1,68 @@
 package developments
 
-import com.googlecode.objectify.Query
-import entity.Development
 import static paging.pagingHelper.*
 
-log.info "Searching for Developments: ${params}"
+import org.apache.commons.lang.StringEscapeUtils
 
-if (!params.searchField){
-	request.session.message = "Search Field not found."
-	redirect '/developments'
+import app.MemcacheKeys
+
+import com.googlecode.objectify.Key
+
+import entity.Collaboration
+import entity.Development
+
+if (!params.searchKey){
+	request.session.message = "Search key required"
+	forward '/templates/developments/search.gtpl'
 	return
 }
 
-def query = dao.ofy().query(Development.class)
+def searchKey = StringEscapeUtils.escapeHtml(params.searchKey).toLowerCase()
+def results = []
 
-if (params.value){
-	
-	def values = params.value.split(";")
-	
-	if (values.size() > 1){
-		query.filter("$params.searchField IN ", values)
-		request.pageTitle = "Developments where ${params.searchField} includes ${values}"
-	} else {
-		query.filter("$params.searchField = ", params.value)
-		
-		def conjunction = (params.searchField.endsWith('ies'))?'includes': 'is'
-		
-		request.pageTitle = "Developments where ${params.searchField} ${conjunction} ${params.value}"
-	}
+def memcacheKey = "${MemcacheKeys.SEARCH_KEY}:${searchKey}"
+if (memcache[memcacheKey]) {
+	results = memcache[memcacheKey]
 } else {
-	request.pageTitle = "Developments with field ${params.searchField}"
+	//Brute force - eugh!
+
+	def developments = dao.ofy().query(Development.class).list()
+
+	developments.each { development ->
+		
+		if (development.title?.toLowerCase()?.contains(searchKey)
+		|| development.description?.toLowerCase()?.contains(searchKey)) {
+			results << development
+			return
+		}
+		
+		development.specificationName?.each { specificationName ->
+			if (specificationName.toLowerCase()?.contains(searchKey)){
+				results << development
+				return
+			}
+		}
+
+		development.specificationValue?.each { specificationValue ->
+			if (specificationValue.toLowerCase()?.contains(searchKey)){
+				results << development
+				return
+			}
+		}
+
+		def developmentKey = new Key(Development.class, development.id as Long)
+		def collaborators = dao.ofy().query(Collaboration.class).ancestor(developmentKey).list()
+		collaborators.each {  collaborator ->
+			if (collaborator.name?.toLowerCase()?.contains(searchKey)){
+				results << development
+				return
+			}
+		}
+
+	}
+	memcache[memcacheKey] = results
 }
-
-def totalCount = query.countAll()
-def (offset,limit) = getOffsetAndLimit(params, totalCount)
-
-request.developments = query.order('title').offset(offset).limit(limit).list()
-
-def resultsetCount = request.developments.size()
-
-request.paging = createPaging(totalCount, limit, offset, resultsetCount)
+request.developments = results
+request.pageTitle = "Developments Search : ${searchKey}"
 
 forward '/templates/developments/list.gtpl'

@@ -4,8 +4,8 @@
 
 	<dir class="directory bordered right">
 		<a href="/developments/latest"><li>Developments</li></a>
-		<a href="/categories"><li>Categories</li></a>
-		<a href="/tags"><li>Tags</li></a>
+		<a href="/developments/search"><li>Search</li></a>
+		<a href="/developments/browse"><li>Browse</li></a>
 		<a href="/activities"><li>Recent Activities</li></a>
 		
 		<%if (users.isUserLoggedIn() && session.userinfo?.username){ %>

@@ -11,6 +11,7 @@
 <nav>
 	<ul>
 		<a href="/"><li>Home</li></a>
+		<br>
 		<% if (users.isUserLoggedIn()) { %>
 			<a href="/development/add"><li>New &hellip;</li></a>
 		<% } %>

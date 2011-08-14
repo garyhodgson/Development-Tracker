@@ -5,7 +5,6 @@ import entity.Development
 import enums.*
 import groovy.xml.MarkupBuilder
 
-log.info "Admin: Test"
 
 def devs = dao.ofy().query(Development.class).list()
 

@@ -2,8 +2,6 @@ package development
 
 import entity.UserInfo
 
-log.info "Unwatch Development"
-
 if (!params.id){
 	request.session.message = "No development id given."
 	redirect "/developments"

@@ -11,8 +11,6 @@ import entity.Development
 import entity.DiffLog
 import exceptions.ValidationException
 
-log.info "New Development"
-
 if (!users.isUserLoggedIn()){
 	request.session.message = "Must be logged in to add a development."
 	forward "/templates/access/login.gtpl?continue=/development/add"
@@ -101,6 +99,8 @@ if (updateImageURL){
 
 dao.ofy().put(new Activity(type:enums.ActivityType.NewDevelopment, title:"${development.title}",by:development.createdBy, created: new Date(), link :"/development/${development.id}"))
 
+// Extreme, but ensures all searches and browse data is up to date
+memcache.clearAll()
 
 redirect "/development/${development.id}"
 

@@ -5,8 +5,6 @@ import com.google.appengine.api.datastore.Query
 
 import entity.UserInfo
 
-log.info "postlogin"
-
 if (!user){
 	request.session.message = "No User Logged In"
 	redirect params.continue?:"/"

@@ -9,8 +9,16 @@ get "/developments/latest",  forward: "/developments/latest.groovy"
 get "/developments/latest/feed",  forward: "/developments/feed.groovy?feedtype=atom"
 get "/developments/latest/feed.@feedtype",  forward: "/developments/feed.groovy?feedtype=@feedtype"
 get "/developments/latest/@count",  forward: "/developments/latest.groovy?count=@count"
-get "/developments/@searchField/@value",  forward: "/developments/search.groovy?searchField=@searchField&value=@value"
-get "/developments/@searchField",  forward: "/developments/search.groovy?searchField=@searchField"
+
+get "/developments/search",  forward: "/templates/developments/search.gtpl"
+get "/developments/search/@searchKey",  forward: "/developments/search.groovy?searchKey=@searchKey"
+post "/developments/search",  forward: "/developments/search.groovy"
+
+get "/developments/browse",  forward: "/templates/developments/browse.gtpl"
+get "/developments/browse/tags",  forward: "/developments/browse/tags.groovy"
+get "/developments/browse/@field",  forward: "/developments/browse/prepareBrowse.groovy?field=@field"
+get "/developments/@searchField/@value",  forward: "/developments/browse/browse.groovy?searchField=@searchField&value=@value"
+get "/developments/@searchField",  forward: "/developments/browse/browse.groovy?searchField=@searchField"
 
 
 /* Development */
@@ -39,13 +47,11 @@ get "/development/@id",  forward: "/development/show.groovy?id=@id"
 
 
 /* Misc */
-get "/categories",  forward: "/categories/list.groovy"
-get "/tags",  forward: "/tags/list.groovy"
 get "/activities", forward: "/activities/list.groovy"
 
 
 /* Admin */
-get "/admin/test",  forward: "/admin/test.groovy"
+get "/admin/@target",  forward: "/admin/@target.groovy"
 
 
 /* Access */
