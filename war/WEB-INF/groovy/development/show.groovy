@@ -41,7 +41,7 @@ forward '/templates/development/show.gtpl'
 
 def getGithubSupplementary(def url){
 	def m =  url =~ /https:\/\/github.com\/(.*)\/(.*)/
-	if (!m.matches() || m[0].size() != 3 ) return null
+	if (!m.matches() && m[0].size() != 3 ) return null
 
 	//check memcache first
 	def memcacheKey = "GithubSupplementary:${m[0][1]}-${m[0][2]}"

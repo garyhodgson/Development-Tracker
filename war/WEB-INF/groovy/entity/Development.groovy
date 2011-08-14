@@ -50,7 +50,11 @@ class Development implements Serializable {
 	
 	void importSource(@AlsoLoad("source") String source) {
 		if (!source)return
-		this.source = Source.valueOf(source.capitalize())
+		if (source == 'reprapwiki'){
+			this.source = Source.RepRapWiki
+		} else {
+			this.source = Source.valueOf(source.capitalize())
+		}
 	}
 	
 	@PrePersist
