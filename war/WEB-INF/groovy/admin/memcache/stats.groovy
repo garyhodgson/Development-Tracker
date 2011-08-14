@@ -1,4 +1,4 @@
-package admin
+package admin.memcache
 
 import app.MemcacheKeys
 
@@ -13,5 +13,7 @@ html.html {
 		  h2 "${MemcacheKeys.BROWSE_STATS}:${it}" 
 		  p memcache.get("${MemcacheKeys.BROWSE_STATS}:${it}")?.toString()
 	  }
+	  
+	  a(href:'/admin/memcache/clear'){p 'Clear Memcache' }
   }
 }

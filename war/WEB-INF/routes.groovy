@@ -49,10 +49,10 @@ get "/development/@id",  forward: "/development/show.groovy?id=@id"
 /* Misc */
 get "/activities", forward: "/activities/list.groovy"
 
-
 /* Admin */
+get "/admin/memcache/clear", forward: "/admin/memcache/clear.groovy"
+get "/admin/memcache/stats", forward: "/admin/memcache/stats.groovy"
 get "/admin/@target",  forward: "/admin/@target.groovy"
-
 
 /* Access */
 get "/access/first", forward: {

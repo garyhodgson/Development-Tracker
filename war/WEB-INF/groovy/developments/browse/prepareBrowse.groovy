@@ -55,7 +55,7 @@ if (memcache[memcacheKey]) {
 		return
 	}
 
-	values.each {
+	values.sort().each {
 		def count = dao.ofy().query(Development.class).filter(field, it.name()).countAll()
 		browseStats[it] = ['id':it, 'title':it.title, 'count':count]
 	}
