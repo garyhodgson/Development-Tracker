@@ -3,6 +3,7 @@
 	def development = request.getAttribute("development") 
 	def relationships = request.getAttribute('relationships')
 	def collaborations = request.getAttribute('collaborations')
+	def supplementary = request.getAttribute('supplementary')
 %>
 <% include '/templates/includes/header.gtpl' %>
 
@@ -58,6 +59,7 @@ jQuery(function() {
 		<li><a href="#">Connections <span class="heading-count">(${relationships?.size()?:0})</span></a></li>
 		<li><a href="#">Collaborators <span class="heading-count">(${collaborations?.size()?:0})</span></a></li>
 		<li><a href="#">Specification <span class="heading-count">(${development.specificationName?.size()?:0})</span></a></li>
+		<li><a href="#">Supplementary <span class="heading-count">(${supplementary?.values().size()?:0})</span></a></li>
 	</ul>
 
 	<!-- tab "panes" -->
@@ -78,15 +80,17 @@ jQuery(function() {
 				</tr>
 				<tr>
 					<td>Source</td>
-					<td>${development.source?.capitalize()?:''} <% if (development.source && development.sourceURL){ %>
-						&nbsp;&colon;&nbsp; <% } %> <% if (development.sourceURL){ %> <a target="_blank" href="${development.sourceURL}"
+					<td>${development.source?.title?:''} <% if (development.source && development.sourceURL){ %>
+						&nbsp;:&nbsp; <% } %> <% if (development.sourceURL){ %> <a target="_blank" href="${development.sourceURL}"
 						title="${development.sourceURL}"
 					>${development.sourceURL}</a> <% } %>
 					</td>
 				</tr>
 				<tr>
 					<td>Status</td>
-					<% def status = (development.status && development.status == enums.Status.Other) ?  development.statusOther?:'' : development.status?.title?:'' %>
+					<%
+						def status = (development.status && development.status == enums.Status.Other) ?  development.statusOther?:'' : development.status?.title?:''
+					%>
 					<td>${status}</td>
 				</tr>
 				<tr>
@@ -196,7 +200,6 @@ jQuery(function() {
 			</table>
 		</div>
 		
-		<%  if (development?.specificationName){ %>
 		<div id="specification" class="development">
 			<table border=0 cellspacing="0" cellpadding="5px">
 			<% if (development?.specificationUnit) { %>
@@ -217,7 +220,19 @@ jQuery(function() {
 			<% } %>
 			</table>
 		</div>
-		<%}%>
+		
+		
+		<div id="supplementary" class="development">
+			<table border=0 cellspacing="0" cellpadding="5px">
+			<% supplementary.each { %>
+				<tr>
+					<td>${it.key}</td>
+			   		<td>${it.value}</td>
+			   	</tr>
+			<% } %>
+			</table>
+		</div>
+		
 	</div>
 </div>
 <% include '/templates/includes/footer.gtpl' %>

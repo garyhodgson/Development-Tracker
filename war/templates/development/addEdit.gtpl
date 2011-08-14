@@ -238,7 +238,7 @@
 		<% if (development?.id){ %>
 			<a href="/development/${development?.id}"><li>Cancel</li> </a>
 		<% } else { %>
-			<a href="/developments"><li>Cancel</li> </a>
+			<a href="/developments/latest"><li>Cancel</li> </a>
 		<% } %>
 		<a href="/help/development/edit"><li>Help</li> </a>
 	</ul>
@@ -288,10 +288,10 @@
 						<tr id="sourceRow">
 							<td>Source</td>
 							<td><select id="source" name="source">
-									<% ['':'None','reprapwiki':'RepRapWiki','github':'Github','thingiverse':'Thingiverse','blog':'Blog','other':'Other'].each { key, value -> 
+								<% enums.Source.each { key ->
 										def selected = (development?.source && development?.source == key) ? 'selected=selected':''
 									%>
-									<option ${selected} value="${key}">${value}</option>
+									<option ${selected} value="${key}">${key.title}</option>
 									<% } %>
 							</select></td>
 							<td><span id="sourceMessage"></span></td>
@@ -307,11 +307,12 @@
 							<td>Status</td>
 							<td>
 								<div class="left">
-									<%  
+									<%
 										def count = Status.values().length -1
-										def c1 = (count)/2 as int
-										Status.values()[0..c1].each { key ->
-										def checked = (development?.status && development?.status == key) ?  'checked=checked':'' %>
+																	def c1 = (count)/2 as int
+																	Status.values()[0..c1].each { key ->
+																	def checked = (development?.status && development?.status == key) ?  'checked=checked':''
+									%>
 									<input type="radio" value="${key}" id="status_${key}" name="status" <%=checked%> />&nbsp;${key.title}
 									<br>
 									<%  } %>

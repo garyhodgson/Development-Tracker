@@ -14,9 +14,6 @@
 
 <link rel="stylesheet" type="text/css" href="/css/smoothness/jquery-ui-1.8.13.custom.css" />
 <link rel="stylesheet/less" type="text/css" href="/css/main.less">
-<link rel="stylesheet/less" type="text/css" href="/css/menu.less">
-<link rel="stylesheet/less" type="text/css" href="/css/tabs.less">
-<link rel="stylesheet/less" type="text/css" href="/css/widgets.less">
 <script src="/js/less.min.js"></script>
 
 <!--[if IE]>

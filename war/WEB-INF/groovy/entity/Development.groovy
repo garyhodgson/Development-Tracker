@@ -3,6 +3,7 @@ package entity
 import javax.persistence.Id
 import javax.persistence.PrePersist
 
+import com.googlecode.objectify.annotation.AlsoLoad
 import com.googlecode.objectify.annotation.Unindexed
 
 import enums.*
@@ -23,7 +24,7 @@ class Development implements Serializable {
 	String thumbnailServingUrl
 	@Unindexed
 	String thumbnailPath
-	String source
+	Source source
 	String sourceURL
 	Status status
 	String statusOther
@@ -46,6 +47,12 @@ class Development implements Serializable {
 		created = new Date()
 	}
 
+	
+	void importSource(@AlsoLoad("source") String source) {
+		if (!source)return
+		this.source = Source.valueOf(source.capitalize())
+	}
+	
 	@PrePersist
 	def prePersist() {
 		updated = new Date()
