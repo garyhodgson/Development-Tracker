@@ -1,4 +1,7 @@
-<% def userinfo = request.getAttribute('userinfo') %>
+<% 
+	import enums.Source
+	def userinfo = request.getAttribute('userinfo')
+%>
 
 <% include '/templates/includes/header.gtpl' %>
 
@@ -52,17 +55,25 @@
 				</tr>
 				<tr>
 					<td class="label-column">Registered</td>
-					<td>${userinfo.created}</td>
+					<td>${prettyTime.format(userinfo.created)}</td>
 				</tr>
-				
-				<% if (userinfo.githubIdVisible) { %>
-				<tr><td class="label-column">Github</td><td><a target="_blank" href="https://github.com/${userinfo.githubId}">${userinfo.githubId}</a></td></tr>
-				<% } %>
-				<% if (userinfo.thingiverseIdVisible) { %>
-				<tr><td class="label-column">Thingiverse</td><td><a target="_blank" href="http://www.thingiverse.com/${userinfo.thingiverseId}">${userinfo.thingiverseId}</a></td></tr>
-				<% } %>
-				<% if (userinfo.reprapWikiIdVisible) { %>
-				<tr><td class="label-column">RepRap Wiki</td><td><a target="_blank" href="http://reprap.org/wiki/User:${userinfo.reprapWikiId}">${userinfo.reprapWikiId}</a></td></tr>
+				<% userinfo.associations?.each { association ->
+					def description = (association.source == enums.Source.Other)? association.sourceOther?:'' : association.source.title
+				%>
+				<tr>
+					<td class="label-column">${description}</td>
+					<td>
+					<% 
+						def url = association.getURL()
+						if (url?.startsWith("http")) { 
+					%>
+						<a target="_blank" href="${url}">${association.sourceId?:''}</a>
+					<% } else { %>
+						${association.sourceId}
+					<% } %>
+					
+					</td>
+				</tr>
 				<% } %>
 			</table>
 		</div>

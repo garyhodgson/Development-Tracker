@@ -4,7 +4,7 @@ package enums;
 public enum Source {
 
 	None,
-	RepRapWiki,
+	RepRapWiki("RepRap Wiki"),
 	Thingiverse,
 	Github,
 	Blog,

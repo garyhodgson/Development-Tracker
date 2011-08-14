@@ -8,7 +8,7 @@ log.info "Retrieving User Infos"
 namespace.of("") {
 	def totalCount = dao.ofy().query(UserInfo.class).countAll()
 
-	def (offset,limit) = getOffsetAndLimit(params)
+	def (offset,limit) = getOffsetAndLimit(params, totalCount)
 
 	if (offset > totalCount){
 		request.session.message = "Offset too large"

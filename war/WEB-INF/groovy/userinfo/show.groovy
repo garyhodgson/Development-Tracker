@@ -6,12 +6,8 @@ import entity.Collaboration
 import entity.Development
 import entity.UserInfo
 
-session = session?:request.getSession(true)
-
-log.info "Showing User Info"
-
 if (!params.username){
-	session.message = "No Username given."
+	request.session.message = "No Username given."
 	redirect '/'
 	return
 }
@@ -23,7 +19,7 @@ namespace.of("") {
 	userinfoKey = new Key(UserInfo.class, userinfo.userId)
 }
 if (!userinfo){
-	session.message = "Unable to find user with username ${params.username}."
+	request.session.message = "Unable to find user with username ${params.username}."
 	redirect '/userinfos'
 	return
 }
@@ -39,7 +35,6 @@ if (userinfo.watchedDevelopments){
 }
 
 def collaborations = []
-
 
 dao.ofy().query(Collaboration.class).filter('userInfo', userinfoKey).list().each {
 

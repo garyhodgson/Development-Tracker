@@ -8,11 +8,8 @@ import org.apache.commons.lang.StringEscapeUtils
 import entity.Activity
 import entity.UserInfo
 
-log.info "New User Info"
-session = session?:request.getSession(true)
-
 if (!params.username){
-	session.message = "Username is required."
+	request.session.message = "Username is required."
 	forward: "/templates/access/first.gtpl"
 	return
 }
@@ -22,7 +19,7 @@ def userinfo
 namespace.of("") {
 	
 	if (dao.ofy().query(UserInfo.class).filter('username', params.username).countAll() != 0) {
-		session.message = "Username already taken. Please choose another."
+		request.session.message = "Username already taken. Please choose another."
 		forward: "/templates/access/first.gtpl"
 		return
 	}
@@ -39,12 +36,7 @@ namespace.of("") {
 	//checkboxes
 	[
 		'useGravatar',
-		'contactOnDevelopmentComment',
-		'contactOnDevelopmentWatch',
-		'acceptTermsOfUse',
-		'githubIdVisible',
-		'thingiverseIdVisible',
-		'reprapWikiIdVisible'
+		'acceptTermsOfUse'
 	].each {
 		userinfo[it] = params[it]?true:false
 	}
@@ -64,6 +56,6 @@ mail.sendToAdmins from: AppProperties.ADMIN_EMAIL,
 		subject: "New userinfo: ${userinfo.username}",
 		textBody: "A new user registered. ${headers.Host}/userinfo/${userinfo.username}"
 
-session.userinfo = userinfo
+request.session.userinfo = userinfo
 
 redirect "/userinfo/${params.username}"

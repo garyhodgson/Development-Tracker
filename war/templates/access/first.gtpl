@@ -161,24 +161,6 @@
 			</table>
 		</fieldset>
 
-		<fieldset>
-			<legend>Contact</legend>
-			<table border=0 cellspacing="0" cellpadding="5px">
-
-				<tr>
-					<td>Contact me by email when...</td>
-					<td><input type="checkbox" id="contactOnDevelopmentComment" value="true" name="contactOnDevelopmentComment"
-						<%=userinfo?.contactOnDevelopmentComment?:'true'=='true'?'checked=checked':''%>
-					>&nbsp;someone comments on my development.<br> <input type="checkbox" id="contactOnDevelopmentWatch"
-						value="true" name="contactOnDevelopmentWatch" <%=userinfo?.contactOnDevelopmentWatch?:'true'=='true'?'checked=checked':''%>
-					>&nbsp;starts watching my development.<br>
-					</td>
-					<td id="contactByEmailMessage" class="field-help">Can Developer Tracker contact you by email when one of these
-						activities occurs?</td>
-				</tr>
-
-			</table>
-		</fieldset>
 		<br />
 		<div id="warnings"></div>
 		

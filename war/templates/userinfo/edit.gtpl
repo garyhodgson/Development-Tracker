@@ -14,12 +14,45 @@
 			var email = (jQuery('#useGravatar').attr('checked') == 'checked') ? jQuery('#email').val() : 'null'
 			jQuery('#gravatar').attr('src', 'http://www.gravatar.com/avatar/'+hex_md5(email.trim()) + '?s=150&d=mm')
 		}
+		
 		jQuery('#useGravatar').change(function(){
 			getGravatar()
 		})
+		
 		jQuery('#submitForm').click(function() {
 				jQuery('#updateUserinfoForm').submit();	
 		})
+		
+		jQuery('#removeAssociation').live('click', function(){
+			if (jQuery('#associationTable tbody>tr').size() > 2){
+				jQuery(this).parent().parent().remove()
+			} else {
+				jQuery('#associationTable tbody>tr:last #associationSourceOther').val('')
+				jQuery('#associationTable tbody>tr:last #associationSourceId').val('')
+				jQuery('#associationTable tbody>tr:last #associationSource').val(0)
+			}
+		})
+				
+		jQuery('#addAssociation').click(function(){
+			jQuery('#associationTable tbody>tr:last').clone(true).insertAfter('#associationTable tbody>tr:last');
+			jQuery('#associationTable tbody>tr:last #associationSourceOther').val('')
+			jQuery('#associationTable tbody>tr:last #associationSourceId').val('')
+			jQuery('#associationTable tbody>tr:last #associationSource').val(0)
+		})
+		
+		jQuery("select[name=associationSource]").change(function() {
+			switch(jQuery(this).val())
+			{
+				case 'Other':
+					jQuery(this).next("#associationSourceOther").show()
+				  	break;
+				default:
+					jQuery(this).next("#associationSourceOther").val('')
+					jQuery(this).next("#associationSourceOther").hide()
+			}
+		})
+		
+		jQuery("select[name=associationSource]").change()
 	});
 </script>
 
@@ -46,7 +79,7 @@
 				<tr id="usernameRow">
 					<td>Username</td>
 					<td><input type="hidden" id="username" name="username" value="<%=userinfo?.username?:''%>"> <%=userinfo?.username?:''%></td>
-					<td>Please contact <a href=\"mailto:support@development-tracker.info\">support</a> if you would like to change
+					<td>Please contact <a href="mailto:${app.AppProperties.SUPPORT_EMAIL}">support</a> if you would like to change
 						your username. <span id="usernameMessage"></span></td>
 				</tr>
 				<tr>
@@ -66,48 +99,54 @@
 				</tr>
 			</table>
 		</fieldset>
+				
 		<fieldset>
-			<legend>Contact</legend>
-			<table border=0 cellspacing="0" cellpadding="5px">
-
+			<legend>Associations</legend>
+			<table border=0 cellspacing="0" cellpadding="5px" id="associationTable">
 				<tr>
-					<td>Contact me by email when...</td>
-					<td><input type="checkbox" id="contactOnDevelopmentComment" value="true" name="contactOnDevelopmentComment"
-						<%=userinfo?.contactOnDevelopmentComment?'checked="checked"':''%>
-					>&nbsp;someone comments on my development.<br> <input type="checkbox" id="contactOnDevelopmentWatch"
-						value="true" name="contactOnDevelopmentWatch" <%=userinfo?.contactOnDevelopmentWatch?'checked="checked"':''%>
-					>&nbsp;starts watching my development.<br>
+					<th class="linkType">Source</th>
+					<th class="linkDescription">Id or URL</th>
+					<th class="linkAction"></th>
+				</tr>
+			
+				<%  if (userinfo.associations){ 
+					userinfo.associations.eachWithIndex { a, i ->
+				%>
+						<tr>
+							<td class="linkType">
+								<select id="associationSource" name="associationSource">
+									<% enums.Source.each { key -> 
+									def selected = (a.source == key) ? 'selected=selected':'' %>
+									<option value="${key}" label="${key.title}" <%=selected%> />
+									<% } %>
+								</select>
+								<input type="text" id="associationSourceOther" name="associationSourceOther" value="${a.sourceOther?:''}" />
+							</td>									
+							<td>
+								<input class="linkURL" type="text" id="associationSourceId" name="associationSourceId" value="${a.sourceId}" />
+							</td>
+							<td class="linkAction"><a href="javascript://" id="removeAssociation">remove</a></td>
+						</tr>
+						<% 	}
+				} else {
+				%>
+				<tr>
+					<td class="linkType">
+						<select id="associationSource" name="associationSource">
+							<% enums.Source.each { key -> %>
+								<option value="${key}" label="${key.title}"/>
+							<% } %>
+						</select>
+						<input type="text" id="associationSourceOther" name="associationSourceOther" />
 					</td>
-					<td id="contactByEmailMessage" class="field-help">Can Developer Tracker contact you by email when one of these
-						activities occurs?</td>
+					<td>
+						<input class="linkURL" type="text" id="associationSourceId" name="associationSourceId"/>
+					</td>
+					<td class="linkAction"><a href="javascript://" id="removeAssociation">remove</a></td>
 				</tr>
-
+				<% } %>
 			</table>
-		</fieldset>
-		
-		<fieldset>
-			<legend>Other Places</legend>
-			<table border=0 cellspacing="0" cellpadding="5px">
-
-				<tr>
-					<td>Github Id</td>
-					<td><input type="text" id="githubId" name="githubId" value="<%=userinfo.githubId?:''%>"></td>
-					<td><input type="checkbox" id="githubIdVisible" name="githubIdVisible" value="true" <%=userinfo.githubIdVisible?'checked=checked':''%>>&nbsp;visible to others?</td>
-				</tr>
-				
-				<tr>
-					<td>Thingiverse Username</td>
-					<td><input type="text" id="thingiverseId" name="thingiverseId" value="<%=userinfo.thingiverseId?:''%>"></td>
-					<td><input type="checkbox" id="thingiverseIdVisible" name="thingiverseIdVisible" value="true" <%=userinfo.thingiverseIdVisible?'checked=checked':''%>>&nbsp;visible to others?</td>
-				</tr>
-				
-				<tr>
-					<td>Reprap Wiki Id</td>
-					<td><input type="text" id="reprapWikiId" name="reprapWikiId" value="<%=userinfo.reprapWikiId?:''%>"></td>
-					<td><input type="checkbox" id="reprapWikiIdVisible" name="reprapWikiIdVisible" value="true" <%=userinfo.reprapWikiIdVisible?'checked=checked':''%>>&nbsp;visible to others?</td>
-				</tr>			
-
-			</table>
+			<input class="action" id="addAssociation" type="button" value="Add Association">
 		</fieldset>
 		<br />
 		<div id="warnings"></div>

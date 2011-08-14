@@ -6,8 +6,7 @@
 
 	<h5>Privacy</h5>
 	<p>Your email address will not be shown to others, and will never be sold, or used for any purpose except informing
-		you about activity on Development Tracker. You may opt out of these notifications at any time by updating your profile
-		or sending an email message to support</p>
+		you about activity on Development Tracker. You may opt out of these notifications at any time by sending an email message to support</p>
 
 	<h5>Warranty</h5>
 	<p>The software is provided by the copyright holders and contributors "as is" and any express or implied
