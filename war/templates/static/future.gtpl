@@ -2,8 +2,7 @@
 <% include '/templates/includes/header.gtpl' %>
 
 <div class="directory bordered right">
-	<p>The application is still at an eary stage and there are many more potential features that may be implemented in
-		the future.</p>
+	<p>The application is still at an eary stage and it has a lot of potential. This page describes some of the features we would like to see in the near future.</p>
 	<p>
 		Bug fixes and suggestions are always appreciated.  Please email <a href="mailto:${app.AppProperties.SUPPORT_EMAIL}">support</a>.
 	</p>
