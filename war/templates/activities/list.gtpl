@@ -29,9 +29,13 @@ jQuery(function() {
 				<td><a href="${activity.link}">${activity.title}</a> was updated by <a href="/userinfo/${activity.by}">${activity.by}</a></td>
 			<% } else if (activity.type == enums.ActivityType.NewUser) {%>
 				<td>New User: <a href="/userinfo/${activity.by}">${activity.by}</a></td>
-			<% } else {%>
+			<% } else if (activity.type == enums.ActivityType.DevelopmentDeleted) {%>
+				<td>Development ${activity.title} was deleted by ${activity.by}</a></td>
+			<% } else if (activity.link) { %>
 				<td><a href="${activity.link}">${activity.title}</a></td>
-			<%} %>		
+			<% } else { %>		
+				<td>${activity.title}</td>
+			<% } %>
 	
 			<td>${prettyTime.format(activity.created)?:''}</td>
 		</tr>

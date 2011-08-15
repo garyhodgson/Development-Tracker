@@ -1,5 +1,7 @@
 package development
 
+import app.MemcacheKeys
+
 import com.github.api.v2.services.GitHubServiceFactory
 import com.github.api.v2.services.RepositoryService
 import com.google.appengine.api.memcache.Expiration

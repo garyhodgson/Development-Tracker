@@ -37,6 +37,7 @@ get "/development/edit/@id",  forward: {
 }
 post "/development/update", forward: "/development/update.groovy"
 get "/development/watch/@id",  forward: "/development/watch.groovy?id=@id"
+get "/development/delete/@id",  forward: "/development/delete.groovy?id=@id"
 get "/development/unwatch/@id",  forward: "/development/unwatch.groovy?id=@id"
 get "/development/validateSyncURL/@syncURL",  forward: "/sync/validateRepRapWikiSyncURL.groovy?syncURL=@syncURL"
 get "/development/sync/@id",  forward: "/sync/controller.groovy?id=@id"

@@ -3,6 +3,7 @@ package enums;
 public enum ActivityType {
 	NewDevelopment("New Development"),
 	DevelopmentUpdated("Development Updated"),
+	DevelopmentDeleted("Development Deleted"),
 	NewUser("New User"),
 	StartedWatching("Started Watching");	
 	

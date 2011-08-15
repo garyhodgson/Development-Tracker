@@ -9,7 +9,7 @@
 	<div class="left" style="width: 45%">
 		<div class="redirect-block  bordered white-bg">
 			<h1>Development Tracker</h1>
-			<h4>Development Tracker is a simple online, open registry where development projects and ideas can be submitted, linked and followed.</h4>
+			<h4>Development Tracker is a simple, online, open registry where development projects and ideas can be submitted, linked and followed.</h4>
 			<p>Keeping track of what is happening in your favourite online community can be tricky. Development projects can span Wikis, Blogs, Project Collaboration Sites and more.  RSS feeds and mailing lists help, but tying these dissparate sources together, either to get a feel for the state of the art, or to discover who else has had the same amazing idea, can be tricky.</p>
 			<br clear="both">
 		</div>
@@ -38,7 +38,7 @@
 				<a href="/start/3dprint"><li class="redirect-subblock hover-link light-bordered site-default-bg"><h2>Vendor Agnostic</h2></li> </a>
 			</ul>
 		</div>
-		<h3>Choose your preferred project/vendor to provide customised news and updates.</h3>
+		<h3>Choose your preferred project/ vendor to provide customised news and updates.</h3>
 
 		<p>
 			The <em>3D Print</em> Development Tracker is project and vendor agnostic. Many developments can be used across the 3D

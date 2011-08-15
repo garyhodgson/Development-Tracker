@@ -7,16 +7,42 @@
 %>
 <% include '/templates/includes/header.gtpl' %>
 
-
 <script type="text/javascript">
 jQuery(function() {	
 	jQuery("ul.tabs").tabs("div.panes > div");	
 	jQuery("table tr:even").addClass("oddrow");
 	jQuery('table td:nth-child(1)').addClass('label-column')
 	jQuery('table td:nth-child(2)').addClass('value-column')
+		
+	var triggers = jQuery("#deleteDevelopment").overlay({
+		top: 200,
+		closeOnClick: false
+	});
+	
+	
+	var buttons = jQuery("#confirm button").click(function(e) {		
+		// get user input
+		var yes = buttons.index(this) === 0;	
+		if (yes){
+			document.location = "/development/delete/<%=development.id%>"	
+		}
+	});
+	
 
 });
 </script>
+
+<div class="modal" id="confirm">
+	<h2>Confirm Delete</h2>
+
+	<p>Are you sure you wish to delete development ${development.id}?</p>
+
+	<!-- yes/no buttons -->
+	<p id="buttons">
+		<button class="close"> Yes </button>
+		<button class="close"> No </button>
+	</p>
+</div>
 
 <h2 class="pageTitle"><%=request.pageTitle?:"Development"%></h2>
 
@@ -44,6 +70,12 @@ jQuery(function() {
 		<% } %>		
 		
 		<a href="/development/<%=development.id%>/history"><li>History</li> </a>
+		<br>
+		<% if (user && !request.history?:false) { %> 
+			<%if (users.isUserAdmin() || session.userinfo?.username == development.createdBy) { %>
+				<a href="#" id="deleteDevelopment" rel="#confirm"><li>Delete</li> </a>
+			<% } %> 
+		<% } %>	
 	</ul>
 </nav>
 
