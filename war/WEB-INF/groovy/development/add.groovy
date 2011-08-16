@@ -1,14 +1,14 @@
 package development
 
 import static development.developmentHelper.*
-import history.PatchBuilder;
+import history.ChangeHelper
 
 import com.googlecode.objectify.Objectify
 import com.googlecode.objectify.ObjectifyService
 
 import entity.Activity
+import entity.ChangeHistory
 import entity.Development
-import entity.DiffLog
 import exceptions.ValidationException
 
 if (!users.isUserLoggedIn()){
@@ -16,7 +16,8 @@ if (!users.isUserLoggedIn()){
 	forward "/templates/access/login.gtpl?continue=/development/add"
 	return
 }
-
+def currentUsername = request.session.userinfo?.username?:''
+def changeHelper = new ChangeHelper();
 def now = new Date()
 def updateImageURL = false
 def development = new Development(
@@ -26,7 +27,6 @@ def development = new Development(
 Objectify ofyTxn = ObjectifyService.beginTransaction();
 
 try {
-	def patchBuilder = new PatchBuilder()
 	
 	updateImageURL = (params.imageURL && development.imageURL != params.imageURL)
 	
@@ -34,38 +34,39 @@ try {
 	validateDevelopment(development)
 	
 	def developmentKey = ofyTxn.put(development)
-	patchBuilder.addNewDevelopment(development)
+	
+	def changes = changeHelper.getDevelopmentChanges([:], development.properties)
 
 	/*****************************************/
 	
 	def relationships = []
 	processRelationships(relationships, params, developmentKey)
-
 	validateRelationships(relationships)
 
+	changes += changeHelper.getListChanges([], relationships, "ConnectionId")?:[]
+	
 	relationships.each { 
 		ofyTxn.put(it) 
-		patchBuilder.addNewRelationship(it)
 	}
 
 	/*****************************************/
 	
 	def collaborations = []
 	processCollaborations(collaborations, params, developmentKey)
-
 	validateCollaborations(collaborations)
+	
+	changes += changeHelper.getListChanges([], collaborations, "CollaboratorId")?:[]
+	
 	collaborations.each { 
 		ofyTxn.put(it)
-		patchBuilder.addNewCollaboration(it)
 	}
 	
 	/*****************************************/
 	
-	def patch = patchBuilder.build()
-	if (patch){
-		ofyTxn.put(new DiffLog(by:session.userinfo.username, on:now, patch:patch, parent:developmentKey))
+	if (changes) {
+		ofyTxn.put(new ChangeHistory(parent:developmentKey, by:currentUsername, on:now, changes:changes))
 	}
-	
+
 	ofyTxn.getTxn().commit()
 } catch (ValidationException e) {
 	request.session.message = e.getMessage()

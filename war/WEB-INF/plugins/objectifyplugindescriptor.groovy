@@ -43,7 +43,7 @@ public class DAO extends DAOBase {
 		ObjectifyService.register(entity.Relationship.class);
 		ObjectifyService.register(entity.Activity.class);
 		ObjectifyService.register(entity.Collaboration.class);
-		ObjectifyService.register(entity.DiffLog.class);
+		ObjectifyService.register(entity.ChangeHistory.class);
 
 	}
 }

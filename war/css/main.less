@@ -509,9 +509,6 @@ nav {
 	}
 }
 
-.change-history ul li a {
-	height:50px;
-}
 
 .warningText {
 	color: red;
@@ -614,27 +611,28 @@ nav {
 	margin: 10px 25px;
 }
 
-table.change-history {
-	.change-value{
-	
+.change-history {
+	ul li a {
+		height:50px;
+		padding-top:5px;
 	}
-	.change-field {
-	
-	}
-	.change-action {
-	
-	}
-	.change-add {
+	.change-C {
 		background-color: #A7D1C7;
 	}
-	.change-update {
+	.change-U {
 		background-color: #EBE9A7;
 	}
-	.change-delete {
+	.change-D {
 		background-color: #D1A7B2;
+	}
+	.symbol {
+		font-weight: bold;	
 	}
 	td {
 		vertical-align: top;
+		padding:5px;
+		border-collapse: collapse;
+		border-bottom: 1px dashed white;
 	}
 }
 

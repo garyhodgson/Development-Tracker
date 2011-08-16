@@ -3,13 +3,10 @@ package development
 import java.text.SimpleDateFormat
 import java.util.List
 
-import name.fraser.neil.plaintext.diff_match_patch
-
 import org.apache.commons.lang.StringEscapeUtils
 
 import com.google.appengine.api.NamespaceManager
 import com.google.appengine.api.files.FileServiceFactory
-import com.google.appengine.api.images.ImagesServiceFactory
 import com.googlecode.objectify.Key
 import com.googlecode.objectify.ObjectifyService
 
@@ -46,13 +43,6 @@ public static def generateThumbnail(def imageURL) {
 	}
 
 	return file
-}
-
-public static def createDiffLogPatch(def a, def b){
-	def dmp = new diff_match_patch();
-	def diffs = dmp.diff_lineMode(a.toString(), b.toString(), 1);
-	dmp.diff_cleanupSemantic(diffs)
-	return dmp.patch_toText(dmp.patch_make(diffs))
 }
 
 public static void processRelationships(def relationships, def params, def fromDevelopmentKey){

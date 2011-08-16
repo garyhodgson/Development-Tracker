@@ -1,12 +1,12 @@
 package entity
 
+import javax.persistence.Embedded
 import javax.persistence.Id
 
 import com.googlecode.objectify.Key
 import com.googlecode.objectify.annotation.Parent
-import com.googlecode.objectify.annotation.Unindexed
 
-class DiffLog implements Serializable {
+class ChangeHistory implements Serializable {
 
 	@Id
 	Long id
@@ -14,11 +14,12 @@ class DiffLog implements Serializable {
 	Key parent
 	String by
 	Date on
-	@Unindexed
-	String patch
+	
+	@Embedded
+	List<Change> changes = new ArrayList<Change>()
 	
 	@Override
-	String toString() {
-		"id:${id}; parent:${parent}; by:${by}; on:${on}; patch:${patch}"
+	public String toString() {
+		"${by} ${on} ${changes}"
 	}
 }

@@ -18,8 +18,7 @@ jQuery(function() {
 		top: 200,
 		closeOnClick: false
 	});
-	
-	
+		
 	var buttons = jQuery("#confirm button").click(function(e) {		
 		// get user input
 		var yes = buttons.index(this) === 0;	
@@ -27,22 +26,9 @@ jQuery(function() {
 			document.location = "/development/delete/<%=development.id%>"	
 		}
 	});
-	
 
 });
 </script>
-
-<div class="modal" id="confirm">
-	<h2>Confirm Delete</h2>
-
-	<p>Are you sure you wish to delete development ${development.id}?</p>
-
-	<!-- yes/no buttons -->
-	<p id="buttons">
-		<button class="close"> Yes </button>
-		<button class="close"> No </button>
-	</p>
-</div>
 
 <h2 class="pageTitle"><%=request.pageTitle?:"Development"%></h2>
 
@@ -241,7 +227,7 @@ jQuery(function() {
 				</tr>			
 			<% } %>			
 			
-			<%  development?.specificationName.eachWithIndex { name, i ->
+			<%  development?.specificationName?.eachWithIndex { name, i ->
 					def specificationName = name
 					def specificationValue = (development.specificationValue) ? development.specificationValue[i] : ''
 			%>
@@ -256,7 +242,7 @@ jQuery(function() {
 		
 		<div id="supplementary" class="development">
 			<table border=0 cellspacing="0" cellpadding="5px">
-			<% supplementary.each { %>
+			<% supplementary?.each { %>
 				<tr>
 					<td>${it.key}</td>
 			   		<td>${it.value}</td>
@@ -266,5 +252,16 @@ jQuery(function() {
 		</div>
 		
 	</div>
+</div>
+<div class="modal" id="confirm">
+	<h2>Confirm Delete</h2>
+
+	<p>Are you sure you wish to delete development ${development.id}?</p>
+
+	<!-- yes/no buttons -->
+	<p id="buttons">
+		<button class="close"> Yes </button>
+		<button class="close"> No </button>
+	</p>
 </div>
 <% include '/templates/includes/footer.gtpl' %>

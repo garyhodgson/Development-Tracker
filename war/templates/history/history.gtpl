@@ -1,9 +1,8 @@
 <% 
-	def diffLogs = request.getAttribute("diffLogs") 
-	def development = request.getAttribute("development") 
-	def dmp = new name.fraser.neil.plaintext.diff_match_patch()
+	def changeHistories = request.getAttribute("changeHistories") 
+	def development = request.getAttribute("development")
 
-	def hightlightIndex = diffLogs.findIndexOf { it.id == params.diffLogId as Long }
+	def hightlightIndex = changeHistories.findIndexOf { it.id == params.changeHistoryId as Long }
 %>
 <% include '/templates/includes/header.gtpl' %>
 
@@ -55,36 +54,27 @@ jQuery(function() {
 	<div id="smartwizard" class="wiz-container change-history">
 
 		<ul id="wizard-anchor">
-		<% diffLogs.eachWithIndex { diffLog, i -> %>
-			<li><a href="#wizard-${diffLog.id}">
-			<div><b>${diffLog.by}</b><br><span title="${diffLog.on}">${diffLog.on.format("E dd MMM yyyy kk:mm:ss")}</span></div>
+		<% changeHistories.eachWithIndex { changeHistory, i -> %>
+			<li><a href="#wizard-${changeHistory.id}">
+			<div><b>${changeHistory.by}</b><br><span title="${changeHistory.on.format("E dd MMM yyyy kk:mm:ss")}">${prettyTime.format(changeHistory.on)}</span></div>
 			</a></li>
 		<% } %>
 		</ul>
 
 		<div id="wizard-body" class="wiz-body">
 
-			<%  def patchList = []
-				def previousVersions = [] 
-			    diffLogs.eachWithIndex { diffLog, i -> %>
+			<%  changeHistories.eachWithIndex { changeHistory, i -> %>
 			   
-				<div id="wizard-${diffLog.id}" class="wiz-content">
-					<% 
-					log.info "diffLog.id = ${diffLog.id}"
-						
-						def patch = dmp.patch_fromText(diffLog.patch)						   
-						def currentDiff					
-						def previousVersion = previousVersions?previousVersions.last():''
-						
-						def thisVersion = dmp.patch_apply(patch, previousVersion)[0]
-						currentDiff =  dmp.diff_main(previousVersion,thisVersion);
-						dmp.diff_cleanupSemantic(currentDiff)
-						previousVersions << thisVersion
-						
-						out << "<p>"
-						out << dmp.diff_prettyHtml(currentDiff)
-						out << "</p>"
-					%>
+				<div id="wizard-${changeHistory.id}" class="wiz-content">
+					<table cellspacing=0>
+						<% changeHistory.changes.each { change -> %>
+							<tr class="change-${change.type}">
+								<td title="${change.type.title}"><span class="symbol">${change.type.symbol}</span></td>
+								<td>${change.name}</td>
+								<td>${change.value}</td>
+							</tr>
+						<% } %>
+					</table>
 				</div>
 				<% } %>
 		</div>
