@@ -1,10 +1,10 @@
 <div class="terms-of-use">
 
-	<p>
+	<p><strong>
 		The following describes the terms that users of Development Tracker agree to abide by. If something requires clarification, or you have a question regarding these terms, please
 		contact <a href="mailto:${app.AppProperties.SUPPORT_EMAIL}">support</a>.
-	</p>
-
+	</strong></p>
+	
 	<h5>Service</h5>
 
 	<p>Development Tracker offers an aggregation service of publically available information from various sites and applications. The information provided herein may be submitted
@@ -32,7 +32,7 @@
 	<h5>Data Retention</h5>
 
 	<p>Upon account deletion, or by user request, the user's details, including email address and associations with other websites and applications, will be completely removed
-		from the application. In order to maintain data integrity the following information will not be deleted: username, user id.</p>
+		from the application. <strong>In order to maintain data integrity the following information will not be deleted: username, user id.</strong></p>
 
 	<p>The administrators reserve the right to reassign, remove and otherwise alter the username associated with an account. This includes the right to reassign a username to
 		another account when the username in question is in common use by the second account holder. In such a case, evidence of this common use may be requested. In any dispute the
@@ -50,4 +50,7 @@
 		special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption)
 		however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this
 		software, even if advised of the possibility of such damage.</p>
+		
+	<h5>Changes</h5>
+	<p>These terms may be subject to change. Reasonable efforts will be made to notify registered users of any changes.</p>
 </div>

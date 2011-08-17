@@ -5,7 +5,6 @@ import groovy.xml.MarkupBuilder
 
 import java.text.SimpleDateFormat
 
-
 SimpleDateFormat sdf =
 		new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 
@@ -33,11 +32,11 @@ if (params.feedtype == 'rss'){
 
 			developments.each { development ->
 				item() {
-					title(development.title)
-					author(development.createdBy)
+					title(development.title?:'')
+					author(development.createdBy?:'')
 					link("http://${serverName}/development/${development.id}")
 					pubDate(development.created)
-					description(development.description?development.description.getValue():"")
+					description(development.description?:'')
 					development.categories?.each{ category(it) }
 				}
 			}
@@ -56,11 +55,11 @@ if (params.feedtype == 'rss'){
 
 		developments.each { development ->
 			entry {
-				title development.title
+				title development.title?:''
 				link("http://${serverName}/development/${development.id}")
 				id "url:http://${serverName},entry,${development.id}"
 				updated sdf.format(development.updated)
-				summary development.description?development.description.getValue():""
+				summary development.description?:''
 			}
 		}
 	}

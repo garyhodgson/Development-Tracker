@@ -111,13 +111,12 @@
 	});
 </script>
 
-<h2 class="pageTitle">First Time</h2>
+<h2 class="pageTitle">User Information</h2>
 
 <nav>
 	<ul>
 		<a href="javascript://" id="submitForm"><li>Submit</li> </a>
 		<a href="/access/logout"><li>Cancel</li> </a>
-		<a href="/help/development/edit"><li>Help</li> </a>
 
 	</ul>
 </nav>
@@ -130,7 +129,7 @@
 
 <div class="content thumbnailed">
 
-	<p>As this appears to be your first time using Development Tracker. <br>Please take the time to fill in the following details.</p>
+	<p><strong>As this appears to be your first time using Development Tracker please take the time to fill in the following details.</strong></p>
 	
 	<% def userinfo = request.getAttribute('userinfo') %>
 	
@@ -172,8 +171,9 @@
 <fieldset>
 	<legend>Terms of Use</legend>
 	
+	<div style="border: 1px solid gray;overflow-y:scroll;height:200px" >
 	<% include '/templates/includes/termsOfUse.gtpl' %>
-	
+	</div>
 	<p><input type="checkbox" value="true" id="acceptTermsOfUse" name="acceptTermsOfUse"
 				<%=userinfo?.acceptTermsOfUse=='true'?'checked=checked':''%>> &nbsp;Accept Terms of Use</p>
 				<p id="acceptTermsOfUseMessage"></p>
@@ -181,4 +181,4 @@
 
 </form>
 
-<% include '/templates/includes/footer.gtpl' %>
+<% include '/templates/includes/htmlFooter.gtpl' %>

@@ -31,7 +31,8 @@ class securityFilter implements Filter {
 		'/access/postLogin',
 		'/userinfo/add',
 		'/userinfo/exists/',
-		'/development/exists/'
+		'/development/exists/',
+		'/_ah/logout'
 	]
 
 	def namespaceExceptionsList = [
@@ -48,7 +49,6 @@ class securityFilter implements Filter {
 		def namespace = NamespaceManager.get()
 		def subdomain = request.properties.serverName.split(/\./).getAt(0)
 		def requestURI = request.getRequestURI()
-		//UserService userService = UserServiceFactory.getUserService();
 		HttpSession session = ((HttpServletRequest) request).getSession(true);
 
 		if (namespace == 'default' && (request.getRequestURI() != '/' && !namespaceExceptionsList.find{request.getRequestURI().startsWith(it)})){
@@ -69,7 +69,9 @@ class securityFilter implements Filter {
 					if (userinfo) {
 						session.setAttribute("userinfo", userinfo)
 					} else {
-						System.err.println("SecurityFilter: Unable to find userinfo for a logged in user:${users.currentUser.userId} and requestURI: ${requestURI}")
+						session.setAttribute("message", "Please fill in the following details to continue. If you feel this is in error please contact <a href=\"mailto:${app.AppProperties.SUPPORT_EMAIL}\">support</a>.")
+						response.sendRedirect("/access/first");
+						return
 					}
 				} finally {
 					NamespaceManager.set(namespace);
