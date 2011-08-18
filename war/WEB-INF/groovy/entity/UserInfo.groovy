@@ -30,19 +30,6 @@ class UserInfo implements Serializable {
 	@Embedded List<Association> associations = new ArrayList<Association>();
 	
 	List<Long> watchedDevelopments	
-	
-	void importGithubId(@AlsoLoad("githubId") String githubId) {
-		if (!this.associations) this.associations = []
-		this.associations << new Association(source:Source.Github, sourceId: githubId)
-	}
-	void importThingiverseId(@AlsoLoad("thingiverseId") String thingiverseId) {
-		if (!this.associations) this.associations = []
-		this.associations << new Association(source:Source.Thingiverse, sourceId: thingiverseId)
-	}
-	void importReprapWikiId(@AlsoLoad("reprapWikiId") String reprapWikiId) {
-		if (!this.associations) this.associations = []
-		this.associations << new Association(source:Source.RepRapWiki, sourceId: reprapWikiId)
-	}
 
 	def getGravatarHash() {
 		if (!useGravatar) return ""

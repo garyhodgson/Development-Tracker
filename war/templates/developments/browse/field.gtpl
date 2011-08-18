@@ -7,7 +7,7 @@
 	</dir>
 	
 	<div class="redirect-block bordered">
-		<h1>${request.browseField?.capitalize()}</h1>
+		<h1>${request.browseFieldTitle}</h1>
 	</div>
 	
 

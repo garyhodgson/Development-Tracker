@@ -21,7 +21,7 @@ if (memcache[memcacheKey]) {
 } else {
 
 	def values = null
-
+	
 	switch (params.field){
 		case 'categories':
 			values = Category.values()
@@ -61,7 +61,21 @@ if (memcache[memcacheKey]) {
 
 request.browseStats = browseStats
 request.browseField = params.field
-request.pageTitle = "Browsing ${field.capitalize()}"
+
+request.pageTitle = "Browsing ${params.field.capitalize()}"
+
+
+switch (params.field){
+	case 'projectVendor':
+		request.browseFieldTitle = "Project Vendor"
+		break
+	case 'developmentType':
+		request.browseFieldTitle = "Development Type"
+		break
+	default:
+		request.browseFieldTitle = params.field.capitalize()
+}
+
 request.session.route = "/browse/${params.field}"
 
 

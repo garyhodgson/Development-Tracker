@@ -47,16 +47,6 @@ class Development implements Serializable {
 		created = new Date()
 	}
 
-	
-	void importSource(@AlsoLoad("source") String source) {
-		if (!source)return
-		if (source == 'reprapwiki'){
-			this.source = Source.RepRapWiki
-		} else {
-			this.source = Source.valueOf(source.capitalize())
-		}
-	}
-	
 	@PrePersist
 	def prePersist() {
 		updated = new Date()
