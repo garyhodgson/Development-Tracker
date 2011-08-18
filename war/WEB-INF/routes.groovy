@@ -93,6 +93,7 @@ get "/future", forward: "/templates/static/future.gtpl"
 get "/faq", forward: "/templates/static/faq.gtpl"
 get "/terms", forward: "/templates/static/terms.gtpl"
 get "/maintenance", forward: "/templates/static/maintenance.gtpl"
+get "/blog", redirect: app.AppProperties.BLOG_ADDRESS
 
 /* Other */
 get "/start/@namespace", forward: "/index.groovy?namespace=@namespace"

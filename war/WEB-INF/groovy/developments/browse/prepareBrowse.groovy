@@ -67,7 +67,7 @@ request.pageTitle = "Browsing ${params.field.capitalize()}"
 
 switch (params.field){
 	case 'projectVendor':
-		request.browseFieldTitle = "Project Vendor"
+		request.browseFieldTitle = "Project/Vendor"
 		break
 	case 'developmentType':
 		request.browseFieldTitle = "Development Type"

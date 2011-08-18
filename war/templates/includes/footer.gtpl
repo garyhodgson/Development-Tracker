@@ -11,6 +11,7 @@
 	<a href="/about" style="border-style: none;"><div style="display: inline-block;" class="footer-link">About</div></a>
 	<a href="/faq" style="border-style: none;"><div style="display: inline-block;" class="footer-link">FAQ</div></a>
 	<a href="/future" style="border-style: none;"><div style="display: inline-block;" class="footer-link">Future</div></a>
+	<a href="/blog" style="border-style: none;"><div style="display: inline-block;" class="footer-link">Blog</div></a>
 </footer>
 
 <footer class="legal-footer">
