@@ -5,6 +5,11 @@ import com.google.appengine.api.NamespaceManager
 
 def subdomain = request.properties.serverName.split(/\./).getAt(0)
 
+//deal with GAE versions
+if (subdomain.isNumber()){
+	subdomain = request.properties.serverName.split(/\./).getAt(1)
+}
+
 if (params.namespace){
 	//strip subdomain
 	def host = headers.Host.replaceAll(subdomain + ".", "")

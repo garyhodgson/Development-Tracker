@@ -13,6 +13,12 @@ if (!params.id){
 	return
 }
 
+if (!params.id.isLong()){
+	request.session.message = "Invalid Id given: ${params.id}"
+	redirect '/developments'
+	return
+}
+
 def id = params.id as Long
 
 if (!users.isUserLoggedIn()){

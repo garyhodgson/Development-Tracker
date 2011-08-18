@@ -8,23 +8,21 @@ if (!params.id){
 	return
 }
 
+if (!params.id.isLong()){
+	request.session.message = "Invalid Id given: ${params.id}"
+	redirect '/developments'
+	return
+}
+
 if (!users.isUserLoggedIn()){
 	request.session.message = "Must be logged in to watch a development."
 	redirect = "/development/${params.id}"
 	return
 }
 
-def developmentId
+def developmentId = Long.parseLong(params.id)
 
-try {
-	developmentId = Long.parseLong(params.id)
-} catch (NumberFormatException e) {
-	request.session.message = "Unable to read development id. Please contact <a href=\"mailto:support@development-tracker.info\">support</a>."
-	redirect = "/development/${params.id}"
-	return
-}
-
-UserInfo userinfo
+UserInfo userinfo = null
 namespace.of("") {
 	userinfo =  dao.ofy().find(UserInfo.class, user.userId)
 }

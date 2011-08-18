@@ -21,7 +21,14 @@ if (!params.id){
 	return
 }
 
-def developmentKey = new Key<Development>(Development.class, params.id as int)
+if (!params.id.isLong()){
+	request.session.message = "Invalid Id given: ${params.id}"
+	redirect '/developments'
+	return
+}
+
+
+def developmentKey = new Key<Development>(Development.class, params.id as Long)
 def development = dao.ofy().get(developmentKey)
 def updateImageURL = false
 def now = new Date()

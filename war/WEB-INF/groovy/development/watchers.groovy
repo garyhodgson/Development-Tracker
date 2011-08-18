@@ -9,7 +9,15 @@ if (!params.id){
 	return
 }
 
-def development = dao.ofy().find(Development.class, params.id as int)
+if (!params.id.isLong()){
+	request.session.message = "Invalid Id given: ${params.id}"
+	redirect '/developments'
+	return
+}
+
+def developmentId = params.id as Long
+
+def development = dao.ofy().find(Development.class, developmentId)
 if (!development) {
 	request.session.message = "Development not found."
 	redirect '/developments'
@@ -17,11 +25,11 @@ if (!development) {
 }
 
 namespace.of("") {
-	request.developmentWatchers = dao.ofy().query(UserInfo.class).filter('watchedDevelopments = ', params.id as Long).list()
+	request.developmentWatchers = dao.ofy().query(UserInfo.class).filter('watchedDevelopments = ', developmentId).list()
 }
 request.development = development
 request.pageTitle = "Watchers of ${development.title}"
 
-session.route="/development/${params.id}/watchers"
+session.route="/development/${developmentId}/watchers"
 
 forward '/templates/development/watchers.gtpl'

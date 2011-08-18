@@ -1,7 +1,6 @@
 package developments.browse
 
 import org.apache.commons.lang.StringEscapeUtils
-
 import app.MemcacheKeys
 import entity.Development
 import enums.*
@@ -12,10 +11,8 @@ if (!params.field){
 	return
 }
 
-def field = StringEscapeUtils.escapeHtml(params.field)
-
 def browseStats = [:]
-def memcacheKey = "${MemcacheKeys.BROWSE_STATS}:${field}" 
+def memcacheKey = "${MemcacheKeys.BROWSE_STATS}:${params.field}" 
 
 if (memcache[memcacheKey]) {
 	
@@ -56,16 +53,16 @@ if (memcache[memcacheKey]) {
 	}
 
 	values.each {
-		def count = dao.ofy().query(Development.class).filter(field, it.name()).countAll()
+		def count = dao.ofy().query(Development.class).filter(params.field, it.name()).countAll()
 		browseStats[it] = ['count':count]
 	}
 	memcache[memcacheKey] = browseStats
 }
 
 request.browseStats = browseStats
-request.browseField = field
+request.browseField = params.field
 request.pageTitle = "Browsing ${field.capitalize()}"
-request.session.route = "/browse/${field}"
+request.session.route = "/browse/${params.field}"
 
 
 forward '/templates/developments/browse/field.gtpl'

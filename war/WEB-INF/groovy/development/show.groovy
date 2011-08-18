@@ -19,6 +19,12 @@ if (!params.id){
 	return
 }
 
+if (!params.id.isLong()){
+	request.session.message = "Invalid Id given: ${params.id}"
+	redirect '/developments'
+	return
+}
+
 def developmentKey = new Key(Development.class, params.id as Long)
 
 try {
