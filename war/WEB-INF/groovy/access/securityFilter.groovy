@@ -38,8 +38,9 @@ class securityFilter implements Filter {
 	def namespaceExceptionsList = [
 		'/about',
 		'/faq',
-		'future',
+		'/future',
 		'/start',
+		'/blog',
 	]
 
 	@Override
