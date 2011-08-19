@@ -50,7 +50,7 @@
 
 	<div id="text" class="right">
 		<h2>Please sign in to continue.</h2>
-		<p>Signing in gives you the ability to add developments, create a personal watch list and comment on entries.</p>
+		<p>Signing in gives you the ability to add developments and create a personal watch list.</p>
 		<p>Your security credentials are not stored in Development Tracker. Your email address is never shown, and you
 			have the opportunity to select a username upon first login.</p>
 	</div>

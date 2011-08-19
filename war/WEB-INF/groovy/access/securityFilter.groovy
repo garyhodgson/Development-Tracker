@@ -40,7 +40,6 @@ class securityFilter implements Filter {
 		'/faq',
 		'future',
 		'/start',
-		'/'
 	]
 
 	@Override

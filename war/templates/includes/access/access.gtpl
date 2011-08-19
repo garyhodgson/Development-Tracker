@@ -17,7 +17,7 @@
 <a href="/access/login?continue=<%=request.getAttribute("javax.servlet.forward.request_uri")?:'/'%>">
 <span class="access signed-out hover-link">
 	
-	Sign In&nbsp;<img width="20px" src="/images/openid/openidico.png" />
+	Sign In&nbsp;<img class="openidico" src="/images/openid/openidico.png" />
 
 </span>
 	</a>

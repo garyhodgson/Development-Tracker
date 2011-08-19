@@ -3,7 +3,7 @@
 	def hideAccess = ["/templates/access/login.gtpl", "/templates/access/first.gtpl"].contains(request.requestURI)
 %>
 
-<a href="/"><img id="ohlogo" src="/images/OpenHardware.png" width="50"> </a>
+<a href="/"><img id="dtlogo" src="/images/DTLogo-50px.png"> </a>
 
 <header>	
 	<span id="title"><a href="/">Development Tracker</a></span>
