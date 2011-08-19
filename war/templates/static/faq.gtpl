@@ -28,6 +28,15 @@
 	</p>
 	<br>
 
+	<p class="faq-question">What happens to the Image URL I give when adding a development? Are you Hot-Linking?</p>
+	<p class="faq-answer">Development tracker makes a thumbnail copy of the image and uses this throughout the lifetime of the entry. No hot-linking occurs. Please be sure to have
+		the correct rights to the image used.</p>
+	<br>
+
+	<p class="faq-question">I'm not happy that my project or development is featured, or an image of mine has been used as a thumbnail and the right to do this was not given. What can I do?</p>
+	<p class="faq-answer">Contact <a href="mailto:${app.AppProperties.SUPPORT_EMAIL}">support</a> and we will check your claim and if necessary delete the offending entry or image.</p>
+	<br>
+
 	<p class="faq-question">How can I delete my account?</p>
 	<p class="faq-answer">
 		Currently there is no self-service for account deletion. Please contact <a href="mailto:${app.AppProperties.SUPPORT_EMAIL}">support</a> who will perform the removal. Please be

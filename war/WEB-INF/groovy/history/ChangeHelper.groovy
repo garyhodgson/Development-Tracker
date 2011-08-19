@@ -71,15 +71,15 @@ class ChangeHelper {
 	
 		adds.each {
 			if (!oldMap.keySet().contains(it.key) || !oldMap.get(it.key)){
-				changes += new Change(it.key, it.value, ChangeType.C)
+				changes += new Change(it.key, it.value.toString(), ChangeType.C)
 			} else if (it.value) {
-				changes += new Change(it.key, it.value, ChangeType.U)
+				changes += new Change(it.key, it.value.toString(), ChangeType.U)
 			}
 		}
 	
 		dels.each {
 			if (!newMap.keySet().contains(it.key) || !newMap.get(it.key)){
-				changes += new Change(it.key, it.value,  ChangeType.D)
+				changes += new Change(it.key, it.value.toString(),  ChangeType.D)
 			}
 	
 		}
