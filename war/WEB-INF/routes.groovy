@@ -43,7 +43,7 @@ get "/development/validateSyncURL/@syncURL",  forward: "/sync/validateRepRapWiki
 get "/development/sync/@id",  forward: "/sync/controller.groovy?id=@id"
 get "/development/@id/watchers",  forward: "/development/watchers.groovy?id=@id"
 get "/development/@id/history",  forward: "/history/history.groovy?id=@id"
-get "/development/@id/history/@diffLogId",  forward: "/history/history.groovy?id=@id&diffLogId=@diffLogId"
+get "/development/@id/history/@changeHistoryId",  forward: "/history/history.groovy?id=@id&changeHistoryId=@changeHistoryId"
 get "/development/@id",  forward: "/development/show.groovy?id=@id"
 
 
