@@ -71,7 +71,7 @@ jQuery(function() {
 							<tr class="change-${change.type}">
 								<td title="${change.type.title}"><span class="symbol">${change.type.symbol}</span></td>
 								<td>${change.name}</td>
-								<td>${change.value}</td>
+								<td>${change.value?.getValue()?:''}</td>
 							</tr>
 						<% } %>
 					</table>

@@ -77,7 +77,7 @@ jQuery(function() {
 		<li><a href="#">Connections <span class="heading-count">(${relationships?.size()?:0})</span></a></li>
 		<li><a href="#">Collaborators <span class="heading-count">(${collaborations?.size()?:0})</span></a></li>
 		<li><a href="#">Specification <span class="heading-count">(${development.specificationName?.size()?:0})</span></a></li>
-		<li><a href="#">Supplementary <span class="heading-count">(${supplementary?.values()?.size()?:0})</span></a></li>
+		<li><a href="#">More <span class="heading-count">(${supplementary?.values()?.size()?:0})</span></a></li>
 	</ul>
 
 	<!-- tab "panes" -->
