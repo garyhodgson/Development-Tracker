@@ -29,7 +29,7 @@
 	<!-- as per the release of SDK 1.2.8, -->
 	<!-- this should speed up cold startups of applications by 10% -->
 	<precompilation-enabled>true</precompilation-enabled>
-
+  	
 	<static-files>
 		<exclude path="/WEB-INF/**.groovy" />
 		<exclude path="**.gtpl" />

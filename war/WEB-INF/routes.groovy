@@ -3,6 +3,9 @@ import static com.google.appengine.api.capabilities.CapabilityStatus.*
 
 all "/_ah/**", ignore: true
 
+get "/templates/static/maintenance.gtpl", ignore: true
+get "/templates/static/error.gtpl", ignore: true
+
 /* Developments */
 get "/developments",  forward: "/developments/list.groovy"
 get "/developments/latest",  forward: "/developments/latest.groovy"
