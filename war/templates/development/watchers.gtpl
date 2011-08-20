@@ -32,7 +32,7 @@
 
 <div class="content ${(development.imageURL)?'thumbnailed':'' }"> 
 
-	<% if (developmentWatchers.size == 0){ %>
+	<% if (developmentWatchers?.isEmpty()){ %>
 		<h3>Nobody watching yet.</h3>
 	<% } else { %>
 	<table>
