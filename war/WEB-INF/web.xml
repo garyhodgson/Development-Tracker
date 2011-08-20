@@ -1,9 +1,9 @@
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
+
 	<listener>
 		<listener-class>groovyx.gaelyk.GaelykServletContextListener
 		</listener-class>
 	</listener>
-
 	<servlet>
 		<servlet-name>GroovletServlet</servlet-name>
 		<servlet-class>groovyx.gaelyk.GaelykServlet</servlet-class>
@@ -112,20 +112,18 @@
 		<welcome-file>templates/index.gtpl</welcome-file>
 	</welcome-file-list>
 	
-	<error-page><exception-type>java.lang.Throwable</exception-type><location>/static/error.html</location></error-page>
-	
-	<error-page><error-code>400</error-code><location>/static/error.html</location></error-page>
-	<error-page><error-code>401</error-code><location>/static/error.html</location></error-page>
-	<error-page><error-code>403</error-code><location>/static/403.html</location></error-page>
-	<error-page><error-code>404</error-code><location>/static/404.html</location></error-page>  
-	<error-page><error-code>405</error-code><location>/static/error.html</location></error-page>
-	<error-page><error-code>406</error-code><location>/static/error.html</location></error-page>
-    
-    <error-page><error-code>500</error-code><location>/static/error.html</location></error-page>
-    <error-page><error-code>501</error-code><location>/static/error.html</location></error-page>
-    <error-page><error-code>502</error-code><location>/static/error.html</location></error-page>
-    <error-page><error-code>503</error-code><location>/templates/static/maintenance.gtpl</location></error-page>
-    <error-page><error-code>504</error-code><location>/static/error.html</location></error-page>
-    <error-page><error-code>505</error-code><location>/static/error.html</location></error-page>
-    
+	<error-page><exception-type>java.lang.Throwable</exception-type><location>/error</location></error-page>
+	<error-page><error-code>400</error-code><location>/error</location></error-page>
+	<error-page><error-code>401</error-code><location>/error</location></error-page>
+	<error-page><error-code>403</error-code><location>/403</location></error-page>	  
+	<error-page><error-code>404</error-code><location>/404</location></error-page>	  
+	<error-page><error-code>405</error-code><location>/error</location></error-page>
+	<error-page><error-code>406</error-code><location>/error</location></error-page>    
+	<error-page><error-code>500</error-code><location>/error</location></error-page>
+	<error-page><error-code>501</error-code><location>/error</location></error-page>
+	<error-page><error-code>502</error-code><location>/error</location></error-page>
+	<error-page><error-code>503</error-code><location>/templates/static/maintenance.gtpl</location></error-page>
+	<error-page><error-code>504</error-code><location>/error</location></error-page>
+	<error-page><error-code>505</error-code><location>/error</location></error-page>
+
 </web-app>
