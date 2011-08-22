@@ -3,8 +3,6 @@ package development
 import java.text.SimpleDateFormat
 import java.util.List
 
-import org.apache.commons.lang.StringEscapeUtils
-
 import com.google.appengine.api.NamespaceManager
 import com.google.appengine.api.files.FileServiceFactory
 import com.googlecode.objectify.Key
@@ -62,14 +60,14 @@ public static void processRelationships(def relationships, def params, def fromD
 				if (to.isLong()){
 					r.to = new Key(Development.class, to)
 				} else {
-					r.toUrl = StringEscapeUtils.escapeHtml(to)
+					r.toUrl = to
 				}
 			}
 		}
 
 		if (params.relationshipDescription){
 			def description = (params.relationshipDescription instanceof String) ? params.relationshipDescription : params.relationshipDescription[i]
-			r.description = StringEscapeUtils.escapeHtml(description)
+			r.description = description
 		}
 
 		if (params.relationshipId){
@@ -98,7 +96,7 @@ public static void processCollaborations(def collaborations, def params, def fro
 		def collaboration = new Collaboration()
 
 		def collaboratorName = (params.collaboratorName instanceof String) ? params.collaboratorName : params.collaboratorName[i]
-		collaboration.name = StringEscapeUtils.escapeHtml(collaboratorName)
+		collaboration.name = collaboratorName
 
 		if (params.collaboratorIsUsername){
 			def list = []
@@ -121,7 +119,7 @@ public static void processCollaborations(def collaborations, def params, def fro
 
 		if ((collaboration.role == Role.Other) && params.collaboratorRoleOther){
 			def collaboratorRoleOther = (params.collaboratorRoleOther instanceof String) ? params.collaboratorRoleOther : params.collaboratorRoleOther[i]
-			collaboration.otherRole = StringEscapeUtils.escapeHtml(collaboratorRoleOther)
+			collaboration.otherRole = collaboratorRoleOther
 		}
 
 		if (params.collaboratorMayEdit){
@@ -186,7 +184,7 @@ public static void processParameters(def development, def params){
 					break
 				case 'tags':
 					def tags = []
-					StringEscapeUtils.escapeHtml(value).split(',').each{ tags << it.trim() }
+					value.split(',').each{ tags << it.trim() }
 					development.tags = tags
 					break
 				case 'projectVendor':
@@ -200,26 +198,26 @@ public static void processParameters(def development, def params){
 					break
 				case 'description':
 				case 'goalsDescription':
-					development[key] = StringEscapeUtils.escapeHtml(value)
+					development[key] = value
 					break;
 				case 'imageURL':
-					development.imageURL = StringEscapeUtils.escapeHtml(params.imageURL)
+					development.imageURL = params.imageURL
 					break
 				case 'specificationName':
 					def specificationName = []
 					if (value instanceof String){
-						specificationName << StringEscapeUtils.escapeHtml(value)
+						specificationName << value
 					} else {
-						value.each { specificationName << StringEscapeUtils.escapeHtml(it) }
+						value.each { specificationName << it }
 					}
 					development.specificationName = specificationName
 					break
 				case 'specificationValue':
 					def specificationValue = []
 					if (value instanceof String){
-						specificationValue << StringEscapeUtils.escapeHtml(value)
+						specificationValue << value
 					} else {
-						value.each { specificationValue << StringEscapeUtils.escapeHtml(it) }
+						value.each { specificationValue << it }
 					}
 					development.specificationValue = specificationValue
 					break
@@ -232,11 +230,11 @@ public static void processParameters(def development, def params){
 					development.license = License.valueOf(value)
 					break
 				case 'licenseOther':
-					development.licenseOther = StringEscapeUtils.escapeHtml(value)
+					development.licenseOther = value
 					break
 				case 'updated':
 				case 'created':
-					development[key] = (new SimpleDateFormat("E MMM dd kk:mm:ss z yyyy")).parse(StringEscapeUtils.escapeHtml(value))
+					development[key] = (new SimpleDateFormat("E MMM dd kk:mm:ss z yyyy")).parse(value)
 					break
 				case 'relationshipType':
 				case 'relationshipTo':
@@ -255,7 +253,7 @@ public static void processParameters(def development, def params){
 					break
 				default:
 				//sanitise and store
-					development[key] = StringEscapeUtils.escapeHtml(value)
+					development[key] = value
 			}
 		} else {
 			// process deletions

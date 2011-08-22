@@ -1,7 +1,5 @@
 package userinfo
 
-import org.apache.commons.lang.StringEscapeUtils
-
 import entity.Association
 import entity.UserInfo
 import enums.Source
@@ -29,9 +27,9 @@ namespace.of("") {
 	}
 	
 	params.each { k, v ->
-		//sanitise
+		//sanitise - happens in securityfilter
 		if (v && v instanceof String && !k.startsWith('association')){
-			userinfo[k] = StringEscapeUtils.escapeHtml v
+			userinfo[k] = v
 		} 
 	}
 
@@ -72,13 +70,13 @@ def processAssociations(def params){
 		if (params.associationSourceId){
 			def associationSourceId = (params.associationSourceId instanceof String) ? params.associationSourceId : params.associationSourceId[i]
 			if (associationSourceId){
-				a.sourceId = StringEscapeUtils.escapeHtml(associationSourceId)
+				a.sourceId = associationSourceId
 			}
 		}
 
 		if (a.source == Source.Other){
 			def associationSourceOther = (params.associationSourceOther instanceof String) ? params.associationSourceOther : params.associationSourceOther[i]
-			a.sourceOther = StringEscapeUtils.escapeHtml(associationSourceOther)
+			a.sourceOther = associationSourceOther
 		}
 
 		associations << a

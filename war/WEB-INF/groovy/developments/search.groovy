@@ -2,8 +2,6 @@ package developments
 
 import static paging.pagingHelper.*
 
-import org.apache.commons.lang.StringEscapeUtils
-
 import app.MemcacheKeys
 
 import com.googlecode.objectify.Key
@@ -17,7 +15,7 @@ if (!params.searchKey){
 	return
 }
 
-def searchKey = StringEscapeUtils.escapeHtml(params.searchKey).toLowerCase()
+def searchKey = params.searchKey.toLowerCase()
 def results = []
 
 def memcacheKey = "${MemcacheKeys.SEARCH_KEY}:${searchKey}"

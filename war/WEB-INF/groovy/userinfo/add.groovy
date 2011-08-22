@@ -3,8 +3,6 @@ package userinfo
 import static com.google.appengine.api.datastore.FetchOptions.Builder.*
 import app.AppProperties
 
-import org.apache.commons.lang.StringEscapeUtils
-
 import entity.Activity
 import entity.UserInfo
 
@@ -27,9 +25,9 @@ namespace.of("") {
 	userinfo = new UserInfo(userId:user.getUserId(), created: new Date(), updated: new Date())
 
 	params.each { k, v ->
-		//sanitise
+		//sanitise - happens in security filter
 		if (v) {
-			userinfo[k] = StringEscapeUtils.escapeHtml v
+			userinfo[k] = v
 		}
 	}
 

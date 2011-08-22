@@ -1,5 +1,4 @@
 <% 
-	import org.apache.commons.lang.StringEscapeUtils
 	def development = request.getAttribute("development") 
 	def relationships = request.getAttribute('relationships')
 	def collaborations = request.getAttribute('collaborations')

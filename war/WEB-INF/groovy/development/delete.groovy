@@ -1,7 +1,5 @@
 package development
 
-import org.apache.commons.lang.StringEscapeUtils
-
 import com.googlecode.objectify.Key
 
 import entity.Activity

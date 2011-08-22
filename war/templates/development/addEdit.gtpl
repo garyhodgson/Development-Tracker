@@ -1,5 +1,4 @@
 <%
-	import org.apache.commons.lang.StringEscapeUtils
 	import enums.*
 	def development = request?.getAttribute('development')  
 	def relationships = request?.getAttribute('relationships')
@@ -652,12 +651,11 @@
 
 						<%  if (development?.specificationName){ 
 								development?.specificationName.eachWithIndex { name, i ->
-								def specificationName = StringEscapeUtils.unescapeHtml(name)
-								def specificationValue = StringEscapeUtils.unescapeHtml((development?.specificationValue) ? development?.specificationValue[i] : '')
+								def specificationValue = (development?.specificationValue) ? development?.specificationValue[i] : ''
 						%>
 						<tr>
 							<td width="20%">
-								<input type="text" id="specificationName" name="specificationName" value="${specificationName}" />
+								<input type="text" id="specificationName" name="specificationName" value="${name}" />
 							</td>
 							<td width="70%">
 								<input type="text" id="specificationValue" name="specificationValue" value="${specificationValue}" />
