@@ -34,9 +34,9 @@
 			<% request.developments?.each { development -> %>
 			<tr>
 				<td width="30%"><a href="/development/${development.id}">${development.title}</a></td>
-				<td width="50%">${development.description? org.apache.commons.lang.StringUtils.abbreviate(development.description, 200) : ''}</td>
+				<td width="50%" class="list-smaller-text">${development.description? org.apache.commons.lang.StringUtils.abbreviate(development.description, 200) : ''}</td>
 
-				<td width="10%">
+				<td width="10%" class="list-smaller-text">
 				<% if (development.sourceURL) {%>
 					<a href="${development.sourceURL}" title="${development.sourceURL}">${development.source?:''}</a>
 				<% } else { %>
@@ -44,7 +44,7 @@
 				<% } %>					
 				</td>
 				<% def status = development.status? development.status.title : '' %>
-				<td width="10%">${status}</td>
+				<td width="10%" class="list-smaller-text">${status}</td>
 			</tr>
 			<% } %>
 		</table>
