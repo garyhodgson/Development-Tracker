@@ -27,10 +27,11 @@ if (!params.id.isLong()){
 	return
 }
 
-
 def developmentKey = new Key<Development>(Development.class, params.id as Long)
 def development = dao.ofy().get(developmentKey)
 def updateImageURL = false
+def deleteThumbnail = false
+def originalThumbnailPath = null
 def now = new Date()
 def currentUsername = request.session.userinfo?.username?:''
 def changeHelper = new ChangeHelper();
@@ -45,6 +46,10 @@ Objectify ofyTxn = ObjectifyService.beginTransaction();
 
 try {
 	updateImageURL = (params.imageURL && development.imageURL != params.imageURL)
+	if (development.imageURL && !params.imageURL){
+		originalThumbnailPath =development.thumbnailPath
+		deleteThumbnail = true
+	}
 
 	def originalDevelopmentProperties = development.properties
 
@@ -77,14 +82,12 @@ try {
 	validateCollaborations(collaborations)
 
 	def existingCollaborations = dao.ofy().query(Collaboration.class).ancestor(developmentKey).list()
-	
+
 	changes += changeHelper.getListChanges(existingCollaborations, collaborations, "CollaboratorId")?:[]
-	
+
 	def collaborationsToBeDeleted = existingCollaborations.minus(collaborations)
 	collaborationsToBeDeleted.each { ofyTxn.delete(it) }
-	collaborations.each {
-		ofyTxn.put(it)
-	}
+	collaborations.each { ofyTxn.put(it) }
 
 	/*******************************************/
 
@@ -93,7 +96,6 @@ try {
 	}
 
 	ofyTxn.getTxn().commit()
-
 } catch (ValidationException e) {
 	request.session.message = e.getMessage()
 	request.development = development
@@ -119,10 +121,11 @@ if (updateImageURL){
 		development.thumbnailPath = thumbnailFile.getFullPath()
 		development.thumbnailServingUrl = images.getServingUrl(thumbnailFile.blobKey)
 
-		log.info "development.thumbnailServingUrl: ${development.thumbnailServingUrl}"
-		log.info "development.thumbnailPath: ${development.thumbnailPath}"
 	}
 	dao.ofy().put(development)
+} else if (deleteThumbnail){
+	def file = files.fromPath(originalThumbnailPath)
+	if (file) file.delete()
 }
 
 dao.ofy().put(new Activity(type:enums.ActivityType.DevelopmentUpdated, title:"${development.title}",by:currentUsername, created: now, link :"/development/${development.id}"))

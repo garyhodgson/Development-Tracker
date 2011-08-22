@@ -41,6 +41,7 @@ class securityFilter implements Filter {
 		'/future',
 		'/start',
 		'/blog',
+		'/_ah'
 	]
 
 	@Override

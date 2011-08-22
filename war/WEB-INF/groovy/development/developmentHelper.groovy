@@ -15,6 +15,7 @@ import entity.UserInfo
 import enums.*
 import exceptions.ValidationException
 
+
 public static def generateThumbnail(def imageURL) {
 
 	if (!imageURL) return null
@@ -258,6 +259,12 @@ public static void processParameters(def development, def params){
 		} else {
 			// process deletions
 			switch (key){
+				case 'imageURL':					
+					development.imageURL = null
+					development.thumbnailServingUrl = null
+					development.thumbnailPath = null
+					break
+
 				case 'relationshipType':
 				case 'relationshipTo':
 				case 'relationshipDescription':
@@ -298,4 +305,3 @@ public static void processParameters(def development, def params){
 
 	}
 }
-
