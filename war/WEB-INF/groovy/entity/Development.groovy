@@ -2,8 +2,8 @@ package entity
 
 import javax.persistence.Id
 import javax.persistence.PrePersist
+import javax.persistence.Transient
 
-import com.googlecode.objectify.annotation.AlsoLoad
 import com.googlecode.objectify.annotation.Unindexed
 
 import enums.*
@@ -22,7 +22,6 @@ class Development implements Serializable {
 	String createdBy
 	@Unindexed
 	String thumbnailServingUrl
-	@Unindexed
 	String thumbnailPath
 	Source source
 	String sourceURL
@@ -43,6 +42,9 @@ class Development implements Serializable {
 	License license
 	String licenseOther
 
+	@Transient
+	String imageBlobKey
+
 	def Development(){
 		created = new Date()
 	}
@@ -62,7 +64,8 @@ class Development implements Serializable {
 				'class',
 				'thumbnailPath',
 				'thumbnailServingUrl',
-				'imageURL'
+				'imageURL',
+				'imageBlobKey'
 			].contains(it.key) && it.value){
 				sb.append("${it.key.capitalize()}: ${it.value}\n")
 			}

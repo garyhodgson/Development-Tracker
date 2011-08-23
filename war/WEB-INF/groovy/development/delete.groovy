@@ -32,7 +32,7 @@ if (!userinfo){
 	return
 }
 
-def key = new Key<Development>(Development.class, params.id)
+def key = new Key<Development>(Development.class, params.id as Long)
 def development = dao.ofy().find(key);
 if (!development) {
 	request.session.message = "Unable to find development with id: ${params.id}"

@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat
 import java.util.List
 
 import com.google.appengine.api.NamespaceManager
+import com.google.appengine.api.blobstore.BlobKey
 import com.google.appengine.api.files.FileServiceFactory
 import com.googlecode.objectify.Key
 import com.googlecode.objectify.ObjectifyService
@@ -15,34 +16,6 @@ import entity.UserInfo
 import enums.*
 import exceptions.ValidationException
 
-
-public static def generateThumbnail(def imageURL) {
-
-	if (!imageURL) return null
-
-	URL url = new URL(imageURL)
-	def image
-
-	try {
-		def response = url.get()
-		if (response.responseCode != 200) return null
-		image = response.content.image
-	} catch (SocketTimeoutException ste){
-		System.err.println(ste.getLocalizedMessage())
-	}
-	def ratio = image.height / image.width
-
-	def thumbnail = (image.width > 400)? image.resize(400,400*ratio as int) : image
-
-	def filename = url.getFile().substring(url.getFile().lastIndexOf('/')+1)
-	def file = FileServiceFactory.getFileService().createNewBlobFile("image/xyz", filename)
-
-	file.withOutputStream { stream  ->
-		stream  << thumbnail.getImageData()
-	}
-
-	return file
-}
 
 public static void processRelationships(def relationships, def params, def fromDevelopmentKey){
 
@@ -253,7 +226,6 @@ public static void processParameters(def development, def params){
 				//	Do nothing
 					break
 				default:
-				//sanitise and store
 					development[key] = value
 			}
 		} else {

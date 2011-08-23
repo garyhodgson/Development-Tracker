@@ -69,7 +69,7 @@ jQuery(function() {
 	<img src="${development.thumbnailServingUrl}">
 </div>
 <% } %>
-<div class="content ${(development.imageURL)?'thumbnailed':'' }">
+<div class="content ${(development.thumbnailServingUrl)?'thumbnailed':'' }">
 
 	<ul class="tabs">
 		<li><a href="#">Core</a></li>

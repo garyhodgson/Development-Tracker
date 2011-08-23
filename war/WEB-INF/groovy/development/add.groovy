@@ -2,6 +2,7 @@ package development
 
 import static development.developmentHelper.*
 import history.ChangeHelper
+import info.developmenttracker.ThumbnailException
 
 import com.googlecode.objectify.Objectify
 import com.googlecode.objectify.ObjectifyService
@@ -19,7 +20,6 @@ if (!users.isUserLoggedIn()){
 def currentUsername = request.session.userinfo?.username?:''
 def changeHelper = new ChangeHelper();
 def now = new Date()
-def updateImageURL = false
 def development = new Development(
 		subdomain:request.properties.serverName.split(/\./).getAt(0),
 		createdBy:session.userinfo.username)
@@ -27,42 +27,36 @@ def development = new Development(
 Objectify ofyTxn = ObjectifyService.beginTransaction();
 
 try {
-	
-	updateImageURL = (params.imageURL && development.imageURL != params.imageURL)
-	
+
 	processParameters(development,  params)
 	validateDevelopment(development)
-	
+
 	def developmentKey = ofyTxn.put(development)
-	
+
 	def changes = changeHelper.getDevelopmentChanges([:], development.properties)
 
 	/*****************************************/
-	
+
 	def relationships = []
 	processRelationships(relationships, params, developmentKey)
 	validateRelationships(relationships)
 
 	changes += changeHelper.getListChanges([], relationships, "ConnectionId")?:[]
-	
-	relationships.each { 
-		ofyTxn.put(it) 
-	}
+
+	relationships.each {  ofyTxn.put(it)  }
 
 	/*****************************************/
-	
+
 	def collaborations = []
 	processCollaborations(collaborations, params, developmentKey)
 	validateCollaborations(collaborations)
-	
+
 	changes += changeHelper.getListChanges([], collaborations, "CollaboratorId")?:[]
-	
-	collaborations.each { 
-		ofyTxn.put(it)
-	}
-	
+
+	collaborations.each {  ofyTxn.put(it) }
+
 	/*****************************************/
-	
+
 	if (changes) {
 		ofyTxn.put(new ChangeHistory(parent:developmentKey, by:currentUsername, on:now, changes:changes))
 	}
@@ -78,24 +72,10 @@ try {
 		ofyTxn.getTxn().rollback();
 }
 
-if (updateImageURL){
-	
-	def thumbnailFile = generateThumbnail(development.imageURL)
-	if (thumbnailFile){
-
-		// Delete existing thumbnail
-		if (development.thumbnailPath){
-			def file = files.fromPath(development.thumbnailPath)
-			if (file) file.delete()
-		}
-
-		development.thumbnailPath = thumbnailFile.getFullPath()
-		development.thumbnailServingUrl = images.getServingUrl(thumbnailFile.blobKey)
-		
-		log.info "development.thumbnailServingUrl: ${development.thumbnailServingUrl}"
-		log.info "development.thumbnailPath: ${development.thumbnailPath}"
-	}
-	dao.ofy().put(development)
+try {
+	(new ThumbnailHelper()).generateThumbnail(null, params, development)
+} catch (ThumbnailException te){
+	request.session.message = te.getLocalizedMessage()
 }
 
 dao.ofy().put(new Activity(type:enums.ActivityType.NewDevelopment, title:"${development.title}",by:development.createdBy, created: new Date(), link :"/development/${development.id}"))

@@ -1,8 +1,11 @@
 package development
 
 import static development.developmentHelper.*
+import info.developmenttracker.ThumbnailException;
 import history.ChangeHelper
 
+import com.google.appengine.api.blobstore.BlobKey
+import com.google.appengine.api.blobstore.BlobstoreFailureException
 import com.googlecode.objectify.Key
 import com.googlecode.objectify.Objectify
 import com.googlecode.objectify.ObjectifyService
@@ -13,7 +16,6 @@ import entity.Collaboration
 import entity.Development
 import entity.Relationship
 import exceptions.ValidationException
-
 
 if (!params.id){
 	request.session.message = "No Id given."
@@ -29,28 +31,20 @@ if (!params.id.isLong()){
 
 def developmentKey = new Key<Development>(Development.class, params.id as Long)
 def development = dao.ofy().get(developmentKey)
-def updateImageURL = false
-def deleteThumbnail = false
-def originalThumbnailPath = null
-def now = new Date()
-def currentUsername = request.session.userinfo?.username?:''
-def changeHelper = new ChangeHelper();
-
 if (!development) {
 	request.session.message = "Unable to find development with Id ${params.id}."
 	redirect params.referer?:'/developments'
 	return
 }
 
+def originalDevelopmentThumbnailPath = development.thumbnailPath
+def now = new Date()
+def currentUsername = request.session.userinfo?.username?:''
+def changeHelper = new ChangeHelper();
+
 Objectify ofyTxn = ObjectifyService.beginTransaction();
 
 try {
-	updateImageURL = (params.imageURL && development.imageURL != params.imageURL)
-	if (development.imageURL && !params.imageURL){
-		originalThumbnailPath =development.thumbnailPath
-		deleteThumbnail = true
-	}
-
 	def originalDevelopmentProperties = development.properties
 
 	processParameters(development, params)
@@ -96,6 +90,7 @@ try {
 	}
 
 	ofyTxn.getTxn().commit()
+
 } catch (ValidationException e) {
 	request.session.message = e.getMessage()
 	request.development = development
@@ -107,25 +102,10 @@ try {
 		ofyTxn.getTxn().rollback();
 }
 
-if (updateImageURL){
-
-	def thumbnailFile = generateThumbnail(development.imageURL)
-	if (thumbnailFile){
-
-		// Delete existing thumbnail
-		if (development.thumbnailPath){
-			def file = files.fromPath(development.thumbnailPath)
-			if (file) file.delete()
-		}
-
-		development.thumbnailPath = thumbnailFile.getFullPath()
-		development.thumbnailServingUrl = images.getServingUrl(thumbnailFile.blobKey)
-
-	}
-	dao.ofy().put(development)
-} else if (deleteThumbnail){
-	def file = files.fromPath(originalThumbnailPath)
-	if (file) file.delete()
+try {
+	(new ThumbnailHelper()).generateThumbnail(originalDevelopmentThumbnailPath, params, development)
+} catch (ThumbnailException te){
+	request.session.message = te.getLocalizedMessage()
 }
 
 dao.ofy().put(new Activity(type:enums.ActivityType.DevelopmentUpdated, title:"${development.title}",by:currentUsername, created: now, link :"/development/${development.id}"))

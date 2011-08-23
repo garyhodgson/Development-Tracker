@@ -57,6 +57,9 @@ get "/activities", forward: "/activities/list.groovy"
 /* Admin */
 get "/admin/memcache/clear", forward: "/admin/memcache/clear.groovy"
 get "/admin/memcache/stats", forward: "/admin/memcache/stats.groovy"
+
+get "/admin/upload", forward: "/templates/admin/upload.gtpl"
+
 get "/admin/@target",  forward: "/admin/@target.groovy"
 
 /* Access */

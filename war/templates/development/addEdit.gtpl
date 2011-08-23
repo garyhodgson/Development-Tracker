@@ -8,7 +8,7 @@
 <% include '/templates/includes/header.gtpl' %>
 
 <script type="text/javascript" src="/js/smartwizard/SmartWizard.js"></script>
-
+<script type="text/javascript" src="/js/plupload/plupload.full.js"></script>
 <script>
 	jQuery(function() {
 
@@ -225,6 +225,70 @@
 		jQuery('input[name=status]').change()
 		jQuery('input[name=developmentType]').change()
 		jQuery('input[name=collaboratorIsUsername]').change()
+		
+		
+		jQuery('#fileUploadContainer').hide();
+		String.prototype.startsWith = function (a) {
+		    return this.substr(0, a.length) === a;
+		}
+		jQuery('#imageBlobKey').blur(function(){
+			if (jQuery('#imageURL').val().startsWith('Uploaded File:')){
+				jQuery('#imageURL').attr("readonly", true);
+				jQuery('#imageURL').addClass("readonly-field");				
+			} else {
+				jQuery('#imageURL').attr("readonly", false);
+				jQuery('#imageURL').removeClass("readonly-field");
+			}
+		});
+		jQuery('#imageBlobKey').blur();
+		
+		var uploader = new plupload.Uploader({
+			runtimes : 'html5,flash,html4',
+			browse_button : 'pickFile',
+			container : 'fileUploadContainer',
+			max_file_size : '1mb',
+			url : "<%=blobstore.createUploadUrl('/development/fileUpload.groovy')%>",
+			flash_swf_url : '/js/plupload/plupload.flash.swf',
+			filters : [
+				{title : "Image files", extensions : "jpg,gif,png"},
+			]
+		});
+		
+		uploader.bind('Init', function(up, params) {
+			jQuery('#fileUploadContainer').show();
+		});
+
+		jQuery('#clearFile').click(function(e) {
+			jQuery('#imageURL').val("");
+			jQuery('#imageBlobKey').val("");
+			jQuery('#imageBlobKey').blur();
+		});
+
+		uploader.init();
+
+		uploader.bind('FilesAdded', function(up, files) {
+			jQuery.each(files, function(i, file) {
+				jQuery('#imageURL').val('Uploaded File: '+file.name);
+				jQuery('#imageBlobKey').blur();
+			});
+			up.refresh(); // Reposition Flash/Silverlight
+			uploader.start();
+		});
+
+		uploader.bind('Error', function(up, err) {
+			if (err.code = plupload.FILE_SIZE_ERROR){
+				alert("File is too large. Limit is 1Mb");
+			} else {
+				alert(err.message);
+			}
+				
+			up.refresh(); // Reposition Flash/Silverlight
+		});
+
+		uploader.bind('FileUploaded', function(up, file, info) {		
+			jQuery('#imageBlobKey').val(info.response);
+		});
+			
 
 	});
 </script>
@@ -335,10 +399,17 @@
 
 						<tr id="imageURLRow">
 							<td>Image URL</td>
-							<td><input type="text" id="imageURL" name="imageURL" value="<%=development?.imageURL?:''%>" /></td>
+							<td>
+								<input type="text" id="imageURL" name="imageURL" value="<%=development?.imageURL?:''%>" />
+								<div id="fileUploadContainer">
+									or&hellip;&nbsp;<a class="nohint" id="pickFile" href="#">[Upload File]</a>
+									&nbsp;&nbsp;<a class="nohint" id="clearFile" href="#">[Clear]</a>
+								</div>
+								<input type="text" id="imageBlobKey" name="imageBlobKey" value="<%=development?.imageBlobKey?:''%>" />
+							</td>
 							<td><span id="imageURLMessage"></span></td>
 						</tr>
-						
+												
 						<tr id="licenseRow">
 							<td>License</td>
 							<td><select  id="license" name="license">
