@@ -1,13 +1,17 @@
-package admin
+package api.v1
 
 import static development.developmentHelper.*
+
+import com.googlecode.objectify.Key
+
+import entity.Collaboration
 import entity.Development
+import entity.Relationship
 import enums.*
 import groovy.xml.MarkupBuilder
 
-
 def devs = dao.ofy().query(Development.class).list()
-
+def baseURL = "${request.scheme}://${headers.Host}"
 def writer = new StringWriter()
 
 response.contentType = 'text/xml'
@@ -15,10 +19,14 @@ def xml = new MarkupBuilder(writer)
 xml.mkp.xmlDeclaration(version:'1.0')
 xml.setOmitEmptyAttributes(true)
 xml.setOmitNullAttributes(true)
-xml.developments("count":devs.size()) {
-	devs.each { d ->
 
-		development(uri:"${request.scheme}://${headers.Host}/development/${d.id}") {
+xml.developments("count":devs.size(), "api-version":"1") {
+	
+	devs.each { d ->
+		
+		def developmentKey = new Key(Development.class, d.id)
+		
+		development(id:"${d.id}", uri:"${baseURL}/development/${d.id}") {
 
 			title(d.title)
 			created(d.created)
@@ -27,6 +35,19 @@ xml.developments("count":devs.size()) {
 			categories {
 				d.categories?.each { category(it.title) }
 			}
+			
+			def collaborations = dao.ofy().query(Collaboration.class).ancestor(developmentKey).list()
+			collaborators("count":collaborations.size()) {
+				collaborations.each { c ->
+					collaborator(role:c.role, c.name)
+				}
+			}
+			def relationships = dao.ofy().query(Relationship.class).ancestor(developmentKey).list()
+			connections("count":relationships.size()) {
+				relationships.each { c ->
+					connection(type:c.type, url:(c.to)?"${baseURL}/development/${c.to}": c.toUrl, c.description)					
+				}
+			}			
 			description(d.description)
 			if (d.developmentType) {
 				if (d.developmentType == DevelopmentType.Other){
@@ -45,12 +66,11 @@ xml.developments("count":devs.size()) {
 				}
 			}
 			goalsDescription(d.goalsDescription)
-			id(d.id)
 			if (d.license){
 				if (d.license == License.Other){
-					license(d.licenseOther)
+					license(id:d.license, d.licenseOther)
 				} else {
-					license(d.license.description?:d.license.title)
+					license(id:d.license, d.license.description?:d.license.title)
 				}
 			}
 			projectVendors{
@@ -61,16 +81,14 @@ xml.developments("count":devs.size()) {
 						projectVendor(it.title)
 					}
 				}
-			}
-			source(d.source)
-			sourceURL(d.sourceURL)
-			specificationUnit(d.specificationUnit?.title)
-			specifications {
+			}			
+			source(url:d.sourceURL, d.source)
+			specifications(unit:d.specificationUnit?.title) {
 				d.specificationName?.eachWithIndex { n,i ->
-					specification {
-						name(n)
-						value(d.specificationValue[i]?:'')
-					}
+						specification {
+							name(n)
+							value(d.specificationValue[i]?:'')
+						}
 				}
 			}
 			if (d.status){

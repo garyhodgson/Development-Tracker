@@ -7,6 +7,9 @@ get "/403/", forward: "/static/403.gtpl"
 get "/404/", forward: "/static/404.gtpl"
 get "/error/", forward: "/static/error.gtpl"
 
+/* API */
+get "/api/@version/developments", forward: "/api/controller.groovy?version=@version"
+
 /* Developments */
 get "/developments",  forward: "/developments/list.groovy"
 get "/developments/latest",  forward: "/developments/latest.groovy"

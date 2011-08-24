@@ -74,7 +74,7 @@ class ThumbnailHelper {
 			
 		} catch (Exception e){
 			e.printStackTrace()
-			println e.getLocalizedMessage()
+			System.err.println e.getLocalizedMessage()
 			throw new ThumbnailException("There was an error generating the thumbnail image.")
 		}
 	}
@@ -92,7 +92,7 @@ class ThumbnailHelper {
 		} catch (Exception e){
 			// We don't care what exception
 			e.printStackTrace()
-			log.severe "Unable to delete thumbnail: ${path}"
+			System.err.println "Unable to delete thumbnail: ${path}"
 		}
 	}
 
@@ -108,7 +108,8 @@ class ThumbnailHelper {
 			if (response.responseCode != 200) return null
 			image = response.content.image
 		} catch (SocketTimeoutException ste){
-			log.warning  ste.getLocalizedMessage()
+			ste.printStackTrace()
+			System.err.println  ste.getLocalizedMessage()
 		}
 		return image
 	}
