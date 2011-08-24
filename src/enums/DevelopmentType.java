@@ -2,7 +2,7 @@ package enums;
 
 public enum DevelopmentType {
 
-	Part, Printer, Document, Technique, Tool, Other;
+	Part, Printer, Document, Technique, Tool, Modification,  Other;
 
 	protected String title;
 

@@ -15,6 +15,7 @@ public enum Category {
 	Modelling,
 	Printer,
 	Process,
+	Software,
 	Toolchain;
 
 	protected String title = null;
