@@ -31,6 +31,9 @@ get "/development/add",  forward: {
 	to("/templates/static/maintenance.gtpl").on(DATASTORE).not(ENABLED)
 	to("/templates/static/maintenance.gtpl").on(DATASTORE_WRITE).not(ENABLED)
 }
+
+get "/development/add/cancel/@imageBlobKey", forward:  "/development/cancelAdd.groovy?imageBlobKey=@imageBlobKey"
+
 post "/development/add", forward:  "/development/add.groovy"
 get "/development/exists/@field/", forward: "/development/exists.groovy?field=@field&value="
 get "/development/exists/@field/@value", forward: "/development/exists.groovy?field=@field&value=@value"

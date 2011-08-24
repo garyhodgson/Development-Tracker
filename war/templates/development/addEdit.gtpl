@@ -1,4 +1,5 @@
 <%
+	import app.AppProperties
 	import enums.*
 	def development = request?.getAttribute('development')  
 	def relationships = request?.getAttribute('relationships')
@@ -92,6 +93,15 @@
 		
 		jQuery('#submitForm').click(function() {
 			jQuery('#addDevelopmentForm').submit();	
+		})
+		
+		jQuery('#cancelAdd').click(function(){
+			if (jQuery('#imageBlobKey').val() != ''){
+				window.location = "/development/add/cancel/"+jQuery('#imageBlobKey').val()	
+			} else {
+				window.location = "/developments/latest"
+			}
+			
 		})
 
 		jQuery('#smartwizard').smartWizard({
@@ -246,7 +256,7 @@
 			runtimes : 'html5,flash,html4',
 			browse_button : 'pickFile',
 			container : 'fileUploadContainer',
-			max_file_size : '1mb',
+			max_file_size : '<%=AppProperties.THUMBNAIL_MAXSIZE?:5%>mb',
 			url : "<%=blobstore.createUploadUrl('/development/fileUpload.groovy')%>",
 			flash_swf_url : '/js/plupload/plupload.flash.swf',
 			filters : [
@@ -277,7 +287,7 @@
 
 		uploader.bind('Error', function(up, err) {
 			if (err.code = plupload.FILE_SIZE_ERROR){
-				alert("File is too large. Limit is 1Mb");
+				alert("File is too large. Limit is <%=AppProperties.THUMBNAIL_MAXSIZE%>Mb");
 			} else {
 				alert(err.message);
 			}
@@ -301,7 +311,7 @@
 		<% if (development?.id){ %>
 			<a href="/development/${development?.id}"><li>Cancel</li> </a>
 		<% } else { %>
-			<a href="/developments/latest"><li>Cancel</li> </a>
+			<a href="javascript://" id="cancelAdd"><li>Cancel</li> </a>
 		<% } %>
 		<a href="/help/development/edit"><li>Help</li> </a>
 	</ul>
@@ -405,7 +415,7 @@
 									or&hellip;&nbsp;<a class="nohint" id="pickFile" href="#">[Upload File]</a>
 									&nbsp;&nbsp;<a class="nohint" id="clearFile" href="#">[Clear]</a>
 								</div>
-								<input type="text" id="imageBlobKey" name="imageBlobKey" value="<%=development?.imageBlobKey?:''%>" />
+								<input type="hidden" id="imageBlobKey" name="imageBlobKey" value="<%=development?.imageBlobKey?:''%>" />
 							</td>
 							<td><span id="imageURLMessage"></span></td>
 						</tr>

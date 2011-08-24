@@ -25,6 +25,7 @@ class ThumbnailHelper {
 		}
 		return thumbnailFile
 	}
+	
 
 	private def generateThumbnailFromURL(def imageURL) throws ThumbnailException{
 		def thumbnailFile
@@ -90,7 +91,7 @@ class ThumbnailHelper {
 			}
 		} catch (Exception e){
 			// We don't care what exception
-			bfe.printStackTrace()
+			e.printStackTrace()
 			log.severe "Unable to delete thumbnail: ${path}"
 		}
 	}
