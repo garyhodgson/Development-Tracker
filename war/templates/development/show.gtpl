@@ -178,8 +178,8 @@ jQuery(function() {
 				<%  relationships?.each { r ->
 				%>
 				<tr>
-					<td class="linkType">${r.type.title}</td>
-					<td class="linkDescription">
+					<td >${r.type.title}</td>
+					<td >
 						<% if (r.to){ %>
 							<a href="/development/${r.to.name}">${r.description?:'Link'}</a>
 						<% } else if (r.toUrl.startsWith('http')) { %>
@@ -198,14 +198,14 @@ jQuery(function() {
 				<%  collaborations?.each { c ->
 				%>
 				<tr>
-					<td class="linkType">
+					<td>
 					<% if (c.role == enums.Role.Other && c.otherRole){ %>
 						${c.otherRole}
 					<% } else { %>
 						${c.role.title}
 					<% }  %>
 					</td>
-					<td class="linkDescription">
+					<td>
 						<% if (c.userInfo){ %>
 							<a href="/userinfo/${c.name}">${c.name?:''}</a>
 						<% } else { %>
