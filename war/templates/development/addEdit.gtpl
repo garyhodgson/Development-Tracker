@@ -34,11 +34,24 @@
 		}
 		
 		jQuery("input[name=status]").change(function() {
+			
 			if (jQuery("input[name='status']:checked").val() == 'Other') {
 				jQuery("#statusOtherRow").show()
 			} else {
 				jQuery("#statusOtherRow").hide()
 				jQuery("#statusOther").val('')
+			}
+			if (jQuery("input[name='status']:checked").val() == 'WorkInProgress') {
+				jQuery("#signs_WorkInProgress").attr('checked', 'checked')
+			} else {
+				jQuery("#signs_WorkInProgress").attr('checked', '')
+			} 
+				
+				
+			if (jQuery("input[name='status']:checked").val() == 'Experimental') {
+				jQuery("#signs_Experimental").attr('checked', 'checked')
+			} else {
+				jQuery("#signs_Experimental").attr('checked', '')
 			}
 		})
 		
@@ -78,8 +91,7 @@
 			}
 		})
 		
-		jQuery("select[name=collaboratorRole]").change(function() {
-			
+		jQuery("select[name=collaboratorRole]").change(function() {			
 			switch(jQuery(this).val())
 			{
 				case 'Other':
@@ -101,7 +113,6 @@
 			} else {
 				window.location = "/developments/latest"
 			}
-			
 		})
 
 		jQuery('#smartwizard').smartWizard({
@@ -334,6 +345,8 @@
 				</li>
 				<li><a href="#wizard-5"><h2>Specify</h2> </a>
 				</li>
+				<li><a href="#wizard-6"><h2>Warn</h2> </a>
+				</li>
 			</ul>
 
 			<div id="wizard-body" class="wiz-body">
@@ -517,22 +530,19 @@
 										c1 = (count)/3 as int
 										c2 = (count)/3 * 2 as int
 										def devCats = development?.categories?:[]
-										Category.values()[0..c1].each { key ->
-										def checked = (development?.categories && development?.projectVendor == key) ? 'checked=checked':'' %>
+										Category.values()[0..c1].each { key -> %>
 									<input type="checkbox" value="${key}" name="categories" <%=devCats.contains(key)? 'checked=checked':''%>/>&nbsp;${key.title}
 									<br>
 									<%  } %>
 								</div>
 								<div class="left">					
-									<% Category.values()[c1+1..c2].each { key ->
-									def checked = (development?.projectVendor && development?.projectVendor == key) ? 'checked=checked':'' %>
+									<% Category.values()[c1+1..c2].each { key -> %>
 									<input type="checkbox" value="${key}" name="categories" <%=devCats.contains(key)? 'checked=checked':''%>/>&nbsp;${key.title}
 									<br>
 									<% } %>
 								</div>
 								<div class="left">					
-									<% Category.values()[c2+1..count].each { key ->
-									def checked = (development?.projectVendor && development?.projectVendor == key) ? 'checked=checked':'' %>
+									<% Category.values()[c2+1..count].each { key -> %>
 									<input type="checkbox" value="${key}" name="categories" <%=devCats.contains(key)? 'checked=checked':''%>/>&nbsp;${key.title}
 									<br>
 									<% } %>
@@ -775,6 +785,28 @@
 							<td><span id="specificationUnitMessage"></span></td>
 						</tr>
 					</table>
+				</div>
+				
+				<div id="wizard-6" class="wiz-content">
+				
+					<table border=0 cellspacing="0" cellpadding="5px" class="form-table">
+						<tr id="noticeRow">
+							<td>Notice</td>
+							<td><textarea rows="4" cols="47" id="notice" name="notice"><%=development?.notice?:''%></textarea></td>
+							<td><span id="noticeMessage"></span></td>
+						</tr>
+					</table>
+					<br>
+					<div class="" style="width:100%;text-align:left">
+						<%  Sign.each { key -> %>
+						<div class="sign-select left">
+							<img src="/images/signs/50/${key.image}" title="${key.title}"/><br>
+							<input type="checkbox" value="${key}" id="signs_${key}" name="signs" <%=development?.signs?.contains(key)? 'checked=checked':''%>/>
+							
+						</div>
+						<%  } %>
+					</div>
+								
 				</div>
 			</div>
 		</div>

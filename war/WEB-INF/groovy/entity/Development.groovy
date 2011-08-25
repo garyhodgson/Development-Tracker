@@ -41,6 +41,8 @@ class Development implements Serializable {
 	SpecificationUnit specificationUnit
 	License license
 	String licenseOther
+	List<Sign> signs
+	String notice
 
 	@Transient
 	String imageBlobKey

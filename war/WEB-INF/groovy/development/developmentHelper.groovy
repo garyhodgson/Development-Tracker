@@ -144,6 +144,15 @@ public static void processParameters(def development, def params){
 					}
 					development.categories = categories
 					break
+				case 'signs':
+					def signs = []
+					if (value instanceof String){
+						signs << Sign.valueOf(value)
+					} else {
+						value.each { signs << Sign.valueOf(it) }
+					}
+					development.signs = signs
+					break
 				case 'status':
 					development.status = Status.valueOf(value)
 					break
@@ -265,6 +274,7 @@ public static void processParameters(def development, def params){
 			'categories',
 			'goals',
 			'tags',
+			'signs',
 			'projectVendor',
 			'specificationName',
 			'specificationValue'

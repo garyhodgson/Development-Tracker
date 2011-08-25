@@ -20,7 +20,7 @@
 <body>
 	<br><br>
 	<div class="">
-		<img src="/images/warning-signs/caution.png" />
+		<img src="/images/signs/244/caution.png" />
 	</div>
 	<br><br>
 	<div class="">

@@ -64,12 +64,30 @@ jQuery(function() {
 	</ul>
 </nav>
 
-<% if (development.thumbnailServingUrl){ %>
-<div class="development-thumb left">
-	<img src="${development.thumbnailServingUrl}">
-</div>
-<% } %>
-<div class="content ${(development.thumbnailServingUrl)?'thumbnailed':'' }">
+
+<div class="left">
+	<% if (development.thumbnailServingUrl){ %>
+	<div class="development-thumb">
+		<img src="${development.thumbnailServingUrl}">
+	</div>
+	<% } %>
+	<% if (development.signs){ %>	
+		<%if (!development.thumbnailServingUrl){%>
+		<br><br>
+		<% } %>
+		<div class="signs">
+			<% development.signs.each { sign ->%>
+				<img src="/images/signs/50/${sign.image}" title="${sign.title}">
+			<% } %>
+		</div>
+	<% } %>
+	<% if (development.notice){ %>
+	<div class="notice site-default-bg">${development.notice}</div>
+	<% } %>
+</div>	
+
+
+<div class="content thumbnailed">
 
 	<ul class="tabs">
 		<li><a href="#">Core</a></li>
