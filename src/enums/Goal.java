@@ -2,18 +2,20 @@ package enums;
 
 public enum Goal {
 
-	Economy("Economy", "Reducing costs."),
-	Simplification("Simplification", "Reducing complexity."),
-	Fun("Fun", "For the fun of it."),
-	Education("Education", "To help and support."),
-	Standardisation("Standardisation", "Bringing designs together."),
-	Minimilism("Minimilism","Shrinking parts or part count."),
-	Reliability("Reliability", "Producing consistent, repeatable results."),
-	Speed("Speed", "Doing it faster."),
 	Accuracy("Accuracy", "Improved precision."),
-	Maintainability("Maintainability", "Easier to keep running."), 
+	Economy("Economy", "Reducing costs."),
+	Education("Education", "To help and support."),
+	Fun("Fun", "For the fun of it."),
 	Improvement("Improvement", "A stepwise update to a previous design."), 
+	Maintainability("Maintainability", "Easier to keep running."), 
+	Minimilism("Minimilism","Shrinking parts or part count."),
+	Quality("Quality", "Improving Quality"),
+	Reliability("Reliability", "Producing consistent, repeatable results."),
+	Reproducability("Reproducability", "Easier to reproduce."),
+	Simplification("Simplification", "Reducing complexity."),
 	Size("Size", "Smaller, or bigger"),
+	Speed("Speed", "Doing it faster."),
+	Standardisation("Standardisation", "Bringing designs together."),
 	Other("Other", "Define your own goal.");
 	
 	protected String title = null;
