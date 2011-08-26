@@ -45,7 +45,7 @@ xml.developments("count":devs.size(), "api-version":"1") {
 			def relationships = dao.ofy().query(Relationship.class).ancestor(developmentKey).list()
 			connections("count":relationships.size()) {
 				relationships.each { c ->
-					connection(type:c.type, url:(c.to)?"${baseURL}/development/${c.to}": c.toUrl, c.description)					
+					connection(type:c.type, url:(c.to)?"${baseURL}/development/${c.to.name}": c.toUrl, c.description)					
 				}
 			}			
 			description(d.description)
