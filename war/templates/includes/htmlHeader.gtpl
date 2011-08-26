@@ -7,12 +7,10 @@
 	
 	<link rel="shortcut icon" href="/images/favicon.ico">
 	<link rel="icon" href="/images/favicon.ico">
+	<script src="/js/jquery-1.6.2.min.js"></script>
 	
-	<script src="/js/jquery-1.6.1.min.js"></script>
-	<script src="/js/jquery-ui-1.8.13.custom.min.js"></script>
-	<script src="http://cdn.jquerytools.org/1.2.5/jquery.tools.min.js"></script>
-	
-	<link rel="stylesheet" type="text/css" href="/css/smoothness/jquery-ui-1.8.13.custom.css" />
+	<script src="/js/jquery-ui-1.8.16.custom.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/css/smoothness/jquery-ui-1.8.16.custom" />
 	<link rel="stylesheet/less" type="text/css" href="/css/main.less">
 	<script src="/js/less.min.js"></script>
 	

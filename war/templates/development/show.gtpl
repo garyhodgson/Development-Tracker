@@ -8,24 +8,28 @@
 
 <script type="text/javascript">
 jQuery(function() {	
-	jQuery("ul.tabs").tabs("div.panes > div");	
+	jQuery("#tabs").tabs();	
 	jQuery("table tr:even").addClass("oddrow");
 	jQuery('table td:nth-child(1)').addClass('label-column')
 	jQuery('table td:nth-child(2)').addClass('value-column')
-		
-	var triggers = jQuery("#deleteDevelopment").overlay({
-		top: 200,
-		closeOnClick: false
+	
+	jQuery("#confirm").dialog({ 
+		autoOpen: false,
+		dialogClass:'modal',
+		position: 'center',
+		minHeight: 50,
+		modal: true,
+		resizable: false,
+		title: 'Confirm Delete',
+		closeText: '',
+		buttons: [{text: "Yes",click: function() { document.location = "/development/delete/<%=development.id%>"; }},
+		          {text: "No",click: function() { jQuery(this).dialog("close"); }}
+				 ] 
 	});
-		
-	var buttons = jQuery("#confirm button").click(function(e) {		
-		// get user input
-		var yes = buttons.index(this) === 0;	
-		if (yes){
-			document.location = "/development/delete/<%=development.id%>"	
-		}
+	
+	jQuery("#deleteDevelopment").click(function(){
+		jQuery("#confirm").dialog('open')
 	});
-
 });
 </script>
 
@@ -88,18 +92,16 @@ jQuery(function() {
 
 
 <div class="content thumbnailed">
+	<div id="tabs">
+		<ul class="tabs">
+			<li><a href="#core">Core</a></li>
+			<li><a href="#connections">Connections <span class="heading-count">(${relationships?.size()?:0})</span></a></li>
+			<li><a href="#collaborators">Collaborators <span class="heading-count">(${collaborations?.size()?:0})</span></a></li>
+			<li><a href="#specification">Specification <span class="heading-count">(${development.specificationName?.size()?:0})</span></a></li>
+			<li><a href="#more">More <span class="heading-count">(${supplementary?.values()?.size()?:0})</span></a></li>
+		</ul>
 
-	<ul class="tabs">
-		<li><a href="#">Core</a></li>
-		<li><a href="#">Connections <span class="heading-count">(${relationships?.size()?:0})</span></a></li>
-		<li><a href="#">Collaborators <span class="heading-count">(${collaborations?.size()?:0})</span></a></li>
-		<li><a href="#">Specification <span class="heading-count">(${development.specificationName?.size()?:0})</span></a></li>
-		<li><a href="#">More <span class="heading-count">(${supplementary?.values()?.size()?:0})</span></a></li>
-	</ul>
-
-	<!-- tab "panes" -->
-	<div class="panes">
-		<div class="development">
+		<div class="development" id="core">
 			<input type="hidden" id="id" name="id" value="${development.id}">
 			<table border=0 cellspacing="0" cellpadding="5px">
 				<tr>
@@ -191,7 +193,7 @@ jQuery(function() {
 
 		</div>
 
-		<div id="relationships" class="development">
+		<div id="connections" class="development">
 			<table border=0 cellspacing="0" cellpadding="5px">
 				<%  relationships?.each { r ->
 				%>
@@ -211,7 +213,7 @@ jQuery(function() {
 			</table>
 		</div>
 		
-		<div id="collaborations" class="development">
+		<div id="collaborators" class="development">
 			<table border=0 cellspacing="0" cellpadding="5px">
 				<%  collaborations?.each { c ->
 				%>
@@ -257,7 +259,7 @@ jQuery(function() {
 		</div>
 		
 		
-		<div id="supplementary" class="development">
+		<div id="more" class="development">
 			<table border=0 cellspacing="0" cellpadding="5px">
 			<% supplementary?.each { %>
 				<tr>
@@ -270,15 +272,8 @@ jQuery(function() {
 		
 	</div>
 </div>
-<div class="modal" id="confirm">
-	<h2>Confirm Delete</h2>
 
+<div id="confirm">
 	<p>Are you sure you wish to delete development ${development.id}?</p>
-
-	<!-- yes/no buttons -->
-	<p id="buttons">
-		<button class="close"> Yes </button>
-		<button class="close"> No </button>
-	</p>
 </div>
 <% include '/templates/includes/footer.gtpl' %>

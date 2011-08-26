@@ -44,14 +44,17 @@
 			if (jQuery("input[name='status']:checked").val() == 'WorkInProgress') {
 				jQuery("#signs_WorkInProgress").attr('checked', 'checked')
 			} else {
-				jQuery("#signs_WorkInProgress").attr('checked', '')
+				jQuery("#signs_WorkInProgress").attr('checked', false)
 			} 
-				
-				
+			if (jQuery("input[name='status']:checked").val() == 'Abandoned') {
+				jQuery("#signs_Abandoned").attr('checked', 'checked')
+			} else {
+				jQuery("#signs_Abandoned").attr('checked', false)
+			} 
 			if (jQuery("input[name='status']:checked").val() == 'Experimental') {
 				jQuery("#signs_Experimental").attr('checked', 'checked')
 			} else {
-				jQuery("#signs_Experimental").attr('checked', '')
+				jQuery("#signs_Experimental").attr('checked', false)
 			}
 		})
 		
@@ -309,7 +312,6 @@
 		uploader.bind('FileUploaded', function(up, file, info) {		
 			jQuery('#imageBlobKey').val(info.response);
 		});
-			
 
 	});
 </script>
@@ -627,7 +629,7 @@
 							<td class="linkType"><select name="relationshipType">
 									<% enums.RelationshipType.each { key -> 
 									def selected = (r.type == key) ? 'selected=selected':'' %>
-									<option value="${key}" label="${key.title}" <%=selected%> />
+									<option value="${key}" <%=selected%> >${key.title}</option>
 									<% } %>
 							</select></td>
 							<td class="linkDescription"><input type="text" id="relationshipDescription" name="relationshipDescription" value="${r.description}"/></td>
@@ -649,7 +651,7 @@
 							<input type="hidden" id="relationshipId" name="relationshipId" />
 							<td class="linkType"><select name="relationshipType">
 									<% enums.RelationshipType.each { key -> %>									
-									<option value="${key}" label="${key.title}" />
+									<option value="${key}">${key.title}</option>									
 									<% } %>
 							</select>
 							</td>
@@ -685,7 +687,7 @@
 								<select id="collaboratorRole" name="collaboratorRole">
 									<% enums.Role.each { key -> 
 									def selected = (c.role == key) ? 'selected=selected':'' %>
-									<option value="${key}" label="${key.title}" <%=selected%> />
+									<option value="${key}" <%=selected%> >${key.title}</option>
 									<% } %>
 								</select>
 								<input type="text" id="collaboratorRoleOther" name="collaboratorRoleOther" value="${c.otherRole?:''}" />
@@ -712,7 +714,7 @@
 							<input type="hidden" id="collaboratorId" name="collaboratorId" />
 							<td class="linkType"><select id="collaboratorRole" name="collaboratorRole">
 									<% enums.Role.each { key -> %>
-									<option value="${key}" label="${key.title}" />
+									<option value="${key}">${key.title}</option>
 									<% } %>
 							</select>
 							<input type="text" id="collaboratorRoleOther" name="collaboratorRoleOther" />

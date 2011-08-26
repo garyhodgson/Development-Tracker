@@ -8,7 +8,7 @@
 <script type="text/javascript">
 	jQuery(function() {
 		
-		jQuery("#flowtabs").tabs("#flowpanes > div", { history: true });
+		jQuery("#tabs").tabs();
 		
 		if (document.location.toString().split('#')[1]){
 			jQuery('a[href=#'+document.location.toString().split('#')[1]+']').click()
@@ -37,17 +37,15 @@
 </div>
 
 <div class="content thumbnailed">
-	<ul class="tabs" id="flowtabs">
-		<li><a id="t1" class="links_with_history" href="#details">Details</a></li>
-		<li><a id="t2" class="links_with_history" href="#developments">Developments Registered <span class="heading-count">(${request.userDevelopments?.size()?:0})</span></a></li>
-		<li><a id="t3" class="links_with_history" href="#watching">Watching <span class="heading-count">(${request.watchedDevelopments?.size()?:0})</span></a></li>
-		<li><a id="t4" class="links_with_history" href="#collaborations">Collaborations <span class="heading-count">(${request.collaborations?.size()?:0})</span></a></li>
-	</ul>
+	<div id="tabs">
+		<ul class="tabs" >
+			<li><a href="#details">Details</a></li>
+			<li><a href="#developments">Developments Registered <span class="heading-count">(${request.userDevelopments?.size()?:0})</span></a></li>
+			<li><a href="#watching">Watching <span class="heading-count">(${request.watchedDevelopments?.size()?:0})</span></a></li>
+			<li><a href="#collaborations">Collaborations <span class="heading-count">(${request.collaborations?.size()?:0})</span></a></li>
+		</ul>
 
-	<!-- tab "panes" -->
-	<div class="panes" id="flowpanes">
-	
-		<div class="userinfo">
+		<div class="userinfo" id="details">
 			<table border=0 cellspacing="0" cellpadding="5px">
 				<tr>
 					<td class="label-column">Username</td>
@@ -78,7 +76,7 @@
 			</table>
 		</div>
 
-		<div class="userinfo">
+		<div class="userinfo" id="developments">
 				<table border=0 cellspacing="0" cellpadding="5px" width=75%>
 					<% request.userDevelopments?.each { development -> %>
 					<tr>
@@ -98,7 +96,7 @@
 				</table>
 		</div>
 
-		<div class="userinfo">
+		<div class="userinfo" id="watching">
 			<table border=0 cellspacing="0" cellpadding="5px" width=75%>
 				<% request.watchedDevelopments?.each { development -> %>
 				<tr>
@@ -119,7 +117,7 @@
 		</div>
 		
 		
-		<div class="userinfo">
+		<div class="userinfo" id="collaborations">
 			<table border=0 cellspacing="0" cellpadding="5px" width=75%>
 				<% request.collaborations?.each { %>
 				<tr>

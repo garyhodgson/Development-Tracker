@@ -2,6 +2,7 @@ package enums;
 
 public enum Sign {
 
+	Abandoned("Abandoned", "abandoned.png"),
 	Biohazard("Biohazard", "biohazard.png"),
 	Blindness("Blindness", "blindness.png"),
 	Caution("Caution", "caution.png"),

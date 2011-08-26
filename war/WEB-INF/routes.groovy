@@ -17,6 +17,8 @@ get "/developments/latest/feed",  forward: "/developments/feed.groovy?feedtype=a
 get "/developments/latest/feed.@feedtype",  forward: "/developments/feed.groovy?feedtype=@feedtype"
 get "/developments/latest/@count",  forward: "/developments/latest.groovy?count=@count"
 
+all "/developments/autocomplete",  forward: "/developments/autocomplete.groovy"
+
 get "/developments/search",  forward: "/templates/developments/search.gtpl"
 get "/developments/search/@searchKey",  forward: "/developments/search.groovy?searchKey=@searchKey"
 post "/developments/search",  forward: "/developments/search.groovy"
