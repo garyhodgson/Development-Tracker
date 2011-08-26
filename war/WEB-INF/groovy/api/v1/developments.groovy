@@ -73,6 +73,7 @@ xml.developments("count":devs.size(), "api-version":"1") {
 					license(id:d.license, d.license.description?:d.license.title)
 				}
 			}
+			notice(d.notice?:'')
 			projectVendors{
 				d.projectVendor?.each {
 					if (it == ProjectVendor.Other){
@@ -89,6 +90,11 @@ xml.developments("count":devs.size(), "api-version":"1") {
 							name(n)
 							value(d.specificationValue[i]?:'')
 						}
+				}
+			}
+			signs {
+				d.signs?.each { 
+					sign(it.title)
 				}
 			}
 			if (d.status){
