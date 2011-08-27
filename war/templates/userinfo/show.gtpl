@@ -5,6 +5,7 @@
 
 <% include '/templates/includes/header.gtpl' %>
 
+<script type="text/javascript" src="/js/jquery.paginator.js"></script>
 <script type="text/javascript">
 	jQuery(function() {
 		
@@ -13,6 +14,10 @@
 		if (document.location.toString().split('#')[1]){
 			jQuery('a[href=#'+document.location.toString().split('#')[1]+']').click()
 		}
+		
+		jQuery("#registeredDevelopmentsTable").paginate(12, 300);
+		jQuery("#watchedDevelopmentsTable").paginate(12, 300);
+		jQuery("#collaborationsTable").paginate(12, 300);
 		
 	});
 </script>
@@ -77,7 +82,7 @@
 		</div>
 
 		<div class="userinfo" id="developments">
-				<table border=0 cellspacing="0" cellpadding="5px" width=75%>
+				<table border=0 cellspacing="0" cellpadding="5px" width=75% id="registeredDevelopmentsTable">
 					<% request.userDevelopments?.each { development -> %>
 					<tr>
 						<td class="value-column"><a href="/development/${development.id}">${development.title}</a></td>
@@ -97,7 +102,7 @@
 		</div>
 
 		<div class="userinfo" id="watching">
-			<table border=0 cellspacing="0" cellpadding="5px" width=75%>
+			<table border=0 cellspacing="0" cellpadding="5px" width=75% id="watchedDevelopmentsTable">
 				<% request.watchedDevelopments?.each { development -> %>
 				<tr>
 					<td class="value-column"><a href="/development/${development.id}">${development.title}</a></td>
@@ -118,7 +123,7 @@
 		
 		
 		<div class="userinfo" id="collaborations">
-			<table border=0 cellspacing="0" cellpadding="5px" width=75%>
+			<table border=0 cellspacing="0" cellpadding="5px" width=75% id="collaborationsTable">
 				<% request.collaborations?.each { %>
 				<tr>
 					<td class="linkDescription">(${it.role})</td>

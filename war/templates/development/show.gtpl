@@ -132,7 +132,7 @@ jQuery(function() {
 				</tr>
 				<tr>
 					<td>License</td>
-					<% def license = (development.license && development.license == enums.License.Other) ?  development.licenseOther ?:'' : development.license.description?:'' %>
+					<% def license = (development.license && development.license == enums.License.Other) ?  development.licenseOther ?:'' : development.license?.description?:'' %>
 					<td>${license}</td>
 				</tr>
 				<tr>
