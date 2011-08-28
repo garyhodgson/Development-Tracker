@@ -5,4 +5,5 @@ public class MemcacheKeys {
 	public static final BROWSE_STATS = "BrowseStats"
 	public static final SEARCH_KEY = "SearchKey"
 	public static final GITHUB_SUPPLEMENTARY = "GithubSupplementary"
+	public static final TITLE_AUTOCOMPLETE = "TitleAutocomplete"
 }

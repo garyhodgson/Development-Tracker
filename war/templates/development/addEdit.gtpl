@@ -313,7 +313,15 @@
 			jQuery('#imageBlobKey').val(info.response);
 		});
 
-		
+		jQuery("input[name=relationshipDescription]").autocomplete({
+				minLength: 2,
+				source: '/developments/autocomplete',
+				select: function( event, ui ) {
+					if (ui.item.id){
+						jQuery(this).parent().next().find('#relationshipTo').val(ui.item.id)	
+					}
+				}
+			});
 	});
 </script>
 
