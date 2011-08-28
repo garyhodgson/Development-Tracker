@@ -208,7 +208,7 @@
 					validate()
 				} else {
 				
-					jQuery.get('/development/exists/title/' + jQuery(this).val(),
+					jQuery.get('/development/exists/title/' + encodeURIComponent(jQuery(this).val()),
 						function(data) {
 							if (data == "") {
 								titleIsValid = true

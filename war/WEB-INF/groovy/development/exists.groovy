@@ -11,10 +11,13 @@ if (!params.value){
 	return
 }
 
-def result = dao.ofy().query(Development.class).filter(params.field, params.value).get()
+try {
+	def result = dao.ofy().query(Development.class).filter(params.field, params.value).get()
 
-if (result){
-	out << result.id
+	if (result){
+		out << result.id
+	}
+} catch (Exception e){
+	log.severe e.getMessage()
 }
-
 return
