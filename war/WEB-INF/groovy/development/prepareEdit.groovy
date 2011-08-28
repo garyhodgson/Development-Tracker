@@ -46,21 +46,22 @@ if (!development) {
 request.development = development
 request.collaborations = dao.ofy().query(Collaboration.class).ancestor(key).list()
 
-def mayEdit = (development.createdBy == userinfo.username);
+if (!users.isUserAdmin()){
+	def mayEdit = (development.createdBy == userinfo.username);
 
-request.collaborations.each {
-	def userInfoKey = new Key(UserInfo.class, userinfo.userId)
-	if (it.userInfo == userInfoKey && it.mayEdit){
-		mayEdit = true
+	request.collaborations.each {
+		def userInfoKey = new Key(UserInfo.class, userinfo.userId)
+		if (it.userInfo == userInfoKey && it.mayEdit){
+			mayEdit = true
+		}
+	}
+
+	if (!mayEdit){
+		request.session.message = "You do not have permission to edit this Development."
+		redirect params.referer?:"/development/${id}"
+		return
 	}
 }
-
-if (!mayEdit){
-	request.session.message = "You do not have permission to edit this Development."
-	redirect params.referer?:"/development/${id}"
-	return
-}
-
 request.relationships = dao.ofy().query(Relationship.class).ancestor(key).list()
 
 request.pageTitle = "Edit Development: ${development.title}"
