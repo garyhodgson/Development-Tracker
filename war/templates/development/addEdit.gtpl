@@ -51,6 +51,11 @@
 			} else {
 				jQuery("#signs_Abandoned").attr('checked', false)
 			} 
+			if (jQuery("input[name='status']:checked").val() == 'Obsolete') {
+				jQuery("#signs_Obsolete").attr('checked', 'checked')
+			} else {
+				jQuery("#signs_Obsolete").attr('checked', false)
+			} 
 			if (jQuery("input[name='status']:checked").val() == 'Experimental') {
 				jQuery("#signs_Experimental").attr('checked', 'checked')
 			} else {

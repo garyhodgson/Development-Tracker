@@ -18,6 +18,7 @@ public enum Sign {
 	Magnetism("Magnetism", "magnetism.png"),
 	MovingParts("Moving Parts", "movingparts.png"),
 	NonIonisingRadiation("Non-Ionising Radiation", "nonionisingradiation.png"),
+	Obsolete("Obsolete", "obsolete.png"),
 	Radiation("Radiation", "radiation.png"),
 	Shock("High Voltage", "shock.png"),
 	Skull("Toxic", "skull.png"),
