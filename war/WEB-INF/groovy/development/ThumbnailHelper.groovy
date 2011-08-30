@@ -56,7 +56,11 @@ class ThumbnailHelper {
 			thumbnailFile = generateThumbnailFromBlob(params.imageBlobKey)
 		} else if (params.imageURL && !params.imageURL.startsWith(UPLOADED_FILE)) {
 			thumbnailFile = generateThumbnailFromURL(params.imageURL)
+		} else {
+			// no new data
+			return
 		}
+	
 
 		if (!thumbnailFile){
 			throw new ThumbnailException("There was an error generating the thumbnail image.")

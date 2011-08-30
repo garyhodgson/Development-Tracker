@@ -44,8 +44,7 @@ jQuery(function() {
 
 <% if (development.imageURL){ %>
 <div class="development-thumb left">
-	<a class="nohint" href="/development/${development.id}"><img src="${development.imageURL}">
-	</a>
+	<img src="${development.thumbnailServingUrl}">
 </div>
 <% } %>
 
