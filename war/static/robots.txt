@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /access/
+Disallow: /api/
+Disallow: /_ah/
+Disallow: /admin/
+Disallow: /userinfos
+Disallow: /userinfo/
+Disallow: /maintenance

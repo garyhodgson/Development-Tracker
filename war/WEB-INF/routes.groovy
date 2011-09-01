@@ -3,6 +3,8 @@ import static com.google.appengine.api.capabilities.CapabilityStatus.*
 
 all "/_ah/**", ignore: true
 
+get "/robots.txt", forward: "/static/robots.txt"
+get "/robots.txt/", forward: "/static/robots.txt"
 get "/403/", forward: "/static/403.gtpl"
 get "/404/", forward: "/static/404.gtpl"
 get "/error/", forward: "/static/error.gtpl"
