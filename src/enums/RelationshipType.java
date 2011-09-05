@@ -3,13 +3,13 @@ package enums;
 
 public enum RelationshipType {
 
-	DerivedFrom("Derived From", "Derives"),
-	RelatedTo("Related To", "Relates To"),
+	DerivedFrom("Derived From", "Derived"),
+	RelatedTo("Related To", "Related To"),
 	DesignedFor("Designed For", "Has Design"),
 	PartOf("Part Of", "Consists Of"),
 	ConsistsOf("Consists Of", "Part Of"),
-	InspiredBy("Inspired By", "Inspires"),
-	EvolvedFrom("Evolved From", "Developed Into"),
+	InspiredBy("Inspired By", "Inspired"),
+	EvolvedFrom("Evolved From", "Evolved Into"),
 	InAnswerTo("In Answer To", "Is Answered By"),
 	Link("Link", "Link"),
 	Other("Other", "Other");
