@@ -30,6 +30,21 @@ def developmentKey = new Key(Development.class, params.id as Long)
 try {
 	request.development = dao.ofy().get(developmentKey)
 	request.relationships = dao.ofy().query(Relationship.class).ancestor(developmentKey).list()
+
+	def reverseRelationships = dao.ofy().query(Relationship.class).filter("to", new Key(Development.class, params.id)).list()
+	if (reverseRelationships){
+		
+		def reverseDevs = dao.ofy().get( reverseRelationships.collect { it.from } ).values()
+	
+		request.reverseRelationships = []
+		
+		reverseDevs.eachWithIndex { dev, i ->
+			def rel = reverseRelationships.getAt(i)
+			request.reverseRelationships << [type:rel.type, development:dev]			
+		}		 
+	}
+	 
+	
 	request.collaborations = dao.ofy().query(Collaboration.class).ancestor(developmentKey).list()
 } catch (NotFoundException nfe){
 	request.session.message = "No development with id ${params.id} found."

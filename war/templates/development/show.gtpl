@@ -1,6 +1,7 @@
 <% 
 	def development = request.getAttribute("development") 
 	def relationships = request.getAttribute('relationships')
+	def reverseRelationships = request.getAttribute('reverseRelationships')
 	def collaborations = request.getAttribute('collaborations')
 	def supplementary = request.getAttribute('supplementary')
 %>
@@ -95,7 +96,7 @@ jQuery(function() {
 	<div id="tabs">
 		<ul class="tabs">
 			<li><a href="#core">Core</a></li>
-			<li><a href="#connections">Connections <span class="heading-count">(${relationships?.size()?:0})</span></a></li>
+			<li><a href="#connections">Connections <span class="heading-count">(${relationships?.size()?:0}/${reverseRelationships?.size()?:0})</span></a></li>
 			<li><a href="#collaborators">Collaborators <span class="heading-count">(${collaborations?.size()?:0})</span></a></li>
 			<li><a href="#specification">Specification <span class="heading-count">(${development.specificationName?.size()?:0})</span></a></li>
 			<li><a href="#more">More <span class="heading-count">(${supplementary?.values()?.size()?:0})</span></a></li>
@@ -207,6 +208,18 @@ jQuery(function() {
 						<% } else { %>
 							${r.toUrl}
 						<% }  %>
+					</td>
+				</tr>
+				<% 	} %>
+			</table>
+			<hr>
+			<table border=0 cellspacing="0" cellpadding="5px">
+				<%  reverseRelationships?.each { rr ->
+				%>
+				<tr>
+					<td >${rr.type.reverseTitle}</td>
+					<td >
+						<a href="/development/${rr.development.id}">${rr.development.title}</a>
 					</td>
 				</tr>
 				<% 	} %>

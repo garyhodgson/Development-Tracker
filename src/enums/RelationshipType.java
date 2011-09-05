@@ -3,27 +3,27 @@ package enums;
 
 public enum RelationshipType {
 
-	DerivedFrom("Derived From"),
-	RelatedTo("Related To"),
-	DesignedFor("Designed For"),
-	PartOf("Part Of"),
-	ConsistsOf("Consists Of"),
-	InspiredBy("Inspired By"),
-	EvolvedFrom("Evolved From"),
-	InAnswerTo("In Answer To"),
-	Link("Link"),
-	Other("Other");
+	DerivedFrom("Derived From", "Derives"),
+	RelatedTo("Related To", "Relates To"),
+	DesignedFor("Designed For", "Has Design"),
+	PartOf("Part Of", "Consists Of"),
+	ConsistsOf("Consists Of", "Part Of"),
+	InspiredBy("Inspired By", "Inspires"),
+	EvolvedFrom("Evolved From", "Developed Into"),
+	InAnswerTo("In Answer To", "Is Answered By"),
+	Link("Link", "Link"),
+	Other("Other", "Other");
 	
 	protected String title = null;
-	protected String description = null;
+	protected String reverseTitle = null;
 	
 	RelationshipType(String title) {
 		this.title = title;
 	}
 	
-	RelationshipType(String title, String description) {
+	RelationshipType(String title, String reverseTitle) {
 		this.title = title;
-		this.description = description;
+		this.reverseTitle = reverseTitle;
 	}
 
 	RelationshipType() {
