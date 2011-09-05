@@ -11,6 +11,9 @@ import enums.*
 import groovy.xml.MarkupBuilder
 
 def devs = dao.ofy().query(Development.class).list()
+def collaborations = dao.ofy().query(Collaboration.class).list()
+def relationships = dao.ofy().query(Relationship.class).list()
+
 def baseURL = "${request.scheme}://${headers.Host}"
 def writer = new StringWriter()
 
@@ -36,18 +39,23 @@ xml.developments("count":devs.size(), "api-version":"1") {
 				d.categories?.each { category(it.title) }
 			}
 			
-			def collaborations = dao.ofy().query(Collaboration.class).ancestor(developmentKey).list()
-			collaborators("count":collaborations.size()) {
-				collaborations.each { c ->
+			def collabs = collaborations.findAll { it.development == developmentKey }
+			if (collabs){
+			collaborators("count":collabs.size()) {
+				collabs.each { c ->
 					collaborator(role:c.role, c.name)
 				}
 			}
-			def relationships = dao.ofy().query(Relationship.class).ancestor(developmentKey).list()
-			connections("count":relationships.size()) {
-				relationships.each { c ->
+			}
+			def rels = relationships.findAll { it.from == developmentKey }
+			if (rels){
+			connections("count":rels.size()) {
+				rels.each { c ->
 					connection(type:c.type, url:(c.to)?"${baseURL}/development/${c.to.name}": c.toUrl, c.description)					
 				}
 			}			
+			}
+			
 			description(d.description)
 			if (d.developmentType) {
 				if (d.developmentType == DevelopmentType.Other){
