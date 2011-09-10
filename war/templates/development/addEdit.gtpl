@@ -207,7 +207,8 @@
 				validate()
 			} else {
 				
-				if (isEditing && (jQuery(this).val() == originalTitle)){
+				var currentTitle = jQuery(this).val().replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+				if (isEditing && (currentTitle == originalTitle)){
 					titleIsValid = true
 					jQuery('#titleMessage').html("")
 					validate()

@@ -11,6 +11,8 @@ if (!params.value){
 	return
 }
 
+log.info params.value.toString()
+
 try {
 	def result = dao.ofy().query(Development.class).filter(params.field, params.value).get()
 
