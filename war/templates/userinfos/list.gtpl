@@ -5,13 +5,6 @@
 <nav>
 	<ul>
 		<a href="/"><li>Home</li></a>
-	
-		<% if (users.isUserLoggedIn()) { %>
-			<% if (users.isUserAdmin() || user.userId == userinfo.userId) { %>
-				<a href="/userinfo/edit/<%=userinfo.username%>"><li>Edit</li></a>
-			<% } %>	
-		<% } %>	
-			
 	</ul>
 </nav>
 
@@ -32,7 +25,7 @@
 			<td><a href="/userinfo/${userinfo.username}">${userinfo.username}</a>
 			</td>
 			<td>${userinfo.created}</td>
-			<% if (users.isUserLoggedIn() && (users.isUserAdmin() || users.currentUser.userId == userinfo.key.id)) { %>
+			<% if (users.isUserLoggedIn() && (users.isUserAdmin() || user.userId == userinfo.userId)) { %>
 			<td><input class="action" type="button" onclick="javascript:location='/userinfo/edit/<%=userinfo.username%>'"
 				value="Edit"
 			></td>

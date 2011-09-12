@@ -29,6 +29,12 @@ if (!params.id.isLong()){
 	return
 }
 
+if (!users.isUserLoggedIn()){
+	request.session.message = "Must be logged in to update a development."
+	forward "/templates/access/login.gtpl?continue=/development/edit/${params.id}"
+	return
+}
+
 def developmentKey = new Key<Development>(Development.class, params.id as Long)
 def development = dao.ofy().get(developmentKey)
 if (!development) {

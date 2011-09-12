@@ -6,6 +6,7 @@
 		<a href="/developments/latest"><li>Developments</li></a>
 		<a href="/developments/search"><li>Search</li></a>
 		<a href="/developments/browse"><li>Browse</li></a>
+		<a href="/themes"><li>Themes</li></a>
 		<a href="/activities"><li>Recent Activities</li></a>
 		
 		<%if (users.isUserLoggedIn() && session.userinfo?.username){ %>

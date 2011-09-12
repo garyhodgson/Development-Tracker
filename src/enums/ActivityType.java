@@ -5,15 +5,18 @@ public enum ActivityType {
 	DevelopmentUpdated("Development Updated"),
 	DevelopmentDeleted("Development Deleted"),
 	NewUser("New User"),
-	StartedWatching("Started Watching");	
+	StartedWatching("Started Watching"),
+	NewTheme("New Theme"),
+	ThemeUpdated("Theme Updated"),
+	ThemeDeleted("Theme Deleted");	
 	
 	protected String title = null;
-	
-	ActivityType(String title){
+
+	ActivityType(String title) {
 		this.title = title;
 	}
-	
-	ActivityType(){
+
+	ActivityType() {
 		this.title = name();
 	}
 

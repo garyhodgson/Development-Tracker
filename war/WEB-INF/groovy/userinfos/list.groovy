@@ -17,9 +17,11 @@ namespace.of("") {
 	}
 	request.userinfos = dao.ofy().query(UserInfo.class).order('-created').offset(offset).limit(limit).list()
 
-	def resultsetCount = request.userinfos.size()
+	if (request.userinfos){
+		def resultsetCount = request.userinfos.size()
 
-	request.paging = createPaging(totalCount, limit, offset, resultsetCount)
+		request.paging = createPaging(totalCount, limit, offset, resultsetCount)
+	}
 }
 
 request.route = "/userinfos"

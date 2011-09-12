@@ -61,7 +61,27 @@ get "/development/@id/history/@changeHistoryId",  forward: "/history/history.gro
 get "/development/@id",  forward: "/development/show.groovy?id=@id"
 
 
-/* Misc */
+/* Theme */
+get "/themes", forward: "/themes/list.groovy"
+get "/themes/latest", forward: "/themes/list.groovy"
+get "/themes/latest/feed.@feedtype",  forward: "/themes/feed.groovy?feedtype=@feedtype"
+get "/theme/add",  forward: {
+	to "/theme/prepareAdd.groovy"
+	to("/templates/static/maintenance.gtpl").on(DATASTORE).not(ENABLED)
+	to("/templates/static/maintenance.gtpl").on(DATASTORE_WRITE).not(ENABLED)
+} 
+post "/theme/add", forward:  "/theme/add.groovy"
+get "/theme/edit/@id",  forward: {
+	to "/theme/prepareEdit.groovy?id=@id"
+	to("/templates/static/maintenance.gtpl").on(DATASTORE).not(ENABLED)
+	to("/templates/static/maintenance.gtpl").on(DATASTORE_WRITE).not(ENABLED)
+}
+post "/theme/update", forward: "/theme/update.groovy"
+get "/theme/delete/@id",  forward: "/theme/delete.groovy?id=@id"
+get "/theme/@id",  forward: "/theme/show.groovy?id=@id"
+
+
+/* Activities */
 get "/activities", forward: "/activities/list.groovy"
 
 /* Admin */
