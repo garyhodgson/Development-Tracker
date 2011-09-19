@@ -3,11 +3,19 @@ import static com.google.appengine.api.capabilities.CapabilityStatus.*
 
 all "/_ah/**", ignore: true
 
-get "/robots.txt", forward: "/static/robots.txt"
-get "/robots.txt/", forward: "/static/robots.txt"
-get "/403/", forward: "/static/403.gtpl"
-get "/404/", forward: "/static/404.gtpl"
-get "/error/", forward: "/static/error.gtpl"
+
+get "/robots.txt", forward: "/robots.txt"
+get "/robots.txt/", forward: "/robots.txt"
+get "/403/", forward: "/templates/static/403.gtpl"
+get "/404/", forward: "/templates/static/404.gtpl"
+get "/error/", forward: "/templates/static/error.gtpl"
+get "/about", forward: "/templates/static/about.gtpl"
+get "/future", forward: "/templates/static/future.gtpl"
+get "/faq", forward: "/templates/static/faq.gtpl"
+get "/terms", forward: "/templates/static/terms.gtpl"
+get "/maintenance", forward: "/templates/static/maintenance.gtpl"
+get "/blog", redirect: app.AppProperties.BLOG_ADDRESS
+get "/favicon.ico", redirect: "/images/favicon.ico"
 
 /* API */
 get "/api/@version/developments", forward: "/api/@version/developments.groovy"
@@ -123,17 +131,7 @@ post "/userinfo/update", forward: "/userinfo/update.groovy"
 /* Userinfos */
 get "/userinfos", forward: "/userinfos/list.groovy"
 
-
-/* Static */
-get "/about", forward: "/templates/static/about.gtpl"
-get "/future", forward: "/templates/static/future.gtpl"
-get "/faq", forward: "/templates/static/faq.gtpl"
-get "/terms", forward: "/templates/static/terms.gtpl"
-get "/maintenance", forward: "/templates/static/maintenance.gtpl"
-get "/blog", redirect: app.AppProperties.BLOG_ADDRESS
-
 /* Other */
 get "/start/@namespace", forward: "/index.groovy?namespace=@namespace"
 get "/help/@topic", forward: "/help/help.groovy?topic=@topic"
-get "/favicon.ico", redirect: "/images/favicon.ico"
 get "/", forward: "/index.groovy"

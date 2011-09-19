@@ -2,12 +2,12 @@
 
 <br><br>
 <div class="">
-	<img src="/images/signs/244/skull.png" />
+	<img src="/images/signs/244/404.png" />
 </div>
 <br><br>
 <div class="">
-	<h2>Sorry, an error occurred.</h2>
-	<p>Please contact <a href="mailto:support@development-tracker.info">support</a> to tell them what went wrong.</p>
+	<h2>Sorry, the page you were trying to reach could not be found.</h2>
+	<p>Please contact <a href="mailto:support@development-tracker.info">support</a> if you require help.</p>
 </div>
 <br><br>
 <div class="bordered site-default-bg">

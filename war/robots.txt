@@ -6,5 +6,5 @@ Disallow: /admin/
 Disallow: /userinfos
 Disallow: /userinfo/
 Disallow: /maintenance
-Disallow: /development/delete
-Disallow: /theme/delete
+Disallow: /development/delete/
+Disallow: /theme/delete/
