@@ -14,19 +14,27 @@ if (!params.searchField){
 def query = dao.ofy().query(Development.class)
 
 if (params.value){
-	
-	def values = params.value.split(";")
-	
-	if (values.size() > 1){
+	log.info "${params.value}"
+
+	if (params.value.contains("_AND_")){
+		
+		def values = params.value.split("_AND_")
+		values.each {
+			query.filter("$params.searchField = ", it)
+		}
+		request.pageTitle = "Developments where ${params.searchField} must include ${values}"
+		
+	} else if (params.value.contains("_OR_")){
+		def values = params.value.split("_OR_")
 		query.filter("$params.searchField IN ", values)
-		request.pageTitle = "Developments where ${params.searchField} includes ${values}"
+		request.pageTitle = "Developments where ${params.searchField} may include ${values}"
+		
 	} else {
 		query.filter("$params.searchField = ", params.value)
-		
 		def conjunction = (params.searchField.endsWith('ies'))?'includes': 'is'
-		
 		request.pageTitle = "Developments where ${params.searchField} ${conjunction} ${params.value}"
 	}
+
 } else {
 	request.pageTitle = "Developments with field ${params.searchField}"
 }
