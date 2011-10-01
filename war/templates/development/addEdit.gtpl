@@ -17,7 +17,16 @@
 		var originalTitle = "${development?.title?:''}"
 		var	originalSourceURL = "${development?.sourceURL?:''}"
 		var isEditing = <%println (request.getAttribute('action')=="/development/update")? 'true': 'false'%>
-		
+		var autocompleteOptions = {
+			minLength: 2,
+			source: '/developments/autocomplete',
+			select: function( event, ui ) {
+				if (ui.item.id){
+					jQuery(event.target.parentElement).next().find('#relationshipTo').val(ui.item.id)	
+				}
+			}
+		}
+	
 		function validate() {
 			if (titleIsValid){
 				jQuery('#submitForm').attr('disabled', false);
@@ -138,10 +147,12 @@
 		})
 				
 		jQuery('#addRelationship').click(function(){
-			jQuery('#relationshipTable tbody>tr:last').clone(true).insertAfter('#relationshipTable tbody>tr:last');
+			jQuery('#relationshipTable tbody>tr:last').clone().insertAfter('#relationshipTable tbody>tr:last');
 			jQuery('#relationshipTable tbody>tr:last #relationshipTo').val('')
 			jQuery('#relationshipTable tbody>tr:last #relationshipDescription').val('')
+			jQuery('#relationshipTable tbody>tr:last #relationshipDescription').autocomplete(autocompleteOptions)
 			jQuery('#relationshipTable tbody>tr:last #relationshipId').val('')
+		
 		})
 		
 		jQuery('#removeCollaborator').live('click', function(){
@@ -165,14 +176,14 @@
 		})
 				
 		jQuery('#addCollaborator').click(function(){
-			jQuery('#collaboratorTable tbody>tr:last').clone(true).insertAfter('#collaboratorTable tbody>tr:last');
+			jQuery('#collaboratorTable tbody>tr:last').clone().insertAfter('#collaboratorTable tbody>tr:last');
 			jQuery('#collaboratorTable tbody>tr:last #collaboratorName').val('')
 			jQuery('#collaboratorTable tbody>tr:last #collaboratorId').val('')
 			jQuery('#collaboratorTable tbody>tr:last #collaboratorRoleOther').val('')
 			
 			var index = jQuery('#collaboratorTable tbody>tr').size() - 2;
-			jQuery('#collaboratorTable tbody>tr:last #collaboratorIsUsername').attr('checked', '').attr('value', index)
-			jQuery('#collaboratorTable tbody>tr:last #collaboratorMayEdit').attr('checked', '').attr('value', index).attr('disabled', true)			
+			jQuery('#collaboratorTable tbody>tr:last #collaboratorIsUsername').attr('checked', false).attr('value', index)
+			jQuery('#collaboratorTable tbody>tr:last #collaboratorMayEdit').attr('checked', false).attr('value', index).attr('disabled', true)			
 		})
 		
 		jQuery('#removeSpecification').live('click', function(){
@@ -185,7 +196,7 @@
 		})
 				
 		jQuery('#addSpecification').click(function(){
-			jQuery('#specificationTable tbody>tr:last').clone(true).insertAfter('#specificationTable tbody>tr:last');
+			jQuery('#specificationTable tbody>tr:last').clone().insertAfter('#specificationTable tbody>tr:last');
 			jQuery('#specificationTable tbody>tr:last #specificationName').val('')
 			jQuery('#specificationTable tbody>tr:last #specificationValue').val('')
 		})
@@ -319,15 +330,7 @@
 			jQuery('#imageBlobKey').val(info.response);
 		});
 
-		jQuery("input[name=relationshipDescription]").autocomplete({
-				minLength: 2,
-				source: '/developments/autocomplete',
-				select: function( event, ui ) {
-					if (ui.item.id){
-						jQuery(this).parent().next().find('#relationshipTo').val(ui.item.id)	
-					}
-				}
-			});
+		jQuery("input[name=relationshipDescription]").autocomplete(autocompleteOptions);
 	});
 </script>
 
