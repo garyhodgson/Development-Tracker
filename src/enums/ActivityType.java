@@ -8,7 +8,9 @@ public enum ActivityType {
 	StartedWatching("Started Watching"),
 	NewTheme("New Theme"),
 	ThemeUpdated("Theme Updated"),
-	ThemeDeleted("Theme Deleted");	
+	ThemeDeleted("Theme Deleted"),
+	NewKit("New Kit"),
+	KitUpdated("Kit Updated");
 	
 	protected String title = null;
 

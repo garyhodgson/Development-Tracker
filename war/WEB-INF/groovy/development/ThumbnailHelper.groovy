@@ -8,7 +8,7 @@ import com.google.appengine.api.files.FileServiceFactory
 import com.googlecode.objectify.ObjectifyService
 
 @GaelykBindings
-class ThumbnailHelper {
+public class ThumbnailHelper {
 	
 	public static final String UPLOADED_FILE = "Uploaded File:"
 	
@@ -42,11 +42,11 @@ class ThumbnailHelper {
 		return thumbnailFile
 	}
 
-	public def generateThumbnail(def originalDevelopmentThumbnailPath, def params, def newDevelopment) throws ThumbnailException {
+	public def generateThumbnail(def originalThumbnailPath, def params, def newEntity) throws ThumbnailException {
 
 		if (!params.imageBlobKey && !params.imageURL){
-			if (originalDevelopmentThumbnailPath){
-				deleteThumbnail(originalDevelopmentThumbnailPath)
+			if (originalThumbnailPath){
+				deleteThumbnail(originalThumbnailPath)
 			}
 			return
 		}
@@ -61,20 +61,19 @@ class ThumbnailHelper {
 			return
 		}
 	
-
 		if (!thumbnailFile){
 			throw new ThumbnailException("There was an error generating the thumbnail image.")
 		}
 
-		if (originalDevelopmentThumbnailPath) {
-			deleteThumbnail(originalDevelopmentThumbnailPath)
+		if (originalThumbnailPath) {
+			deleteThumbnail(originalThumbnailPath)
 		}
 
 		try {
-			newDevelopment.thumbnailPath = thumbnailFile.getFullPath()
-			newDevelopment.thumbnailServingUrl = images.getServingUrl(thumbnailFile.blobKey)
+			newEntity.thumbnailPath = thumbnailFile.getFullPath()
+			newEntity.thumbnailServingUrl = images.getServingUrl(thumbnailFile.blobKey)
 
-			ObjectifyService.begin().put(newDevelopment)
+			ObjectifyService.begin().put(newEntity)
 			
 		} catch (Exception e){
 			e.printStackTrace()
@@ -94,7 +93,6 @@ class ThumbnailHelper {
 				file.delete()
 			}
 		} catch (Exception e){
-			// We don't care what exception
 			e.printStackTrace()
 			System.err.println "Unable to delete thumbnail: ${path}"
 		}

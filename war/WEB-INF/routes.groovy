@@ -128,6 +128,25 @@ get "/userinfo/@username", forward: "/userinfo/show.groovy?username=@username"
 post "/userinfo/update", forward: "/userinfo/update.groovy"
 
 
+/* Kit */
+get "/kits", forward: "/kits/list.groovy"
+get "/kit/add",  forward: {
+	to "/kit/prepareAdd.groovy"
+	to("/templates/static/maintenance.gtpl").on(DATASTORE).not(ENABLED)
+	to("/templates/static/maintenance.gtpl").on(DATASTORE_WRITE).not(ENABLED)
+}
+post "/kit/add", forward:  "/kit/add.groovy"
+get "/kit/edit/@id",  forward: {
+	to "/kit/prepareEdit.groovy?id=@id"
+	to("/templates/static/maintenance.gtpl").on(DATASTORE).not(ENABLED)
+	to("/templates/static/maintenance.gtpl").on(DATASTORE_WRITE).not(ENABLED)
+}
+post "/kit/update", forward: "/kit/update.groovy"
+get "/kit/delete/@id",  forward: "/kit/delete.groovy?id=@id"
+get "/kit/@id",  forward: "/kit/show.groovy?id=@id"
+
+
+
 /* Userinfos */
 get "/userinfos", forward: "/userinfos/list.groovy"
 

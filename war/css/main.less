@@ -173,6 +173,14 @@ header h1 {
 	border-radius: 40px;
 }
 
+.very-light-bordered {
+	margin: 5px;
+	padding: 5px;
+	border: 2px solid black;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+}
+
 
 .pageTitle {
 	.light-bordered;
@@ -842,4 +850,41 @@ ul.tabs {
 	border: 2px solid black;
 	-moz-border-radius: 10px;
 	border-radius: 20px;
+}
+
+.kit-thumbnail {
+	padding: 5px;
+	border: 1px solid black;
+	margin: 28px auto 10px auto;
+	width: 300px;
+	img {
+		width: 300px;
+	}
+}
+
+.kit-description {
+	white-space: pre-line;
+	margin: 5px 20px 10px 5px;
+	padding: 10px;
+	border: 2px solid black;
+	-moz-border-radius: 10px;
+	border-radius: 20px;
+
+}
+
+
+.parts-list {
+	li {
+		padding: 5px;
+		margin-bottom:5px;
+		.very-light-bordered;
+		list-style:none;
+	}
+	li:hover {
+		background-color: @site-default-select;
+	}
+	ul {
+		margin-right:-10px;
+		padding: 0;
+	}
 }

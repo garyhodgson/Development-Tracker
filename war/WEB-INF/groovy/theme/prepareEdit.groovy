@@ -27,7 +27,7 @@ if (!users.isUserLoggedIn()){
 def userinfo = session.userinfo
 if (!userinfo){
 	request.session.message = "Unable to identify user. Please contact <a href=\"mailto:${app.AppProperties.SUPPORT_EMAIL}\">support</a>."
-	redirect params.referer?:"/theme/${id}"
+	redirect params.referer?:"/theme/${params.id}"
 	return
 }
 

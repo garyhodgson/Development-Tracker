@@ -31,6 +31,9 @@
 		<% if (users.isUserLoggedIn()) { %>
 			<% if (users.isUserAdmin() || user.userId == userinfo.userId) { %>
 				<a href="/userinfo/edit/<%=userinfo.username%>"><li>Edit</li></a>
+				<br>
+				<a href="/kit/add"><li>Add Kit</li></a>
+				
 			<% } %>	
 		<% } %>	
 			
@@ -45,6 +48,7 @@
 	<div id="tabs">
 		<ul class="tabs" >
 			<li><a href="#details">Details</a></li>
+			<li><a href="#kits">Kits <span class="heading-count">(${request.kits?.size()?:0})</span></a></li>
 			<li><a href="#developments">Developments Registered <span class="heading-count">(${request.userDevelopments?.size()?:0})</span></a></li>
 			<li><a href="#watching">Watching <span class="heading-count">(${request.watchedDevelopments?.size()?:0})</span></a></li>
 			<li><a href="#collaborations">Collaborations <span class="heading-count">(${request.collaborations?.size()?:0})</span></a></li>
@@ -81,6 +85,26 @@
 			</table>
 		</div>
 
+		<div class="userinfo" id="kits">
+				<table border=0 cellspacing="0" cellpadding="5px" width=75% id="kitsTable">
+					<% request.kits?.each { kit -> %>
+					<tr>
+						<td class="value-column"><a href="/kit/${kit.id}">${kit.title}</a></td>
+						
+						<% if (users.isUserLoggedIn() && (users.isUserAdmin() || session.userinfo.username == kit.ownerUsername)) { %>
+							<td  class="linkAction"><input class="action" type="button"
+								onclick="javascript:location='/kit/edit/<%=kit.id%>'" value="Edit"
+							>
+							</td>
+						<% } else { %>
+							<td class="linkAction"></td>
+						<% } %>
+
+					</tr>
+					<% } %>
+				</table>
+		</div>
+		
 		<div class="userinfo" id="developments">
 				<table border=0 cellspacing="0" cellpadding="5px" width=75% id="registeredDevelopmentsTable">
 					<% request.userDevelopments?.each { development -> %>

@@ -4,6 +4,7 @@ import com.googlecode.objectify.Key
 
 import entity.Collaboration
 import entity.Development
+import entity.Kit
 import entity.UserInfo
 
 if (!params.username){
@@ -34,6 +35,8 @@ if (userinfo.watchedDevelopments){
 	request.watchedDevelopments = []
 }
 
+request.kits = dao.ofy().query(Kit.class).filter('ownerUsername', params.username).order('title').list()
+
 def collaborations = []
 
 dao.ofy().query(Collaboration.class).filter('userInfo', userinfoKey).list().each {
@@ -44,7 +47,6 @@ dao.ofy().query(Collaboration.class).filter('userInfo', userinfoKey).list().each
 		collaborations << [developmentId:collaborationDevelopment.id, developmentTitle: collaborationDevelopment.title, role: it.role]
 	}
 }
-
 request.collaborations = collaborations
 
 request.pageTitle = "User Info: ${userinfo.username}"

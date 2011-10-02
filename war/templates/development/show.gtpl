@@ -73,7 +73,7 @@ jQuery(function() {
 <div class="left">
 	<% if (development.thumbnailServingUrl){ %>
 	<div class="development-thumb">
-		<img src="${development.thumbnailServingUrl}">
+		<a class="nohint" href="${kit.thumbnailServingUrl}" target="_blank"><img src="${development.thumbnailServingUrl}"></a>
 	</div>
 	<% } %>
 	<% if (development.signs){ %>	
