@@ -27,6 +27,9 @@ class Association implements Serializable {
 				return "http://reprap.org/wiki/User:${sourceId}"
 				break
 			default :
+				if (sourceId.startsWith("http")){
+					return sourceId
+				}
 				return null
 		}
 	}
