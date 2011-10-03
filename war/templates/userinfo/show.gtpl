@@ -48,48 +48,60 @@
 	<div id="tabs">
 		<ul class="tabs" >
 			<li><a href="#details">Details</a></li>
-			<li><a href="#kits">Kits <span class="heading-count">(${request.kits?.size()?:0})</span></a></li>
 			<li><a href="#developments">Developments Registered <span class="heading-count">(${request.userDevelopments?.size()?:0})</span></a></li>
 			<li><a href="#watching">Watching <span class="heading-count">(${request.watchedDevelopments?.size()?:0})</span></a></li>
 			<li><a href="#collaborations">Collaborations <span class="heading-count">(${request.collaborations?.size()?:0})</span></a></li>
 		</ul>
 
 		<div class="userinfo" id="details">
-			<table border=0 cellspacing="0" cellpadding="5px">
-				<tr>
-					<td class="label-column">Username</td>
-					<td>${userinfo.username}</td>
-				</tr>
-				<tr>
-					<td class="label-column">Registered</td>
-					<td>${prettyTime.format(userinfo.created)}</td>
-				</tr>
-				<% userinfo.associations?.each { association ->
-					def description = (association.source == enums.Source.Other)? association.sourceOther?:'' : association.source.title
-				%>
-				<tr>
-					<td class="label-column">${description}</td>
-					<td>
-					<% 
-						def url = association.getURL()
-						if (url?.startsWith("http")) { 
+			<fieldset>
+				<table border=0 cellspacing="0" cellpadding="5px">
+					<tr>
+						<td class="label-column">Username</td>
+						<td>${userinfo.username}</td>
+					</tr>
+					<tr>
+						<td class="label-column">Registered</td>
+						<td>${prettyTime.format(userinfo.created)}</td>
+					</tr>
+				</table>
+			</fieldset>
+			<br>
+			<fieldset>
+				<legend>Associations</legend>
+				<table border=0 cellspacing="0" cellpadding="5px">
+					<% userinfo.associations?.each { association ->
+						def description = (association.source == enums.Source.Other)? association.sourceOther?:'' : association.source.title
 					%>
-						<a target="_blank" href="${url}">${association.sourceId?:''}</a>
-					<% } else { %>
-						${association.sourceId}
+					<tr>
+						<td class="label-column">${description}</td>
+						<td>
+						<% 
+							def url = association.getURL()
+							if (url?.startsWith("http")) { 
+						%>
+							<a target="_blank" href="${url}">${association.sourceId?:''}</a>
+						<% } else { %>
+							${association.sourceId}
+						<% } %>
+						
+						</td>
+					</tr>
 					<% } %>
-					
-					</td>
-				</tr>
-				<% } %>
-			</table>
-		</div>
-
-		<div class="userinfo" id="kits">
-				<table border=0 cellspacing="0" cellpadding="5px" width=75% id="kitsTable">
+				</table>
+			</fieldset>
+			<br>
+			<fieldset>
+				<legend>Kits</legend>
+				<table border=0 cellspacing="0" cellpadding="5px">
 					<% request.kits?.each { kit -> %>
 					<tr>
-						<td class="value-column"><a href="/kit/${kit.id}">${kit.title}</a></td>
+						<% if (kit.thumbnailServingUrl){ %>
+						<td>
+							<a class="nohint" href="${kit.thumbnailServingUrl}" target="_blank"><img width="100px" src="${kit.thumbnailServingUrl}"></a>
+						</td>
+						<% } %>
+						<td><a href="/kit/${kit.id}">${kit.title}</a></td>
 						
 						<% if (users.isUserLoggedIn() && (users.isUserAdmin() || session.userinfo.username == kit.ownerUsername)) { %>
 							<td  class="linkAction"><input class="action" type="button"
@@ -99,10 +111,11 @@
 						<% } else { %>
 							<td class="linkAction"></td>
 						<% } %>
-
+	
 					</tr>
 					<% } %>
 				</table>
+			</fieldset>
 		</div>
 		
 		<div class="userinfo" id="developments">
