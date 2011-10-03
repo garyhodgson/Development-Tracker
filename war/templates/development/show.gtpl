@@ -73,7 +73,7 @@ jQuery(function() {
 <div class="left">
 	<% if (development.thumbnailServingUrl){ %>
 	<div class="development-thumb">
-		<a class="nohint" href="${kit.thumbnailServingUrl}" target="_blank"><img src="${development.thumbnailServingUrl}"></a>
+		<a class="nohint" href="${development.thumbnailServingUrl}" target="_blank"><img src="${development.thumbnailServingUrl}"></a>
 	</div>
 	<% } %>
 	<% if (development.signs){ %>	
@@ -111,10 +111,13 @@ jQuery(function() {
 				</tr>
 				<tr>
 					<td>Description</td>
-					<% def text = development.description?development.description:""
+					<% 	def text = ""
+						if (development.description){
+							def markdown = new com.petebevin.markdown.MarkdownProcessor()
+							text = markdown.markdown(development.description)	
+						}
 						def rows = text.length() < 512 ? 4 : 10 %>
-					<td><textarea readonly="readonly" contenteditable="false" style="width: 100%" rows="${rows}">${text}</textarea>
-					</td>
+					<td>${text}</td>
 				</tr>
 				<tr>
 					<td>Source</td>

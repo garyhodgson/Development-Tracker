@@ -90,6 +90,7 @@
 					<% } %>
 				</table>
 			</fieldset>
+			<% if (request.kits) { %>
 			<br>
 			<fieldset>
 				<legend>Kits</legend>
@@ -116,6 +117,7 @@
 					<% } %>
 				</table>
 			</fieldset>
+			<% } %>
 		</div>
 		
 		<div class="userinfo" id="developments">

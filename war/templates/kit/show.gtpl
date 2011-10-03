@@ -65,12 +65,18 @@ jQuery(function() {
 </div>	
 
 <div class="content left" style="width:45%">
-	<% if (kit.description) { %>
-	<div class="left kit-description">${kit.description}</div>
+	<% if (kit.description) { 
+		def markdown = new com.petebevin.markdown.MarkdownProcessor()
+	%>
+	
+	<div class="left kit-description">${markdown.markdown(kit.description)}</div>
 	<% } %>
 </div>
 
 <div id="confirm">
 	<p>Are you sure you wish to delete kit ${kit.id}?</p>
 </div>
+
+<br class="clear">
+
 <% include '/templates/includes/footer.gtpl' %>

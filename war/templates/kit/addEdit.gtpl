@@ -136,8 +136,8 @@
 
 				<tr id="descriptionRow">
 					<td>Description</td>
-					<td><textarea rows="5" cols="47" id="description" name="description"><%=kit?.description?:'' %></textarea></td>
-					<td><span id="descriptionMessage"></span>
+					<td><textarea rows="5" cols="66" id="description" name="description"><%=kit?.description?:'' %></textarea></td>
+					<td><a href="http://daringfireball.net/projects/markdown/syntax" target="_blank">Markdown</a> is accepted.&nbsp;<span id="descriptionMessage"></span>
 					</td>
 				</tr>
 				
@@ -154,7 +154,8 @@
 					<td><span id="imageURLMessage"></span></td>
 				</tr>
 					
-				
+				<br>
+				<hr>
 				<tr>
 					<td>Add Development as Part</td>		
 					<td><input type="text" name="developmentTitle" /></td>							
