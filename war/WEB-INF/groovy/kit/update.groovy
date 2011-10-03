@@ -1,13 +1,11 @@
 package kit
 
-import static development.developmentHelper.*
 import info.developmenttracker.ThumbnailException
 import development.ThumbnailHelper
-import com.googlecode.objectify.Key
-
 import entity.Activity
-import entity.Development
 import entity.Kit
+
+
 
 if (!params.id){
 	request.session.message = "No Id given."
@@ -50,7 +48,15 @@ if (!users.isUserAdmin() && kit.ownerUsername != userinfo.username){
 def originalThumbnailPath = kit.thumbnailPath
 
 kit.title = params.title
-kit.imageURL = params.imageURL
+
+if (params.imageURL){
+	kit.imageURL = params.imageURL
+} else {
+	kit.imageURL = null
+	kit.thumbnailServingUrl = null
+	kit.thumbnailPath = null
+}
+
 kit.description= params.description
 kit.parts = []
 
