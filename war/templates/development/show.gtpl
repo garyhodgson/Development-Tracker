@@ -111,11 +111,7 @@ jQuery(function() {
 				</tr>
 				<tr>
 					<td>Description</td>
-					<% 	def text = ""
-						if (development.description){
-							def markdown = new com.petebevin.markdown.MarkdownProcessor()
-							text = markdown.markdown(development.description)	
-						}
+					<% 	def text = markdown.markdown(development.description?:'')	
 						def rows = text.length() < 512 ? 4 : 10 %>
 					<td>${text}</td>
 				</tr>

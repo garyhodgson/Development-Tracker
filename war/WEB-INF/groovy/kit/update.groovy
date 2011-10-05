@@ -1,6 +1,9 @@
 package kit
 
 import info.developmenttracker.ThumbnailException
+
+import org.apache.commons.lang.StringEscapeUtils
+
 import development.ThumbnailHelper
 import entity.Activity
 import entity.Kit
@@ -46,6 +49,7 @@ if (!users.isUserAdmin() && kit.ownerUsername != userinfo.username){
 }
 
 def originalThumbnailPath = kit.thumbnailPath
+def updateThumbnail = kit.imageURL != params.imageURL
 
 kit.title = params.title
 
@@ -57,7 +61,8 @@ if (params.imageURL){
 	kit.thumbnailPath = null
 }
 
-kit.description= params.description
+kit.description = params.description
+
 kit.parts = []
 
 if (params.partId){
@@ -70,12 +75,13 @@ if (params.partId){
 
 dao.ofy().put(kit)
 
-try {
-	(new ThumbnailHelper()).generateThumbnail(originalThumbnailPath, params, kit)
-} catch (ThumbnailException te){
-	request.session.message = te.getLocalizedMessage()
+if (updateThumbnail){
+	try {
+		(new ThumbnailHelper()).generateThumbnail(originalThumbnailPath, params, kit)
+	} catch (ThumbnailException te){
+		request.session.message = te.getLocalizedMessage()
+	}
 }
-
 
 dao.ofy().put(new Activity(type:enums.ActivityType.KitUpdated, title:"${kit.title}",by:userinfo.username, created: new Date(), link :"/kit/${kit.id}"))
 

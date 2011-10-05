@@ -153,18 +153,23 @@
 					</td>
 					<td><span id="imageURLMessage"></span></td>
 				</tr>
-					
-				<br>
-				<hr>
-				<tr>
+			</table>
+		</div>
+		
+		<br>
+		<hr>
+		
+		<div id="parts">
+			<table border=0 cellspacing="0" cellpadding="5px" class="form-table" >
+			<tr>
 					<td>Add Development as Part</td>		
 					<td><input type="text" name="developmentTitle" /></td>							
 					<td>Type to search by title</span>
 				</tr>
 			</table>
-		</div>
-		
-		<div id="parts">
+			
+			<br>
+			
 			<table border=0 cellspacing="0" cellpadding="5px" id="partsTable" class="form-list-table">
 				<tr>
 					<th width="70%">Part</th>

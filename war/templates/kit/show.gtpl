@@ -65,12 +65,8 @@ jQuery(function() {
 </div>	
 
 <div class="content left" style="width:45%">
-	<% if (kit.description) { 
-		def markdown = new com.petebevin.markdown.MarkdownProcessor()
-	%>
-	
-	<div class="left kit-description">${markdown.markdown(kit.description)}</div>
-	<% } %>
+	<% def text = markdown.markdown(kit.description?:'') %>	
+	<div class="left kit-description">${text}</div>
 </div>
 
 <div id="confirm">

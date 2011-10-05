@@ -44,6 +44,8 @@ if (!development) {
 }
 
 def originalDevelopmentThumbnailPath = development.thumbnailPath
+def updateThumbnail = development.imageURL != params.imageURL
+
 def now = new Date()
 def currentUsername = request.session.userinfo?.username?:''
 def changeHelper = new ChangeHelper();
@@ -108,10 +110,12 @@ try {
 		ofyTxn.getTxn().rollback();
 }
 
-try {
-	(new ThumbnailHelper()).generateThumbnail(originalDevelopmentThumbnailPath, params, development)
-} catch (ThumbnailException te){
-	request.session.message = te.getLocalizedMessage()
+if (updateThumbnail){
+	try {
+		(new ThumbnailHelper()).generateThumbnail(originalDevelopmentThumbnailPath, params, development)
+	} catch (ThumbnailException te){
+		request.session.message = te.getLocalizedMessage()
+	}
 }
 
 dao.ofy().put(new Activity(type:enums.ActivityType.DevelopmentUpdated, title:"${development.title}",by:currentUsername, created: now, link :"/development/${development.id}"))

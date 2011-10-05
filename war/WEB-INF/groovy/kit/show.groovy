@@ -19,11 +19,10 @@ if (!params.id.isLong()){
 
 try {
 	request.kit = dao.ofy().get(Kit.class, params.id as Long)
-		
+
 	if (request.kit.parts) {
 		def keys = request.kit.parts.collect { it as Long }
 		request.parts = dao.ofy().get(Development.class, keys)?.values()
-		
 	}
 } catch (NotFoundException nfe){
 	log.severe nfe.getLocalizedMessage()

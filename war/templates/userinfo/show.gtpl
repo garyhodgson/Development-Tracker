@@ -93,7 +93,7 @@
 			<% if (request.kits) { %>
 			<br>
 			<fieldset>
-				<legend>Kits</legend>
+				<legend>My Kit</legend>
 				<table border=0 cellspacing="0" cellpadding="5px">
 					<% request.kits?.each { kit -> %>
 					<tr>

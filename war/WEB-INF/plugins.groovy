@@ -15,5 +15,6 @@
  *  'install plugindescriptor'
  */
 
-install objectifyplugindescriptor	// objectify support
+install markdownplugindescriptor
+install objectifyplugindescriptor
 install prettytime
