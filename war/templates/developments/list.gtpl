@@ -17,9 +17,9 @@
 		<% } %>
 		<br>
 		<a href="/developments/latest"><li>Latest</li></a>
+		<a href="/developments/latest/feed.rss"><li>Latest RSS</li></a>
 		<a href="/developments"><li>A-Z</li></a>
-		<br>
-		<a href="/developments/latest/feed.rss"><li>RSS</li></a>
+		
 	</ul>
 </nav>
 

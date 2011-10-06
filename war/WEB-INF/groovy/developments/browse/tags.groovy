@@ -2,14 +2,16 @@ package developments.browse
 
 import app.MemcacheKeys
 import entity.Development
+import static enums.MemcacheKeys.*
 
 def tags = [:]
 
-if (memcache[MemcacheKeys.BROWSE_STATS_TAGS]) {
-	tags = memcache[MemcacheKeys.BROWSE_STATS_TAGS]
+if (BrowseStatsTags in memcache) {
+	tags = memcache[BrowseStatsTags]
 } else {
 
-	def developments = dao.ofy().query(Development.class).filter('tags != ', '').list()
+	def developments = memcache[AllDevelopments] ?: (memcache[AllDevelopments] = dao.ofy().query(Development.class).list())
+
 	developments.each{ development ->
 		if (development.tags){
 			development.tags.each{ t ->
@@ -18,7 +20,7 @@ if (memcache[MemcacheKeys.BROWSE_STATS_TAGS]) {
 			}
 		}
 	}
-	memcache[MemcacheKeys.BROWSE_STATS_TAGS] = tags
+	memcache[BrowseStatsTags] = tags
 }
 
 request.tags = tags

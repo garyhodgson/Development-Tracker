@@ -1,19 +1,19 @@
 package developments
 
-import app.MemcacheKeys
+import static enums.MemcacheKeys.*
 import entity.Development
 
 
 if (!params.term) {
 	return
 }
+
 def term = params.term.toLowerCase()
 
 def titleMap = [:]
-def memcacheKey = MemcacheKeys.TITLE_AUTOCOMPLETE
 
-if (memcache[memcacheKey]) {
-	titleMap = memcache[memcacheKey]
+if (memcache[TitleAutocomplete]) {
+	titleMap = memcache[TitleAutocomplete]
 } else {
 
 	def devs = dao.ofy().query(Development.class).list()
@@ -21,11 +21,11 @@ if (memcache[memcacheKey]) {
 	devs.each {
 		titleMap[it.title] = it.id
 	}
-	memcache[memcacheKey] = titleMap
+	memcache[TitleAutocomplete] = titleMap
 }
 
 def list = []
-		
+
 titleMap.each {
 	if (it.key.toLowerCase().contains(term)){
 		list << [label:it.key, id:it.value]

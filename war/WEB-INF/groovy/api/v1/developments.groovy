@@ -1,6 +1,7 @@
 package api.v1
 
 import static development.developmentHelper.*
+import static enums.MemcacheKeys.*
 
 import com.googlecode.objectify.Key
 
@@ -10,7 +11,7 @@ import entity.Relationship
 import enums.*
 import groovy.xml.MarkupBuilder
 
-def devs = dao.ofy().query(Development.class).list()
+def devs = memcache[AllDevelopments] ?: (memcache[AllDevelopments] = dao.ofy().query(Development.class).list())
 def collaborations = dao.ofy().query(Collaboration.class).list()
 def relationships = dao.ofy().query(Relationship.class).list()
 

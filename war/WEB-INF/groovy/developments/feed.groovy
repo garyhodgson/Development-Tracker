@@ -1,17 +1,25 @@
+
 package developments
+
 import static com.google.appengine.api.datastore.FetchOptions.Builder.*
+import app.AppProperties
 import entity.Development
 import groovy.xml.MarkupBuilder
 
 import java.text.SimpleDateFormat
+import static enums.MemcacheKeys.*
 
 SimpleDateFormat sdf =
 		new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 
 def xml = new MarkupBuilder(out)
-def limit = params.limit ? Math.min(params.limit, 100) : 25
+def offset = 0
+def limit = AppProperties.PAGE_LIMIT
 
-def developments = dao.ofy().query(Development.class).limit(limit as int).order('-created').list() 
+def memcacheKey = "${LatestActivities}:${offset}:${limit}"
+
+def developments = memcache[memcacheKey] ?:
+		(memcache[memcacheKey] = dao.ofy().query(Development.class).order('-created').offset(offset).limit(limit).list())
 
 def serverName= headers.Host
 
@@ -52,7 +60,7 @@ if (params.feedtype == 'rss'){
 		link(href:feedLink)
 		author { name("Development Tracker") }
 		updated(lastUpdated)
-
+		
 		developments.each { development ->
 			entry {
 				title development.title?:''

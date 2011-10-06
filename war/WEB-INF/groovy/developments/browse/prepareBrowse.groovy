@@ -1,7 +1,7 @@
 package developments.browse
 
 import org.apache.commons.lang.StringEscapeUtils
-import app.MemcacheKeys
+import static enums.MemcacheKeys.*
 import entity.Development
 import enums.*
 
@@ -12,16 +12,15 @@ if (!params.field){
 }
 
 def browseStats = [:]
-def memcacheKey = "${MemcacheKeys.BROWSE_STATS}:${params.field}" 
+def memcacheKey = "${BrowseStats}:${params.field}"
 
-if (memcache[memcacheKey]) {
-	
+if (memcacheKey in memcache) {
+
 	browseStats = memcache[memcacheKey]
-
 } else {
 
 	def values = null
-	
+
 	switch (params.field){
 		case 'categories':
 			values = Category.values()

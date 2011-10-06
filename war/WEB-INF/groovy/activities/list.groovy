@@ -1,15 +1,19 @@
 package activities
 
 import static paging.pagingHelper.*
+import static enums.MemcacheKeys.*
 import entity.Activity
 
-def totalCount = dao.ofy().query(Activity.class).countAll()
+def totalCount = memcache[TotalActivitiesCount]?:(memcache[TotalActivitiesCount] = dao.ofy().query(Activity.class).countAll())
 
 def (offset,limit) = getOffsetAndLimit(params, totalCount)
 
-request.activities = dao.ofy().query(Activity.class).order('-created').offset(offset).limit(limit).list()
+def memcacheKey = "${LatestActivities}:${offset}:${limit}"
 
-def resultsetCount = request.activities.size()
+request.activities = memcache[memcacheKey] ?:
+		(memcache[memcacheKey] = dao.ofy().query(Activity.class).order('-created').offset(offset).limit(limit).list())
+
+def resultsetCount = request.activities?.size()?:0
 
 request.paging = createPaging(totalCount, limit, offset, resultsetCount)
 

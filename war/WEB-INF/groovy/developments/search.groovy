@@ -2,7 +2,7 @@ package developments
 
 import static paging.pagingHelper.*
 
-import app.MemcacheKeys
+import static enums.MemcacheKeys.*
 
 import com.googlecode.objectify.Key
 
@@ -18,48 +18,42 @@ if (!params.searchKey){
 def searchKey = params.searchKey.toLowerCase()
 def results = []
 
-def memcacheKey = "${MemcacheKeys.SEARCH_KEY}:${searchKey}"
-if (memcache[memcacheKey]) {
-	results = memcache[memcacheKey]
-} else {
-	//Brute force - eugh!
 
-	def developments = dao.ofy().query(Development.class).list()
+def developments = memcache[AllDevelopments] ?: (memcache[AllDevelopments] = dao.ofy().query(Development.class).list())
 
-	developments.each { development ->
-		
-		if (development.title?.toLowerCase()?.contains(searchKey)
-		|| development.description?.toLowerCase()?.contains(searchKey)) {
+developments.each { development ->
+
+	if (development.title?.toLowerCase()?.contains(searchKey)
+	|| development.description?.toLowerCase()?.contains(searchKey)) {
+		results << development
+		return
+	}
+
+	development.specificationName?.each { specificationName ->
+		if (specificationName.toLowerCase()?.contains(searchKey)){
 			results << development
 			return
 		}
-		
-		development.specificationName?.each { specificationName ->
-			if (specificationName.toLowerCase()?.contains(searchKey)){
-				results << development
-				return
-			}
-		}
-
-		development.specificationValue?.each { specificationValue ->
-			if (specificationValue.toLowerCase()?.contains(searchKey)){
-				results << development
-				return
-			}
-		}
-
-		def developmentKey = new Key(Development.class, development.id as Long)
-		def collaborators = dao.ofy().query(Collaboration.class).ancestor(developmentKey).list()
-		collaborators.each {  collaborator ->
-			if (collaborator.name?.toLowerCase()?.contains(searchKey)){
-				results << development
-				return
-			}
-		}
-
 	}
-	memcache[memcacheKey] = results
+
+	development.specificationValue?.each { specificationValue ->
+		if (specificationValue.toLowerCase()?.contains(searchKey)){
+			results << development
+			return
+		}
+	}
+
+	def developmentKey = new Key(Development.class, development.id as Long)
+	def collaborators = dao.ofy().query(Collaboration.class).ancestor(developmentKey).list()
+	collaborators.each {  collaborator ->
+		if (collaborator.name?.toLowerCase()?.contains(searchKey)){
+			results << development
+			return
+		}
+	}
+
 }
+
 request.developments = results
 request.pageTitle = "Developments Search : ${searchKey}"
 

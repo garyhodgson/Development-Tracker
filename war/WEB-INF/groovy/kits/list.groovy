@@ -1,17 +1,22 @@
 package kits
 
+import static enums.MemcacheKeys.*
 import static paging.pagingHelper.*
+import entity.Development
 import entity.Kit
-import entity.Theme
 
 
-def totalCount = dao.ofy().query(Kit.class).countAll()
+def totalCount = memcache[TotalKitsCount]?:(memcache[TotalKitsCount] = dao.ofy().query(Kit.class).countAll())
 
 def (offset,limit) = getOffsetAndLimit(params, totalCount)
 
-request.kits = dao.ofy().query(Kit.class).order('created').offset(offset).limit(limit).list()
+def memcacheKey = "${LatestKits}:${offset}:${limit}"
 
-def resultsetCount = request.kits.size()
+request.kits = memcache[memcacheKey] ?:
+		(memcache[memcacheKey] = dao.ofy().query(Kit.class).order('-created').offset(offset).limit(limit).list())
+
+
+def resultsetCount = request.kits?.size()?:0
 
 request.paging = createPaging(totalCount, limit, offset, resultsetCount)
 
