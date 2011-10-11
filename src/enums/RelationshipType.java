@@ -6,6 +6,7 @@ public enum RelationshipType {
 	DerivedFrom("Derived From", "Derived"),
 	RelatedTo("Related To", "Related To"),
 	DesignedFor("Designed For", "Has Design"),
+	ImplementationOf("Implementation Of", "Implemented By"),
 	PartOf("Part Of", "Consists Of"),
 	ConsistsOf("Consists Of", "Part Of"),
 	InspiredBy("Inspired By", "Inspired"),

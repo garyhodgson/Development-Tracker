@@ -17,6 +17,7 @@ public enum Goal {
 	Size("Size", "Smaller, or bigger."),
 	Speed("Speed", "Doing it faster."),
 	Standardisation("Standardisation", "Bringing designs together."),
+	Weight("Weight", "Reducing weight."),
 	Other("Other", "Define your own goal.");
 	
 	protected String title = null;
