@@ -6,7 +6,7 @@ import app.MemcacheKeys
 import entity.Development
 
 
-def totalCount = memcache[TotalDevelopmentCount]?:(memcache[TotalDevelopmentCount] = dao.ofy().query(Development.class).countAll())
+def totalCount = cacheManager.developmentCount()
 
 def (offset,limit) = getOffsetAndLimit(params, totalCount)
 

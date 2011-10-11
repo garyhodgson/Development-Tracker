@@ -4,7 +4,7 @@ import static paging.pagingHelper.*
 import static enums.MemcacheKeys.*
 import entity.Activity
 
-def totalCount = memcache[TotalActivitiesCount]?:(memcache[TotalActivitiesCount] = dao.ofy().query(Activity.class).countAll())
+def totalCount = cacheManager.activityCount()
 
 def (offset,limit) = getOffsetAndLimit(params, totalCount)
 

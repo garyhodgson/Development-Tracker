@@ -5,7 +5,7 @@ import entity.Theme
 import static enums.MemcacheKeys.*
 
 
-def totalCount = memcache[TotalThemesCount]?:(memcache[TotalThemesCount] = dao.ofy().query(Theme.class).countAll())
+def totalCount = cacheManager.themeCount()
 
 def (offset,limit) = getOffsetAndLimit(params, totalCount)
 

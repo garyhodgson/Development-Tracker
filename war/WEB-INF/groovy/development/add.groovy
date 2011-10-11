@@ -80,8 +80,7 @@ try {
 
 dao.ofy().put(new Activity(type:enums.ActivityType.NewDevelopment, title:"${development.title}",by:development.createdBy, created: new Date(), link :"/development/${development.id}"))
 
-// Extreme, but ensures all searches and browse data is up to date
-memcache.clearAll()
+cacheManager.resetCache()
 
 redirect "/development/${development.id}"
 

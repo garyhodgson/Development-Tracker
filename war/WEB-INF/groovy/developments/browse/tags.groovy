@@ -1,7 +1,5 @@
 package developments.browse
 
-import app.MemcacheKeys
-import entity.Development
 import static enums.MemcacheKeys.*
 
 def tags = [:]
@@ -10,7 +8,7 @@ if (BrowseStatsTags in memcache) {
 	tags = memcache[BrowseStatsTags]
 } else {
 
-	def developments = memcache[AllDevelopments] ?: (memcache[AllDevelopments] = dao.ofy().query(Development.class).list())
+	def developments = cacheManager.allDevelopments()
 
 	developments.each{ development ->
 		if (development.tags){

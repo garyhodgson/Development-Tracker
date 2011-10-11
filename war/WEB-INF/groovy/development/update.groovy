@@ -1,11 +1,9 @@
 package development
 
 import static development.developmentHelper.*
-import info.developmenttracker.ThumbnailException;
 import history.ChangeHelper
+import info.developmenttracker.ThumbnailException
 
-import com.google.appengine.api.blobstore.BlobKey
-import com.google.appengine.api.blobstore.BlobstoreFailureException
 import com.googlecode.objectify.Key
 import com.googlecode.objectify.Objectify
 import com.googlecode.objectify.ObjectifyService
@@ -120,7 +118,6 @@ if (updateThumbnail){
 
 dao.ofy().put(new Activity(type:enums.ActivityType.DevelopmentUpdated, title:"${development.title}",by:currentUsername, created: now, link :"/development/${development.id}"))
 
-// Extreme, but ensures all searches and browse data is up to date
-memcache.clearAll()
+cacheManager.resetCache()
 
 redirect params.referer?:"/development/${development.id}"

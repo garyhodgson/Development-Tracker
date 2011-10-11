@@ -16,5 +16,6 @@
  */
 
 install markdownplugindescriptor
+install applicationBindings
 install objectifyplugindescriptor
 install prettytime

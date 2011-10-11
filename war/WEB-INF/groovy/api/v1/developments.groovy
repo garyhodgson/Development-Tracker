@@ -11,7 +11,7 @@ import entity.Relationship
 import enums.*
 import groovy.xml.MarkupBuilder
 
-def devs = memcache[AllDevelopments] ?: (memcache[AllDevelopments] = dao.ofy().query(Development.class).list())
+def devs = cacheManager.allDevelopments()
 def collaborations = dao.ofy().query(Collaboration.class).list()
 def relationships = dao.ofy().query(Relationship.class).list()
 

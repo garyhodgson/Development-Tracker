@@ -225,7 +225,8 @@
 					validate()
 				} else {
 				
-					jQuery.get('/development/exists/title/' + encodeURIComponent(jQuery(this).val()),
+					var escapedValue = jQuery(this).val().replace(/\$/g,"&#37;")
+					jQuery.get('/development/exists/title/' + encodeURIComponent(escapedValue),
 						function(data) {
 							if (data == "") {
 								titleIsValid = true
