@@ -218,14 +218,16 @@
 				validate()
 			} else {
 				
-				var currentTitle = jQuery(this).val().replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+				var currentTitle = jQuery(this).val().replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;").replace(/\\044/g, '&#37;');
+				
+				
 				if (isEditing && (currentTitle == originalTitle)){
 					titleIsValid = true
 					jQuery('#titleMessage').html("")
 					validate()
 				} else {
 				
-					jQuery.get('/development/exists/title/' + encodeURIComponent(jQuery(this).val()),
+					jQuery.get('/development/exists/title/' + encodeURIComponent(currentTitle),
 						function(data) {
 							if (data == "") {
 								titleIsValid = true
@@ -242,18 +244,28 @@
 		})
 		
 		jQuery('input[name=sourceURL]').blur(function() {
+			var val = jQuery(this).val()
 
-			if (jQuery(this).val() != ""){
-				if (isEditing && (jQuery(this).val() != originalSourceURL)){
+			if (val != ""){
+				if (isEditing && (val != originalSourceURL)){
+					// do nothing
 				} else {
-					jQuery.get('/development/exists/sourceURL/' + encodeURIComponent(jQuery(this).val()),
+					jQuery.get('/development/exists/sourceURL/' + encodeURIComponent(val),
 						function(data) {
 							if (data == "") {
 								jQuery('#sourceURLMessage').html("")
 							} else {								
 								jQuery('#sourceURLMessage').html("<span class='red'>A development with this URL already exists. (<a href='/development/"+data+"' title='Open in new page' target='_blank'>view</a>). Please check if this will a duplicate.</span>")
 							}
-						})
+						})	
+				}
+				
+				if (val.indexOf("github.com") != -1){
+					jQuery("select[name=source] option[value='Github']").attr('selected', 'selected');
+				} else if (val.indexOf("reprap.org/wiki") != -1){
+					jQuery("select[name=source] option[value='RepRapWiki']").attr('selected', 'selected');
+				} else if (val.indexOf("thingiverse.com") != -1){
+					jQuery("select[name=source] option[value='Thingiverse']").attr('selected', 'selected');
 				}
 			}
 		})
@@ -391,6 +403,12 @@
 							<td><a href="http://daringfireball.net/projects/markdown/syntax" target="_blank">Markdown</a> is accepted.<span id="descriptionMessage"></span></td>
 						</tr>
 
+						<tr id="sourceURLRow">
+							<td>URL</td>
+							<td><input type="text" id="sourceURL" name="sourceURL" value="<%=development?.sourceURL?:''%>" /></td>
+							<td><span id="sourceURLMessage"></span></td>
+						</tr>
+
 						<tr id="sourceRow">
 							<td>Source</td>
 							<td><select id="source" name="source">
@@ -402,13 +420,7 @@
 							</select></td>
 							<td><span id="sourceMessage"></span></td>
 						</tr>
-
-						<tr id="sourceURLRow">
-							<td>URL</td>
-							<td><input type="text" id="sourceURL" name="sourceURL" value="<%=development?.sourceURL?:''%>" /></td>
-							<td><span id="sourceURLMessage"></span></td>
-						</tr>
-
+						
 						<tr id="statusRow">
 							<td>Status</td>
 							<td>

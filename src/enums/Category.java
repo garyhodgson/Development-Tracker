@@ -13,6 +13,7 @@ public enum Category {
 	Host,
 	HotEnd("Hot-End"),
 	Modelling,
+	Movement,
 	Printer,
 	Process,
 	Software,
