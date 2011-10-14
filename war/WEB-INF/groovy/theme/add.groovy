@@ -17,8 +17,6 @@ theme.title = params.title
 theme.description= params.description
 theme.developmentIds = new ArrayList<Long>()
 
-log.info "${params.developmentId}"
-
 if (params.developmentId){
 	if (params.developmentId instanceof String){
 		theme.developmentIds << params.developmentId

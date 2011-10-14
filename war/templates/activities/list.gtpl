@@ -40,6 +40,12 @@ jQuery(function() {
 			
 			<% } else if (activity.type == enums.ActivityType.KitUpdated) {%>
 				<td><a href="/userinfo/${activity.by}">${activity.by}</a> updated kit <a href="${activity.link}">${activity.title}</a></a></td>
+				
+			<% } else if (activity.type == enums.ActivityType.NewTheme) {%>
+				<td><a href="/userinfo/${activity.by}">${activity.by}</a> added a new theme: <a href="${activity.link}">${activity.title}</a></a></td>
+			
+			<% } else if (activity.type == enums.ActivityType.ThemeUpdated) {%>
+				<td><a href="/userinfo/${activity.by}">${activity.by}</a> updated theme <a href="${activity.link}">${activity.title}</a></a></td>
 			
 			<% } else if (activity.link) { %>
 				<td><a href="${activity.link}">${activity.title}</a></td>
