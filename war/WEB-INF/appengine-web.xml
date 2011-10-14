@@ -32,9 +32,9 @@
   	
 	<static-files>
         <include path="/robots.txt" expiration="7d" />
-        <include path="/images/**.png" expiration="1d" />
-        <include path="/images/favicon.ico"  expiration="7d" />
-        <include path="/js/**.js" />
+        <include path="/images/**.png" expiration="7d" />
+        <include path="/images/favicon.ico" expiration="7d" />
+        <include path="/js/**.js" expiration="7d" />
         <include path="/css/**" />
         
 		<exclude path="/WEB-INF/**.groovy" />
