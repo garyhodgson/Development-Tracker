@@ -56,8 +56,7 @@ dao.ofy().delete(keysToDelete)
 
 dao.ofy().put(new Activity(type:enums.ActivityType.DevelopmentDeleted, title:"${development.title}",by:userinfo.username, created: new Date()))
 
-// Extreme, but ensures all searches and browse data is up to date
-memcache.clearAll()
+cacheManager.resetCache()
 
 request.session.message = "Development deleted."
 redirect "/developments"

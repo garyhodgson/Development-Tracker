@@ -2,12 +2,12 @@
 package developments
 
 import static com.google.appengine.api.datastore.FetchOptions.Builder.*
-import app.AppProperties
-import entity.Development
+import static enums.MemcacheKeys.*
 import groovy.xml.MarkupBuilder
 
 import java.text.SimpleDateFormat
-import static enums.MemcacheKeys.*
+
+import app.AppProperties
 
 SimpleDateFormat sdf =
 		new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
@@ -16,15 +16,12 @@ def xml = new MarkupBuilder(out)
 def offset = 0
 def limit = AppProperties.PAGE_LIMIT
 
-def memcacheKey = "${LatestActivities}:${offset}:${limit}"
-
-def developments = memcache[memcacheKey] ?:
-		(memcache[memcacheKey] = dao.ofy().query(Development.class).order('-created').offset(offset).limit(limit).list())
+def developments = cacheManager.latestDevelopments(offset,limit)
 
 def serverName= headers.Host
 
 out << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-def feedTitle = "Development Tracker"
+def feedTitle = "Development Tracker - Latest Developments"
 def feedDescription = "Latest Developments"
 def feedLink = "http://${serverName}/developments/latest"
 def lastUpdated = sdf.format(new Date())

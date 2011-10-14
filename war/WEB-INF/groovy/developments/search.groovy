@@ -19,7 +19,7 @@ def searchKey = params.searchKey.toLowerCase()
 def results = []
 
 
-def developments = memcache[AllDevelopments] ?: (memcache[AllDevelopments] = dao.ofy().query(Development.class).list())
+def developments = cacheManager.allDevelopments()
 
 developments.each { development ->
 

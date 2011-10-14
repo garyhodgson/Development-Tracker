@@ -10,25 +10,13 @@ if (!params.term) {
 
 def term = params.term.toLowerCase()
 
-def titleMap = [:]
-
-if (memcache[TitleAutocomplete]) {
-	titleMap = memcache[TitleAutocomplete]
-} else {
-
-	def devs = dao.ofy().query(Development.class).list()
-
-	devs.each {
-		titleMap[it.title] = it.id
-	}
-	memcache[TitleAutocomplete] = titleMap
-}
+def developments = cacheManager.allDevelopments()
 
 def list = []
 
-titleMap.each {
-	if (it.key.toLowerCase().contains(term)){
-		list << [label:it.key, id:it.value]
+developments.each {
+	if (it.title.toLowerCase().contains(term)){
+		list << [label:it.title, id:it.id]
 	}
 }
 

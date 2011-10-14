@@ -10,10 +10,7 @@ def totalCount = cacheManager.developmentCount()
 
 def (offset,limit) = getOffsetAndLimit(params, totalCount)
 
-def memcacheKey = "${LatestDevelopments}:${offset}:${limit}"
-
-request.developments = memcache[memcacheKey] ?:
-		(memcache[memcacheKey] = dao.ofy().query(Development.class).order('-created').offset(offset).limit(limit).list())
+request.developments = cacheManager.latestDevelopments(offset,limit)
 
 def resultsetCount = request.developments.size()
 

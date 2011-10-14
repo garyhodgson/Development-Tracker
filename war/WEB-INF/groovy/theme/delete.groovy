@@ -50,8 +50,7 @@ dao.ofy().delete(theme)
 
 dao.ofy().put(new Activity(type:enums.ActivityType.ThemeDeleted, title:"${theme.title}",by:userinfo.username, created: new Date()))
 
-// Extreme, but ensures all searches and browse data is up to date
-memcache.clearAll()
+cacheManager.refreshThemesCount()
 
 request.session.message = "Theme deleted."
 redirect "/themes"

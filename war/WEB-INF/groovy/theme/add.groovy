@@ -12,7 +12,6 @@ if (!users.isUserLoggedIn()){
 def currentUsername = request.session.userinfo?.username?:''
 def theme = new Theme(createdBy:session.userinfo.username)
 
-
 theme.title = params.title
 theme.description= params.description
 theme.developmentIds = new ArrayList<Long>()
@@ -31,8 +30,7 @@ dao.ofy().put(theme)
 
 dao.ofy().put(new Activity(type:enums.ActivityType.NewTheme, title:"${theme.title}",by:theme.createdBy, created: new Date(), link :"/theme/${theme.id}"))
 
-// Extreme, but ensures all searches and browse data is up to date
-memcache.clearAll()
+cacheManager.refreshThemesCount()
 
 redirect "/theme/${theme.id}"
 

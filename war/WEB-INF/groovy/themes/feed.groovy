@@ -1,17 +1,19 @@
 package themes
 import static com.google.appengine.api.datastore.FetchOptions.Builder.*
-import entity.Theme
 import groovy.xml.MarkupBuilder
 
 import java.text.SimpleDateFormat
+
+import app.AppProperties
 
 SimpleDateFormat sdf =
 		new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 
 def xml = new MarkupBuilder(out)
-def limit = params.limit ? Math.min(params.limit, 100) : 25
+def offset = 0
+def limit = AppProperties.PAGE_LIMIT
 
-def themes = dao.ofy().query(Theme.class).limit(limit as int).order('-created').list() 
+def themes = cacheManager.latestThemes(offset,limit)
 
 def serverName= headers.Host
 

@@ -9,10 +9,8 @@ def totalCount = cacheManager.themeCount()
 
 def (offset,limit) = getOffsetAndLimit(params, totalCount)
 
-def memcacheKey = "${LatestThemes}:${offset}:${limit}"
 
-request.themes = memcache[memcacheKey] ?:
-		(memcache[memcacheKey] = dao.ofy().query(Theme.class).order('-created').offset(offset).limit(limit).list())
+request.themes = cacheManager.latestThemes(offset,limit)
 
 def resultsetCount = request.themes?.size()?:0
 

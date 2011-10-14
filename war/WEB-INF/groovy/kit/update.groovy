@@ -85,9 +85,6 @@ if (updateThumbnail){
 
 dao.ofy().put(new Activity(type:enums.ActivityType.KitUpdated, title:"${kit.title}",by:userinfo.username, created: new Date(), link :"/kit/${kit.id}"))
 
-// Extreme, but ensures all searches and browse data is up to date
-memcache.clearAll()
-
 redirect "/kit/${kit.id}"
 
 

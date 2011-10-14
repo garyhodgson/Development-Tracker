@@ -65,9 +65,6 @@ dao.ofy().put(theme)
 
 dao.ofy().put(new Activity(type:enums.ActivityType.ThemeUpdated, title:"${theme.title}",by:theme.createdBy, created: new Date(), link :"/theme/${theme.id}"))
 
-// Extreme, but ensures all searches and browse data is up to date
-memcache.clearAll()
-
 redirect "/theme/${theme.id}"
 
 

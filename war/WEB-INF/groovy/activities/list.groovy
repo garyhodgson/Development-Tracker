@@ -8,10 +8,7 @@ def totalCount = cacheManager.activityCount()
 
 def (offset,limit) = getOffsetAndLimit(params, totalCount)
 
-def memcacheKey = "${LatestActivities}:${offset}:${limit}"
-
-request.activities = memcache[memcacheKey] ?:
-		(memcache[memcacheKey] = dao.ofy().query(Activity.class).order('-created').offset(offset).limit(limit).list())
+request.activities = cacheManager.latestActivities(offset,limit)
 
 def resultsetCount = request.activities?.size()?:0
 

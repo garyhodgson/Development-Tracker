@@ -14,7 +14,6 @@ if (!params.searchField){
 def query = dao.ofy().query(Development.class)
 
 if (params.value){
-	log.info "${params.value}"
 
 	if (params.value.contains("_AND_")){
 		

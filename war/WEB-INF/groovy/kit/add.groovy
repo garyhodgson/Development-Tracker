@@ -44,8 +44,7 @@ try {
 
 dao.ofy().put(new Activity(type:enums.ActivityType.NewKit, title:"${kit.title}",by:currentUsername, created: new Date(), link :"/kit/${kit.id}"))
 
-// Extreme, but ensures all searches and browse data is up to date
-memcache.clearAll()
+cacheManager.refreshKitCount()
 
 redirect "/kit/${kit.id}"
 

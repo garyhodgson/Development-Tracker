@@ -7,12 +7,14 @@ import entity.Development
 
 def totalCount = cacheManager.developmentCount()
 
+def developments = cacheManager.allDevelopments()
+
 def (offset,limit) = getOffsetAndLimit(params, totalCount)
 
-def memcacheKey = "${AlphabeticDevelopments}:${offset}:${limit}"
+def from = offset
+def to = Math.min(totalCount-1, (offset + limit)-1)
 
-request.developments = memcache[memcacheKey] ?:
-		(memcache[memcacheKey] = dao.ofy().query(Development.class).order('title').offset(offset).limit(limit).list())
+request.developments = developments[from..to]
 
 def resultsetCount = request.developments?.size()?:0
 

@@ -42,8 +42,7 @@ if (!(users.isUserAdmin() || kit.ownerUsername == userinfo.username)){
 
 dao.ofy().delete(kit)
 
-// Extreme, but ensures all searches and browse data is up to date
-memcache.clearAll()
+cacheManager.refreshKitCount()
 
 request.session.message = "Kit deleted."
 redirect "/userinfo/${userinfo.username}"

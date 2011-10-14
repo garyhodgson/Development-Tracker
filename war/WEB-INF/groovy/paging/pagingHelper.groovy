@@ -2,16 +2,16 @@ package paging
 
 import app.AppProperties
 
-public static def createPaging(int itemCount, int limit, int offset, int resultsetCount) {
+public static def createPaging(int totalCount, int limit, int offset, int resultsetCount) {
 	def firstPage = 0
 	
-	def lastPage = (resultsetCount == itemCount)? 0 : itemCount-(itemCount % limit)
-	def start = Math.min(offset+1, itemCount)
-	def end =  Math.min(offset+resultsetCount, itemCount)
+	def lastPage = (resultsetCount == totalCount)? 0 : totalCount-(totalCount % limit)
+	def start = Math.min(offset+1, totalCount)
+	def end =  Math.min(offset+resultsetCount, totalCount)
 	def nextPage = Math.min(offset+limit, lastPage)
 	def previousPage = Math.max(offset-limit, 0)
 
-	return ['total':itemCount, 'start':start, 'end':end, 'next':nextPage, 'previous':previousPage, 'last':lastPage, 'first':firstPage, 'limit':limit, 'offset':offset]
+	return ['total':totalCount, 'start':start, 'end':end, 'next':nextPage, 'previous':previousPage, 'last':lastPage, 'first':firstPage, 'limit':limit, 'offset':offset]
 }
 
 public static def getOffsetAndLimit(def params, def totalCount) {
