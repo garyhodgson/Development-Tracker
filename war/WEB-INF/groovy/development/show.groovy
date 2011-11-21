@@ -1,7 +1,10 @@
 package development
 
+import java.util.logging.Logger;
+
 import app.MemcacheKeys
 
+import com.github.api.v2.services.GitHubException
 import com.github.api.v2.services.GitHubServiceFactory
 import com.github.api.v2.services.RepositoryService
 import com.google.appengine.api.memcache.Expiration
@@ -61,7 +64,8 @@ request.pageTitle = request.development.title
 forward '/templates/development/show.gtpl'
 
 def getGithubSupplementary(def url){
-	def m =  url =~ /https:\/\/github.com\/(.*)\/(.*)/
+	/*Only match URLs that follow the format: https://github.com/<user>/<project>, i.e. not wiki's or issue pages*/
+	def m =  url =~ /https:\/\/github.com\/([^\/]*)\/([^\/]*)/
 	if (!m.matches() && m[0].size() != 3 ) return null
 
 	//check memcache first
@@ -71,7 +75,15 @@ def getGithubSupplementary(def url){
 	}
 
 	RepositoryService service = GitHubServiceFactory.newInstance().createRepositoryService()
-	def repo = service.getRepository(m[0][1], m[0][2])
+	def repo = null
+	try {
+		repo = service.getRepository(m[0][1], m[0][2])
+	} catch (GitHubException ghe){
+		log.warning("Attempt to get repository for github supplementary data failed: ${m[0][1]}, ${m[0][2]} - ${ghe.getLocalizedMessage()}")
+	}
+	if (repo == null){
+		return null
+	}
 
 	def supplementary = [:]
 	supplementary.Owner = repo.owner
