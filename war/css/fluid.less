@@ -1,7 +1,4 @@
-/*
------------------------------------------------
-Grey Box Method - Layout CSS
------------------------------------------------ */
+@import "lib.less";
 
 body {
 	background: #fff;
@@ -47,17 +44,14 @@ h1 a {
 /* branding
 ----------------------------------------------- */
 h1#branding {
-	font-weight:normal;
+	font-weight:bold;
 	font-size:3em;
 	text-align:left;
-	background:yellow;
+	background:#000;
+	color: @site-default;
 	padding:.7em 1em;
 	margin-bottom:0;
-	margin: 5px;
-	padding: 5px;
-	border: 5px solid black;
-	-moz-border-radius: 40px;
-	border-radius: 40px;
+	.light-bordered;
 }
 
 
@@ -74,9 +68,10 @@ h2#page-heading {
 /* boxes
 ----------------------------------------------- */
 .box {
-	background:#ddd;
+	background:#eee;
 	margin-bottom:20px;
 	padding:10px 10px 1px 10px;
+	.border-radius;
 }
 .box h2 {
 	font-size:1em;
@@ -151,7 +146,7 @@ ul, ol {
 ----------------------------------------------- */
 ul.menu {
 	list-style:none;
-	border-top:1px solid #bbb;
+	border-top:1px solid #000;
 }
 ul.menu li {
 	margin:0;
@@ -425,14 +420,16 @@ input.search.button {
 ----------------------------------------------- */
 #site_info .box {
 	color:#ccc;
-	background:#666;
-	margin-bottom:10px;
+	background:#000;
+	border: 2px solid black;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
 }
 #site_info a {
-	color:#fff;
+	color:@site-default;
 }
 #site_info a:hover {
-	color:#000;
+	color:@site-default-select;
 }
 
 
@@ -523,4 +520,15 @@ input.search.button {
 }
 #kwick .four {
 	background: #999;
+}
+
+/* Mine
+----------------------------------------------- */
+#dtlogo {
+	float: left;
+	margin-left: 60px;
+	background-color: black;
+	border: 10px solid black;
+	-moz-border-radius: 80px;
+	border-radius: 80px;
 }

@@ -1,6 +1,10 @@
 <% include '/templates/includes/header2.gtpl' %>
 
-<% def subdomain = request.properties.serverName.split(/\./).getAt(0) %>
+<% 
+import org.apache.commons.lang.StringUtils
+
+def subdomain = request.properties.serverName.split(/\./).getAt(0) 
+%>
 
 	<br>
 
@@ -36,7 +40,7 @@
 						</a>
 						<% } %>
 						
-						<% 	def text = markdown.markdown(development.description?:'') %>
+						<% 	def text = StringUtils.abbreviate(markdown.markdown(development.description?:''),500) %>
 						<p>${text}</p>
 						<div class="clear"></div>
 					</div>
@@ -46,6 +50,24 @@
 		</div>
 	</div>
 	<div class="grid_5">
+	
+		<div class="box">
+			<h2>
+				<a href="#" >Latest Activities</a>
+			</h2>
+			<div class="block" id="paragraphs">
+				<%
+					request.latestActivities.each { activity-> 
+				%>
+				<h5><a href="${activity.link}">${activity} - ${prettyTime.format(activity.created)}</a></h5>
+				<div class="clear"></div>			
+				<hr>
+				<%
+					} 
+				%>
+			</div>
+		</div>
+		
 		<div class="box">
 			<h2>
 				<a href="#" >Latest Themes</a>
@@ -77,7 +99,7 @@
 				<% if (kit.thumbnailServingUrl){ %>
 					<img src="${kit.thumbnailServingUrl}" width="60" height="60" alt="${kit.title}" >
 				<% } %>
-				<% def text = markdown.markdown(kit.description?:'') %>	
+				<% def text = StringUtils.abbreviate(markdown.markdown(kit.description?:''),300) %>	
 				<p>${text}</p>
 				<div class="clear"></div>						
 				<hr>
@@ -87,22 +109,7 @@
 			</div>
 		</div>
 
-		<div class="box">
-			<h2>
-				<a href="#" >Latest Activities</a>
-			</h2>
-			<div class="block" id="paragraphs">
-				<%
-					request.latestActivities.each { activity-> 
-				%>
-				<h5>${activity} - ${prettyTime.format(activity.created)}</h5>
-				<div class="clear"></div>			
-				<hr>
-				<%
-					} 
-				%>
-			</div>
-		</div>
+		
 
 		
 	</div>

@@ -1,0 +1,33 @@
+@site-default: yellow;
+@site-default-darker: orange;
+@site-default-select: orange;
+@large-rounded: 80px;
+@medium-rounded: 40px;
+@small-rounded: 20px;
+
+.border-radius (@radius: 10px) {
+  border-radius: @radius;
+  -moz-border-radius: @radius;
+  -webkit-border-radius: @radius;
+}
+
+.bordered {
+	margin: 10px;
+	padding: 10px;
+	border: 15px solid black;
+	.border-radius(80px);
+}
+
+.light-bordered {
+	margin: 5px;
+	padding: 5px;
+	border: 5px solid black;
+	.border-radius(40px);
+}
+
+.very-light-bordered {
+	margin: 5px;
+	padding: 5px;
+	border: 2px solid black;
+	.border-radius(20px);
+}

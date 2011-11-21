@@ -5,8 +5,9 @@
 
 <div class="container_12">
 	<div class="grid_12">
+		<a href="/"><img id="dtlogo" src="/images/DTLogo-50px.png"> </a>
 		<h1 id="branding">
-			<a href="/">Development Tracker</a>
+			Development Tracker
 		</h1>
 	</div>
 	
