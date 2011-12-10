@@ -9,9 +9,8 @@
 	<link rel="icon" href="/images/favicon.ico">
 	<script type="text/javascript" src="/js/jquery-1.6.2.min.js"></script>	
 	<script type="text/javascript" src="/js/jquery-ui-1.8.16.custom.min.js"></script>
-	<link rel="stylesheet/less" type="text/css" href="/css/main.less">
-	<script type="text/javascript" src="/js/less.min.js"></script>
 	
+
 	<!--[if IE]>
 	    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
@@ -30,6 +29,8 @@
 		})();
 	
 	</script>
-
+	<link rel="stylesheet/less" type="text/css" href="/css/main.less">
+	<script type="text/javascript" src="/js/less.min.js"></script>
+	
 </head>
 <body>

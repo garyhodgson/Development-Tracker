@@ -23,37 +23,7 @@ jQuery(function() {
 		<% request.activities?.each { activity ->
 		%>
 		<tr>
-			<% if (activity.type == enums.ActivityType.NewDevelopment) {%>
-				<td><a href="/userinfo/${activity.by}">${activity.by}</a> created a new development called <a href="${activity.link}">${activity.title}</a></td>
-
-			<% } else if (activity.type == enums.ActivityType.DevelopmentUpdated) {%>
-				<td><a href="${activity.link}">${activity.title}</a> was updated by <a href="/userinfo/${activity.by}">${activity.by}</a></td>
-
-			<% } else if (activity.type == enums.ActivityType.NewUser) {%>
-				<td>New User: <a href="/userinfo/${activity.by}">${activity.by}</a></td>
-
-			<% } else if (activity.type == enums.ActivityType.DevelopmentDeleted) {%>
-				<td>Development ${activity.title} was deleted by ${activity.by}</a></td>
-			
-			<% } else if (activity.type == enums.ActivityType.NewKit) {%>
-				<td><a href="/userinfo/${activity.by}">${activity.by}</a> added a new kit: <a href="${activity.link}">${activity.title}</a></a></td>
-			
-			<% } else if (activity.type == enums.ActivityType.KitUpdated) {%>
-				<td><a href="/userinfo/${activity.by}">${activity.by}</a> updated kit <a href="${activity.link}">${activity.title}</a></a></td>
-				
-			<% } else if (activity.type == enums.ActivityType.NewTheme) {%>
-				<td><a href="/userinfo/${activity.by}">${activity.by}</a> added a new theme: <a href="${activity.link}">${activity.title}</a></a></td>
-			
-			<% } else if (activity.type == enums.ActivityType.ThemeUpdated) {%>
-				<td><a href="/userinfo/${activity.by}">${activity.by}</a> updated theme <a href="${activity.link}">${activity.title}</a></a></td>
-			
-			<% } else if (activity.link) { %>
-				<td><a href="${activity.link}">${activity.title}</a></td>
-
-			<% } else { %>		
-				<td>${activity.title}</td>
-			<% } %>
-	
+			<td><a href="${activity.link?:'#'}">${activity}</a></td>
 			<td>${prettyTime.format(activity.created)?:''}</td>
 		</tr>
 		<% } %>

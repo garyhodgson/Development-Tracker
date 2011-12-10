@@ -1,0 +1,10 @@
+
+#paragraphs p {
+	margin-left: 15px;
+}
+
+
+#paragraphs img {
+	float: left;
+	padding: 5px;
+}

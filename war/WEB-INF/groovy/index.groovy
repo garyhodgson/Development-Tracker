@@ -1,7 +1,8 @@
-import static com.google.appengine.api.datastore.FetchOptions.Builder.*
-
 import com.google.appengine.api.NamespaceManager
-
+import static paging.pagingHelper.*
+import static enums.MemcacheKeys.*
+import app.MemcacheKeys
+import entity.Development
 
 def subdomain = request.properties.serverName.split(/\./).getAt(0)
 
@@ -25,14 +26,13 @@ if (params.namespace){
 }
 
 if (NamespaceManager.get() != null && !NamespaceManager.get().isEmpty()){
+	
+	request.latestDevelopments = cacheManager.latestDevelopments(0,3)
+	request.latestThemes = cacheManager.latestThemes(0,2)
+	request.latestKits = cacheManager.latestKits(0,2)
+	request.latestActivities = cacheManager.latestActivities(0,4)
 
-	if (NamespaceManager.get() == "my" && !users.isUserLoggedIn()){
-		request.session.message = "Login Required"
-		redirect '/access/login?continue=/'
-		return
-	}
-
-	forward "/templates/namespace/${NamespaceManager.get()}/index.gtpl"
+	forward "/templates/namespace/${NamespaceManager.get()}/index2.gtpl"
 	return
 }
 

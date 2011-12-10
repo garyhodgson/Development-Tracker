@@ -111,8 +111,7 @@ jQuery(function() {
 				</tr>
 				<tr>
 					<td>Description</td>
-					<% 	def text = markdown.markdown(development.description?:'')	
-						def rows = text.length() < 512 ? 4 : 10 %>
+					<% 	def text = markdown.markdown(development.description?:'') %>
 					<td>${text}</td>
 				</tr>
 				<tr>
