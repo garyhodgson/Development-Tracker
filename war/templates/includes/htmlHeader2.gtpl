@@ -41,6 +41,9 @@
 			})();
 		
 		</script>
-	
+		<script type="text/javascript" src="/js/css_auto-reload.js"></script>
+		<script>
+			document.styleSheets.start_autoreload(1000)
+		</script>
 </head>
 <body>
