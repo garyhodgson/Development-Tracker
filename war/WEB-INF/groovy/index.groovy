@@ -24,16 +24,4 @@ if (params.namespace){
 	return
 }
 
-if (NamespaceManager.get() != null && !NamespaceManager.get().isEmpty()){
-
-	if (NamespaceManager.get() == "my" && !users.isUserLoggedIn()){
-		request.session.message = "Login Required"
-		redirect '/access/login?continue=/'
-		return
-	}
-
-	forward "/templates/namespace/${NamespaceManager.get()}/index.gtpl"
-	return
-}
-
-forward '/templates/namespace/default/index.gtpl'
+forward '/templates/namespace/3dprint/index.gtpl'

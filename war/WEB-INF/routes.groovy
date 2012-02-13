@@ -1,6 +1,8 @@
 import static com.google.appengine.api.capabilities.Capability.*
 import static com.google.appengine.api.capabilities.CapabilityStatus.*
 
+
+all "/_ah/warmup", forward: "/warmupRequestHandler.groovy"
 all "/_ah/**", ignore: true
 
 

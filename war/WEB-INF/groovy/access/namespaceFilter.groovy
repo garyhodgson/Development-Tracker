@@ -6,21 +6,12 @@ import com.google.appengine.api.NamespaceManager
 class namespaceFilter implements Filter {
 
 	FilterConfig filterConfig
-	def namespaceMap = ['3dprint':[
-			'reprap',
-			'makerbot',
-			'3dprint'
-		]]
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
 		if (NamespaceManager.get() == null) {
-			def subdomain = request.properties.serverName.split(/\./).getAt(0)
-
-			def namespace = namespaceMap.find{it.value.contains(subdomain)}?.getKey()?:'default'
-
-			NamespaceManager.set(namespace);
+			NamespaceManager.set('3dprint');
 		}
 
 		chain.doFilter(request, response);

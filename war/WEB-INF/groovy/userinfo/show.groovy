@@ -17,13 +17,14 @@ UserInfo userinfo
 def userinfoKey
 namespace.of("") {
 	userinfo = dao.ofy().query(UserInfo.class).filter('username', params.username).get()
-	userinfoKey = new Key(UserInfo.class, userinfo.userId)
 }
 if (!userinfo){
 	request.session.message = "Unable to find user with username ${params.username}."
 	redirect '/userinfos'
 	return
 }
+
+userinfoKey = new Key(UserInfo.class, userinfo.userId)
 
 request.userinfo = userinfo
 request.userDevelopments = dao.ofy().query(Development.class).filter('createdBy', params.username).order('title').list()

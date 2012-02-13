@@ -44,16 +44,6 @@
 	</p>
 	<br>
 
-	<p class="faq-question">Why are there different subdomains (reprap, makerbot) for the 3dprint namespace? Isn't that simply confusing?</p>
-	<p class="faq-answer">
-		The idea is to be able to tailor parts of the application to the preferences of the user. If someone has more interest in the reprap project then they can go to <a
-			href="/start/reprap"
-		>reprap.development-tracker.info</a> and receive information weighted for this project.
-	</p>
-	<p class="faq-answer">At this stage there is little tailoring to the site - but future iterations should bring news feeds, priority listings and other project or vendor
-		specific information.</p>
-	<br>
-
 </div>
 
 <div class="redirect-block bordered">

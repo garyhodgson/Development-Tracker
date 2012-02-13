@@ -24,11 +24,11 @@
 	<br>
 
 	<div class="">
-	<%if (subdomain=="reprap") {%>
-		<img width="26%" alt="Prusa Mendel" src="/images/PrusaMendel_Mono.png">
-	<% } else if (subdomain=="makerbot") {%>
+	<%if (subdomain=="makerbot") {%>
 		<img width="26%" alt="ThingOMatic" src="/images/ThingOMatic.png">
-	<% } %>
+	<% } else {%>
+		<img width="26%" alt="Prusa Mendel" src="/images/PrusaMendel_Mono.png">
+	<% }  %>
 	</div>
 	
 	<br clear="both">
