@@ -66,7 +66,7 @@ forward '/templates/development/show.gtpl'
 def getGithubSupplementary(def url){
 	/*Only match URLs that follow the format: https://github.com/<user>/<project>, i.e. not wiki's or issue pages*/
 	def m =  url =~ /https:\/\/github.com\/([^\/]*)\/([^\/]*)/
-	if (!m.matches() && m[0].size() != 3 ) return null
+	if (!m.matches() || m[0].size() != 3 ) return null
 
 	//check memcache first
 	def memcacheKey = "${MemcacheKeys.GITHUB_SUPPLEMENTARY}:${m[0][1]}-${m[0][2]}"

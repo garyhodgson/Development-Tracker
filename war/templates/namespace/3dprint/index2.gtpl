@@ -77,7 +77,7 @@ def subdomain = request.properties.serverName.split(/\./).getAt(0)
 				<%
 					request.latestThemes.each { theme -> 
 				%>
-				<h5>${theme.title}</h5>
+				<h5><a href="/theme/${theme.id}">${theme.title}</a></h5>
 				<p>${theme.description?:''}</p>
 				<div class="clear"></div>
 				<hr>
