@@ -1,9 +1,6 @@
 package development
 
-import java.util.logging.Logger;
-
-
-import cache.MemcacheKeys;
+import cache.MemcacheKeys
 
 import com.github.api.v2.services.GitHubException
 import com.github.api.v2.services.GitHubServiceFactory
@@ -16,6 +13,8 @@ import entity.Collaboration
 import entity.Development
 import entity.Relationship
 import enums.Source
+
+
 
 if (!params.id){
 	request.session.message = "No Id given."

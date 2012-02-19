@@ -32,7 +32,7 @@ jQuery(function() {
 	<h2 class="pageTitle"><%=request.pageTitle?:"Kit: " + kit.title%></h2>
 </div>
 
-<div class="grid_4">
+<div class="grid_3">
 	<% if (kit.thumbnailServingUrl){ %>
 	<div class="kit-large-thumbnail">
 		<a class="nohint" href="${kit.thumbnailServingUrl}" target="_blank"><img src="${kit.thumbnailServingUrl}"></a>

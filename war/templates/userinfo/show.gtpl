@@ -27,15 +27,10 @@
 </div>
 
 <div class="userinfo-thumb grid_2">
-	<img src="http://www.gravatar.com/avatar/${userinfo.getGravatarHash()}?s=150&d=mm" />
+	<img src="http://www.gravatar.com/avatar/${userinfo.getGravatarHash()}?s=175&d=mm" />
 </div>
 
-<% if (users.isUserLoggedIn()) { %>
 <div class="grid_9">
-<% } else { %>
-<div class="grid_10">
-<% }%>
-
 	<div id="tabs">
 		<ul class="tabs" >
 			<li><a href="#details">Details</a></li>
@@ -158,8 +153,6 @@
 				<tr>
 					<td class="linkDescription">(${it.role})</td>
 					<td class="linkDescription"><a href="/development/${it.developmentId}">${it.developmentTitle}</a></td>
-					
-					
 				</tr>
 				<% } %>
 			</table>

@@ -62,7 +62,7 @@ jQuery(function() {
 	<% } %>
 </div>	
 
-<div class="grid_8">
+<div class="grid_9">
 	<div id="tabs">
 		<ul class="tabs">
 			<li><a href="#core">Core</a></li>
@@ -254,7 +254,7 @@ jQuery(function() {
 	</div>
 </div>
 
-<div id="actions" class="grid_2">
+<div id="actions" class="grid_1">
 	<ul>
 		<% if (request.history?:false) { %> 
 			<a href="/development/<%=development.id%>"><li>Back</li> </a>

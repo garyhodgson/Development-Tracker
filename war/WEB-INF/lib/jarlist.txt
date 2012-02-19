@@ -1,6 +1,6 @@
-appengine-api-1.0-sdk-1.6.0.jar
-appengine-api-labs-1.6.0.jar
-appengine-jsr107cache-1.6.0.jar
+appengine-api-1.0-sdk-1.6.2.1.jar
+appengine-api-labs-1.6.2.1.jar
+appengine-jsr107cache-1.6.2.1.jar
 commons-fileupload-1.2.1.jar
 commons-io.jar
 commons-lang-2.5.jar
@@ -11,14 +11,14 @@ gaelyk-1.1.jar
 geronimo-jpa_3.0_spec-1.1.1.jar
 geronimo-jta_1.1_spec-1.1.1.jar
 github-java-sdk.jar
+google_sql.jar
 groovy-all-1.8.4.jar
 gson-1.7.1.jar
-jarlist.txt
 jdo2-api-2.3-eb.jar
 jdom-1.1.1.jar
 jsr107cache-1.1.jar
 markdownj-0.3.0-1.0.2b4.jar
-objectify-3.0-retro.jar
+objectify-3.1.jar
 ocpsoft-pretty-time-1.0.7.jar
 rome-1.0.jar
 rome-fetcher-1.0.jar

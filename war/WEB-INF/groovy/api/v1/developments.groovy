@@ -37,7 +37,7 @@ xml.developments("count":devs.size(), "api-version":"1") {
 			createdBy(d.createdBy)
 			updated(d.updated)
 			categories {
-				d.categories?.each { category(it.title) }
+				d.categories?.each { category(id:it, it.title) }
 			}
 			
 			def collabs = collaborations.findAll { it.development == developmentKey }
@@ -60,17 +60,17 @@ xml.developments("count":devs.size(), "api-version":"1") {
 			description(d.description)
 			if (d.developmentType) {
 				if (d.developmentType == DevelopmentType.Other){
-					developmentType(d.developmentTypeOther)
+					developmentType(id:d.developmentType, d.developmentTypeOther)
 				} else {
-					developmentType(d.developmentType.title)
+					developmentType(id:d.developmentType, d.developmentType.title)
 				}
 			}
 			goals {
 				d.goals?.each {
 					if (it == Goal.Other){
-						goal(d.goalsOther)
+						goal(id:it, d.goalsOther)
 					} else {
-						goal(it.title)
+						goal(id:it, it.title)
 					}
 				}
 			}
@@ -87,9 +87,9 @@ xml.developments("count":devs.size(), "api-version":"1") {
 			projectVendors{
 				d.projectVendor?.each {
 					if (it == ProjectVendor.Other){
-						projectVendor(d.projectVendorOther)
+						projectVendor(id:it, d.projectVendorOther)
 					} else {
-						projectVendor(it.title)
+						projectVendor(id:it, it.title)
 					}
 				}
 			}			
@@ -111,7 +111,7 @@ xml.developments("count":devs.size(), "api-version":"1") {
 				if (d.status == Status.Other){
 					status(d.statusOther)
 				} else {
-					status(d.status.title)
+					status(id:d.status, d.status.title)
 				}
 			}
 			tags {

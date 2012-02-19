@@ -26,8 +26,9 @@ def subdomain = request.properties.serverName.split(/\./).getAt(0)
 						</h3>
 						<%
 							def status = (development.status && development.status == enums.Status.Other) ?  development.statusOther?:'None' : development.status?.title?:'None'
+							def userlink = development.createdBy ? "/userinfo/${development.createdBy}" : "#"
 						%>
-						<p>by: <b><a href="/userinfo/${development.createdBy}">${development.createdBy}</a></b>; status: <b>${status}</b></p>
+						<p>by: <b><a href="${userlink}">${development.createdBy?:'Unknown'}</a></b>; status: <b>${status}</b></p>
 						
 						
 						
@@ -56,8 +57,7 @@ def subdomain = request.properties.serverName.split(/\./).getAt(0)
 				<%
 					request.latestActivities.each { activity-> 
 				%>
-				<p><a class="nohint" href="${activity.link}">${activity} - ${prettyTime.format(activity.created)}</a></p>
-				<div class="clear"></div>			
+				<p><a class="nohint" href="${activity.link}">${activity} - ${prettyTime.format(activity.created)}</a></p>		
 				<hr>
 				<%
 					} 

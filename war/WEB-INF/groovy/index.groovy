@@ -28,7 +28,7 @@ if (params.namespace){
 
 if (NamespaceManager.get() != null && !NamespaceManager.get().isEmpty()){
 	
-	request.latestDevelopments = cacheManager.latestDevelopments(0,3)
+	request.latestDevelopments = cacheManager.latestDevelopments(0,4)
 	request.latestThemes = cacheManager.latestThemes(0,2)
 	request.latestKits = cacheManager.latestKits(0,2)
 	request.latestActivities = cacheManager.latestActivities(0,4)

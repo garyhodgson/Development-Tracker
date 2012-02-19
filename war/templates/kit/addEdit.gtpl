@@ -37,9 +37,9 @@
 		
 		jQuery('#cancelAdd').click(function(){
 			if (jQuery('#imageBlobKey').val() != ''){
-				window.location = "/kit/add/cancel/?continue=/&imageBlobKey="+jQuery('#imageBlobKey').val()
+				window.location = "/kit/add/cancel/"+jQuery('#imageBlobKey').val()
 			} else {
-				window.location = "/kits/latest"
+				window.location = "/kits"
 			}
 		})
 		
@@ -67,7 +67,7 @@
 			browse_button : 'pickFile',
 			container : 'fileUploadContainer',
 			max_file_size : '<%=AppProperties.THUMBNAIL_MAXSIZE?:5%>mb',
-			url : "<%=blobstore.createUploadUrl('/development/fileUpload.groovy')%>",
+			url : "<%=blobstore.createUploadUrl('/fileUpload.groovy')%>",
 			flash_swf_url : '/js/plupload/plupload.flash.swf',
 			filters : [
 				{title : "Image files", extensions : "jpg,gif,png"},

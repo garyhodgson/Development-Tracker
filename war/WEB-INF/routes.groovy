@@ -131,7 +131,9 @@ post "/userinfo/update", forward: "/userinfo/update.groovy"
 
 /* Kit */
 get "/kits", forward: "/kits/list.groovy"
-get "/kit/add/cancel?continue=@continue&imageBlobKey=@imageBlobKey", forward:  "/cancelAdd.groovy?imageBlobKey=@imageBlobKey&continue=@continue"
+
+get "/kit/add/cancel/@imageBlobKey", forward:  "/kit/cancelAdd.groovy?imageBlobKey=@imageBlobKey"
+
 get "/kit/add",  forward: {
 	to "/kit/prepareAdd.groovy"
 	to("/templates/static/maintenance.gtpl").on(DATASTORE).not(ENABLED)

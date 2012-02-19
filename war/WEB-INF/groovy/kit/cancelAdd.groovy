@@ -1,3 +1,4 @@
+package kit
 
 
 import com.google.appengine.api.blobstore.BlobKey
@@ -11,6 +12,4 @@ if (params.imageBlobKey){
 	}
 }
 
-println params.continue
-
-redirect params.continue
+redirect '/kits'
