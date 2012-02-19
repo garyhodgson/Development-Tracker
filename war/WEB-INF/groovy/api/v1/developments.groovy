@@ -83,6 +83,7 @@ xml.developments("count":devs.size(), "api-version":"1") {
 				}
 			}
 			notice(d.notice?:'')
+			image(url: d.imageURL, thumbnail:d.thumbnailServingUrl)
 			projectVendors{
 				d.projectVendor?.each {
 					if (it == ProjectVendor.Other){
