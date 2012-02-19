@@ -118,6 +118,8 @@ if (updateThumbnail){
 
 dao.ofy().put(new Activity(type:enums.ActivityType.DevelopmentUpdated, title:"${development.title}",by:currentUsername, created: now, link :"/development/${development.id}"))
 
-cacheManager.resetCache()
+cacheManager.resetDevelopmentCache()
+cacheManager.resetActivityCache()
+
 
 redirect params.referer?:"/development/${development.id}"

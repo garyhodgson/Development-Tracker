@@ -4,17 +4,14 @@
 ul.nav,
 ul.nav * { margin:0;padding:0;}
 ul.nav {
-  position:relative;
-  background:#666;
-  max-width:85%;
-  margin: -10px auto 0px auto;
-  padding: 0px 20px;
-  height:2.5em;
-  border: 2px solid black;
-  -moz-border-radius-bottomright: 20px;
-  -moz-border-radius-bottomleft: 20px;
-  border-bottom-right-radius: 20px;
-  border-bottom-left-radius: 20px;
+	position:relative;
+	background:#666;
+	margin: -36px auto 0 60px;
+	padding: 0 20px 0 15px;
+	height:2.5em;
+	border: 2px solid black;
+	-moz-border-radius-bottomright: @medium-rounded;
+	border-bottom-right-radius: @medium-rounded;
   }
 ul.nav li {
 	cursor:pointer;
@@ -103,7 +100,7 @@ ul.main li a {
 	height:2.5em;
 	line-height:2.5em;
 	border:0;
-	color:#fff;
+	color:lightgrey;
 	background:#000;
 }
 ul.main li ul li a {
@@ -112,17 +109,18 @@ ul.main li ul li a {
   height:2em;
   text-align:left;
   color:#fff;
-  border-top:1px solid #444;
+  border: 1px solid black;
   background:#000;
 }
 ul.main li a:focus {color:#fff; background:@site-default-select;}
 ul.main li ul li a:hover {
   color:#fff;
   background:@site-default-select;
+  border: 1px solid black;
 }
 ul.main li:hover a {
   color:#fff;
-  background:#555;
+  background:#000;
 }
 ul.main li:hover ul li a {color:#fff;}
 ul.main li:hover ul li a:hover {color:#fff; background:@site-default-select;}
@@ -162,9 +160,9 @@ ul.nav li.secondary span.status span {
 }
 ul.nav li.secondary:hover a {
 	color:#fff;
-	background:#666;
+	background:#000;
 }
 ul.nav li.secondary:hover a:hover {
-	background:#555;
+	background:#000;
 }
-ul.nav li.secondary:hover a:active {background:#444;}
+ul.nav li.secondary:hover a:active {background:#000;}

@@ -6,24 +6,11 @@
 	});
 </script>
 
-<h2 class="pageTitle"><%=request.pageTitle?:"Themes"%></h2>
+<div class="grid_10 prefix_1 suffix_1">
+	<h2 class="pageTitle"><%=request.pageTitle?:"Themes"%></h2>
+</div>
 
-<nav>
-	<ul>
-		<a href="/"><li>Home</li></a>
-		<br>
-		<% if (users.isUserLoggedIn()) { %>
-			<a href="/theme/add"><li>New Theme &hellip;</li></a>
-			<br>
-		<% } %>
-		
-		<a href="/themes/latest"><li>Latest</li></a>
-		<br>
-		<a href="/themes/latest/feed.rss"><li>RSS</li></a>
-	</ul>
-</nav>
-
-<div class="content" >
+<div class="grid_12">
 		<table border=0 cellspacing="0" cellpadding="5px">
 			<tr>
 				<th width="90%">Title</th>

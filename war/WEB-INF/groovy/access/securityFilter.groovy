@@ -32,31 +32,33 @@ class securityFilter implements Filter {
 		'/userinfo/add',
 		'/userinfo/exists/',
 		'/development/exists/',
-		'/_ah/logout'
+		'/_ah/logout',
+		'/_ah/warmup'
 	]
 
-	def namespaceExceptionsList = [
-		'/about',
-		'/faq',
-		'/future',
-		'/start',
-		'/blog',
-		'/_ah',
-		'/robots.txt',
+	def subdomainList = [
+		'reprap',
+		'makerbot',
+		'3dprint'
 	]
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
+		
 		def namespace = NamespaceManager.get()
-		def subdomain = request.properties.serverName.split(/\./).getAt(0)
+		def serverName = request.getServerName()
+		def subdomain = serverName.split(/\./).getAt(0)
 		def requestURI = request.getRequestURI()
 		HttpSession session = ((HttpServletRequest) request).getSession(true);
 
-		if (namespace == 'default' && (request.getRequestURI() != '/' && !namespaceExceptionsList.find{request.getRequestURI().startsWith(it)})){
-			// We should not go anywhere apart from home
-			session.setAttribute("message", "Please choose your preferred project/vendor.");
-			response.sendRedirect("/");
+		if (!subdomainList.contains(subdomain)){
+
+			if (serverName.startsWith("www.")){
+				serverName = serverName.replace("www.", "")
+			}
+
+			def port = (request.getLocalPort())?":"+request.getLocalPort():'';
+			response.sendRedirect("http://3dprint."+serverName+port+request.getRequestURI());
 			return
 		}
 

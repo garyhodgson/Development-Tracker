@@ -22,29 +22,20 @@
 	});
 </script>
 
-<h2 class="pageTitle">User Info: ${userinfo.username}</h2>
+<div class="grid_10 prefix_1">
+	<h2 class="pageTitle">User Info: ${userinfo.username}</h2>
+</div>
 
-<nav>
-	<ul>
-		<a href="/"><li>Home</li></a>
-	
-		<% if (users.isUserLoggedIn()) { %>
-			<% if (users.isUserAdmin() || user.userId == userinfo.userId) { %>
-				<a href="/userinfo/edit/<%=userinfo.username%>"><li>Edit</li></a>
-				<br>
-				<a href="/kit/add"><li>Add Kit</li></a>
-				
-			<% } %>	
-		<% } %>	
-			
-	</ul>
-</nav>
-
-<div class="userinfo-thumb left">
+<div class="userinfo-thumb grid_2">
 	<img src="http://www.gravatar.com/avatar/${userinfo.getGravatarHash()}?s=150&d=mm" />
 </div>
 
-<div class="content thumbnailed">
+<% if (users.isUserLoggedIn()) { %>
+<div class="grid_9">
+<% } else { %>
+<div class="grid_10">
+<% }%>
+
 	<div id="tabs">
 		<ul class="tabs" >
 			<li><a href="#details">Details</a></li>
@@ -175,5 +166,16 @@
 		</div>
 	</div>
 </div>
+
+<% if (users.isUserLoggedIn()) { %>
+	<% if (users.isUserAdmin() || user.userId == userinfo.userId) { %>
+	<div id="actions" class="grid_1">
+		<ul>
+			<a href="/userinfo/edit/<%=userinfo.username%>"><li>Edit</li></a>
+			<a href="/kit/add"><li>Add Kit</li></a>
+		</ul>
+	</div>
+	<% } %>	
+<% } %>	
 
 <% include '/templates/includes/footer.gtpl' %>

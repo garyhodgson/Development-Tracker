@@ -2,7 +2,8 @@ package development
 
 import java.util.logging.Logger;
 
-import app.MemcacheKeys
+
+import cache.MemcacheKeys;
 
 import com.github.api.v2.services.GitHubException
 import com.github.api.v2.services.GitHubServiceFactory

@@ -27,30 +27,11 @@ jQuery(function() {
 });
 </script>
 
-<h2 class="pageTitle"><%=request.pageTitle?:"Theme: " + theme.title%></h2>
+<div class="grid_10 prefix_1 suffix_1">
+	<h2 class="pageTitle"><%=request.pageTitle?:"Theme: " + theme.title%></h2>
+</div>
 
-<nav>
-	<ul>
-		<a href="/"><li>Home</li></a>
-		<br>
-		<a href="/themes/latest"><li>Themes</li> </a>
-		<br>
-		<% if (user) { %> 
-			<%if (users.isUserAdmin() || session.userinfo?.username == theme.createdBy) { %>
-				<a href="/theme/edit/<%=theme.id%>"><li>Edit</li> </a>
-			<% } %> 
-		<% } %>
-		<br>
-		<% if (user) { %> 
-			<%if (users.isUserAdmin() || session.userinfo?.username == theme.createdBy) { %>
-				<a href="#" id="deleteTheme" rel="#confirm"><li>Delete</li> </a>
-			<% } %> 
-		<% } %>
-			
-	</ul>
-</nav>
-
-<div class="content" >
+<div class="grid_11">
 		<% if (theme.description) { %>
 			<div class="theme-description">${theme.description}</div>
 		<% } %>
@@ -79,11 +60,28 @@ jQuery(function() {
 			</tr>
 			<% } %>
 		</table>
-		<% if (request.developments) include '/templates/includes/paging.gtpl' %>
+		<% if (request.developments) include '/templates/includes/paging.gtpl' %>		
+</div>
+
+
+<div id="actions" class="grid_1">
+	<ul>
+		<% if (user) { %> 
+			<%if (users.isUserAdmin() || session.userinfo?.username == theme.createdBy) { %>
+				<a href="/theme/edit/<%=theme.id%>"><li>Edit</li> </a>
+			<% } %> 
+		<% } %>
+		<% if (user) { %> 
+			<%if (users.isUserAdmin() || session.userinfo?.username == theme.createdBy) { %>
+				<a href="#" id="deleteTheme" rel="#confirm"><li>Delete</li> </a>
+			<% } %> 
+		<% } %>
 		
+	</ul>
 </div>
 
 <div id="confirm">
 	<p>Are you sure you wish to delete theme ${theme.id}?</p>
 </div>
+
 <% include '/templates/includes/footer.gtpl' %>

@@ -19,36 +19,18 @@ jQuery(function() {
 });
 </script>
 
-<h2 class="pageTitle"><%=request.pageTitle?:"Change History"%></h2>
-
-<nav>
-	<ul>
-		<a href="/developments"><li>Developments</li> </a>
-		<a href="/development/<%=development.id%>"><li>Back</li> </a>
-		<br>
-
-		<% if (user) { %>
-		<% if ((session.userinfo?.watchedDevelopments?:[]).contains(development.id)) { %>
-		<a href="/development/unwatch/<%=development.id%>"><li>Unwatch</li> </a>
-		<% } else { %>
-		<a href="/development/watch/<%=development.id%>"><li>Watch</li> </a>
-		<% } %>
-		<br>
-		<%if (users.isUserAdmin() || session.userinfo?.username == development.createdBy) { %>
-		<a href="/development/edit/<%=development.id%>"><li>Edit</li> </a>
-		<% } %>
-		<% } %>
-	</ul>
-</nav>
+<div class="grid_10 prefix_1">
+	<h2 class="pageTitle"><%=request.pageTitle?:"Change History"%></h2>
+</div>
 
 
 <% if (development.imageURL){ %>
-<div class="development-thumb left">
+<div class="development-thumb grid_2">
 	<img src="${development.thumbnailServingUrl}">
 </div>
 <% } %>
 
-<div class="content ${(development.imageURL)?'thumbnailed':'' }">
+<div class="grid_8">
 	
 	<div id="smartwizard" class="wiz-container change-history">
 
@@ -81,5 +63,26 @@ jQuery(function() {
 	</div>
 
 </div>
+
+<div id="actions" class="grid_2">
+	<ul>
+		<a href="/developments"><li>Developments</li> </a>
+		<a href="/development/<%=development.id%>"><li>Back</li> </a>
+		<br>
+
+		<% if (user) { %>
+		<% if ((session.userinfo?.watchedDevelopments?:[]).contains(development.id)) { %>
+		<a href="/development/unwatch/<%=development.id%>"><li>Unwatch</li> </a>
+		<% } else { %>
+		<a href="/development/watch/<%=development.id%>"><li>Watch</li> </a>
+		<% } %>
+		<br>
+		<%if (users.isUserAdmin() || session.userinfo?.username == development.createdBy) { %>
+		<a href="/development/edit/<%=development.id%>"><li>Edit</li> </a>
+		<% } %>
+		<% } %>
+	</ul>
+</div>
+
 
 <% include '/templates/includes/footer.gtpl' %>

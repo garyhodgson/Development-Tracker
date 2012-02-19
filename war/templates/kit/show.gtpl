@@ -28,28 +28,13 @@ jQuery(function() {
 });
 </script>
 
-<h2 class="pageTitle"><%=request.pageTitle?:"Kit: " + kit.title%></h2>
+<div class="grid_10 prefix_1 suffix_1">
+	<h2 class="pageTitle"><%=request.pageTitle?:"Kit: " + kit.title%></h2>
+</div>
 
-<nav>
-	<ul>
-		<a href="/"><li>Home</li></a>
-		<br>
-		<a href="/userinfo/${kit.ownerUsername}"><li>Owner</li> </a>
-		<br>
-		<% if (user) { %>
-		<%if (users.isUserAdmin() || session.userinfo.username == kit.ownerUsername) { %>
-		<a href="/kit/edit/<%=kit.id%>"><li>Edit</li> </a>
-		<br>
-		<a href="#" id="deleteKit" rel="#confirm"><li>Delete</li> </a>
-		<% } %>
-		<% } %>
-
-	</ul>
-</nav>
-
-<div class="left" style="width:40%">
+<div class="grid_4">
 	<% if (kit.thumbnailServingUrl){ %>
-	<div class="kit-thumbnail">
+	<div class="kit-large-thumbnail">
 		<a class="nohint" href="${kit.thumbnailServingUrl}" target="_blank"><img src="${kit.thumbnailServingUrl}"></a>
 	</div>
 	<% } %>
@@ -64,10 +49,26 @@ jQuery(function() {
 	</fieldset>
 </div>	
 
-<div class="content left" style="width:45%">
+<div class="grid_7">
 	<% def text = markdown.markdown(kit.description?:'') %>	
-	<div class="left kit-description">${text}</div>
+	<div class="kit-description">${text}</div>
 </div>
+
+<div id="actions" class="grid_1">
+	<ul>
+		<a href="/userinfo/${kit.ownerUsername}"><li>Owner</li> </a>
+		<br>
+		<% if (user) { %>
+		<%if (users.isUserAdmin() || session.userinfo.username == kit.ownerUsername) { %>
+		<a href="/kit/edit/<%=kit.id%>"><li>Edit</li> </a>
+		<br>
+		<a href="#" id="deleteKit" rel="#confirm"><li>Delete</li> </a>
+		<% } %>
+		<% } %>
+
+	</ul>
+</div>
+
 
 <div id="confirm">
 	<p>Are you sure you wish to delete kit ${kit.id}?</p>

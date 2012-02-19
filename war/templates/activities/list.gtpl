@@ -10,15 +10,11 @@ jQuery(function() {
 });
 </script>
 
-<h2 class="pageTitle"><%=request.pageTitle?:"Activities"%></h2>
+<div class="grid_10 prefix_1">
+	<h2 class="pageTitle"><%=request.pageTitle?:"Activities"%></h2>
+</div>
 
-<nav>
-	<ul>
-		<a href="/"><li>Home</li></a>
-	</ul>
-</nav>
-
-<div class="content">
+<div class="grid_12">
 	<table border=0 cellspacing="0" cellpadding="5px" id="activityTable">
 		<% request.activities?.each { activity ->
 		%>
@@ -30,7 +26,5 @@ jQuery(function() {
 	</table>
 	<% if (request.activities) include '/templates/includes/paging.gtpl' %>
 </div>
-
-
 
 <% include '/templates/includes/footer.gtpl' %>

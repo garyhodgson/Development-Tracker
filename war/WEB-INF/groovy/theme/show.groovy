@@ -1,6 +1,7 @@
 package theme
 
-import app.MemcacheKeys
+
+import cache.MemcacheKeys;
 
 import com.github.api.v2.services.GitHubServiceFactory
 import com.github.api.v2.services.RepositoryService

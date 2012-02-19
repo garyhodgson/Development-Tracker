@@ -1,3 +1,4 @@
+import com.googlecode.objectify.ObjectifyOpts
 import com.googlecode.objectify.ObjectifyService
 import com.googlecode.objectify.util.DAOBase
 
@@ -36,6 +37,11 @@ import com.googlecode.objectify.util.DAOBase
  * 
  */
 public class DAO extends DAOBase {
+	
+	public DAO(ObjectifyOpts opts){
+		super(opts)
+	}
+	
 	// Register your POJOs here
 	static {
 		ObjectifyService.register(entity.Development.class);
@@ -56,5 +62,6 @@ public class DAO extends DAOBase {
  */
 binding {
 	// an instance of class DAO from objectify library
-	dao = new DAO()
+	ObjectifyOpts opts = new ObjectifyOpts().setSessionCache(true)
+	dao = new DAO(opts)
 }

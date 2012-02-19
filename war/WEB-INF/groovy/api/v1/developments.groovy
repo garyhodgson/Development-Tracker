@@ -82,6 +82,7 @@ xml.developments("count":devs.size(), "api-version":"1") {
 					license(id:d.license, d.license.description?:d.license.title)
 				}
 			}
+			image(url: d.imageURL, thumbnail:d.thumbnailServingUrl)
 			notice(d.notice?:'')
 			projectVendors{
 				d.projectVendor?.each {

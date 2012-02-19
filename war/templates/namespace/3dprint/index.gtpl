@@ -1,36 +1,108 @@
 <% include '/templates/includes/header.gtpl' %>
 
-<% def subdomain = request.properties.serverName.split(/\./).getAt(0) %>
+<% 
+import org.apache.commons.lang.StringUtils
 
-	<dir class="directory bordered right">
-		<a href="/developments/latest"><li>Developments</li></a>
-		<a href="/developments/search"><li>Search</li></a>
-		<a href="/developments/browse"><li>Browse</li></a>
-		<a href="/themes"><li>Themes</li></a>
-		<a href="/kits"><li>Kits</li></a>
-		<a href="/activities"><li>Recent Activities</li></a>
-		
-		<%if (users.isUserLoggedIn() && session.userinfo?.username){ %>
-		<br>
-		<a href="/userinfo/${session.userinfo.username}"><li>My Development Tracker</li></a>
-		<% } %>
-	</dir>
-	
-	<div class="redirect-block bordered">
-		
-		<h1><%=(subdomain=="reprap")?"RepRap&hellip;":"${subdomain.capitalize()}&hellip;"%></h1>
-	</div>
-	
-	<br>
+def subdomain = request.properties.serverName.split(/\./).getAt(0) 
+%>
 
-	<div class="">
-	<%if (subdomain=="reprap") {%>
-		<img width="26%" alt="Prusa Mendel" src="/images/PrusaMendel_Mono.png">
-	<% } else if (subdomain=="makerbot") {%>
-		<img width="26%" alt="ThingOMatic" src="/images/ThingOMatic.png">
-	<% } %>
+	<div class="grid_7">
+
+		<div class="box articles">
+		
+			<a href="/developments/latest"><h2>Latest Developments</h2></a>
+			
+			<div class="block" id="articles">				
+				<%
+					def latestDevelopmentsCount = request.latestDevelopments.size() 
+					request.latestDevelopments.eachWithIndex { development, i -> 
+						def cssClass = "article"
+						if (i == 0) cssClass = "first article"
+						if (i == latestDevelopmentsCount-1) cssClass = "last article"
+				%>				
+					<div class="${cssClass}">
+						<h3>
+							<a href="/development/${development.id}">${development.title}</a>
+						</h3>
+						<%
+							def status = (development.status && development.status == enums.Status.Other) ?  development.statusOther?:'None' : development.status?.title?:'None'
+						%>
+						<p>by: <b><a href="/userinfo/${development.createdBy}">${development.createdBy}</a></b>; status: <b>${status}</b></p>
+						
+						
+						
+						<% if (development.thumbnailServingUrl){ %>
+						<a href="${development.thumbnailServingUrl}" class="image">
+							<img src="${development.thumbnailServingUrl}" width="60" height="60" alt="${development.title}" />
+						</a>
+						<% } %>
+						
+						<% 	def text = StringUtils.abbreviate(markdown.markdown(development.description?:''),500) %>
+						<p>${text}</p>
+						<div class="clear"></div>
+					</div>
+				
+				<% } %>
+			</div>
+		</div>
 	</div>
+	<div class="grid_5">
 	
-	<br clear="both">
+		<div class="box">
+			
+			<a href="/activities"><h2>Latest Activities</h2></a>
+			
+			<div class="block" id="paragraphs">
+				<%
+					request.latestActivities.each { activity-> 
+				%>
+				<p><a class="nohint" href="${activity.link}">${activity} - ${prettyTime.format(activity.created)}</a></p>
+				<div class="clear"></div>			
+				<hr>
+				<%
+					} 
+				%>
+			</div>
+		</div>
+		
+		<div class="box">
+			
+			<a href="/themes"><h2>Latest Themes</h2></a>
+			<div class="block" id="paragraphs">			
+				<%
+					request.latestThemes.each { theme -> 
+				%>
+				<h5><a href="/theme/${theme.id}">${theme.title}</a></h5>
+				<p>${theme.description?:''}</p>
+				<div class="clear"></div>
+				<hr>
+				<%
+					} 
+				%>
+			</div>
+		</div>
+
+		<div class="box">
+
+			<a href="/kits"><h2>Latest Kits</h2></a>
+
+			<div class="block" id="">
+				<%
+					request.latestKits.each { kit -> 
+				%>
+				<a href="/kit/${kit.id}"><h6>${kit.title}</h6></a>
+				<% if (kit.thumbnailServingUrl){ %>
+					<img class="index-thumbnail" src="${kit.thumbnailServingUrl}" width="60" height="60" alt="${kit.title}" >
+				<% } %>
+				<p>${StringUtils.abbreviate(markdown.markdown(kit.description?:''),300)}</p>
+				<div class="clear"></div>						
+				<hr>
+				<%
+					} 
+				%>
+			</div>
+		</div>
+		
+	</div>
 
 <% include '/templates/includes/footer.gtpl' %>

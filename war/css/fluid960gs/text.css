@@ -73,11 +73,6 @@ ul
 	list-style: square;
 }
 
-li
-{
-	margin-left: 30px;
-}
-
 p,
 dl,
 hr,
@@ -94,5 +89,5 @@ table,
 address,
 fieldset
 {
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 }

@@ -20,5 +20,7 @@ public enum MemcacheKeys {
 	LatestKits,
 	
 	TotalThemesCount,
-	LatestThemes;
+	LatestThemes,
+	
+	Keys;
 }

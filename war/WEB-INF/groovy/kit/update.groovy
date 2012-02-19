@@ -85,6 +85,9 @@ if (updateThumbnail){
 
 dao.ofy().put(new Activity(type:enums.ActivityType.KitUpdated, title:"${kit.title}",by:userinfo.username, created: new Date(), link :"/kit/${kit.id}"))
 
+cacheManager.resetKitCache()
+cacheManager.resetActivityCache()
+
 redirect "/kit/${kit.id}"
 
 

@@ -3,10 +3,8 @@ package userinfos
 import entity.UserInfo
 import static paging.pagingHelper.*
 
-log.info "Retrieving User Infos"
-
 namespace.of("") {
-	def totalCount = dao.ofy().query(UserInfo.class).countAll()
+	def totalCount = dao.ofy().query(UserInfo.class).count()
 
 	def (offset,limit) = getOffsetAndLimit(params, totalCount)
 

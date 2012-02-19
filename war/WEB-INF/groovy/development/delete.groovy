@@ -1,6 +1,8 @@
 package development
 
 import com.googlecode.objectify.Key
+import com.googlecode.objectify.Objectify
+import com.googlecode.objectify.ObjectifyService
 
 import entity.Activity
 import entity.Collaboration
@@ -56,7 +58,8 @@ dao.ofy().delete(keysToDelete)
 
 dao.ofy().put(new Activity(type:enums.ActivityType.DevelopmentDeleted, title:"${development.title}",by:userinfo.username, created: new Date()))
 
-cacheManager.resetCache()
+cacheManager.resetDevelopmentCache()
+cacheManager.resetActivityCache()
 
 request.session.message = "Development deleted."
 redirect "/developments"

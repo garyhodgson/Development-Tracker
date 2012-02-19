@@ -43,20 +43,11 @@
 	});
 </script>
 
-<h2 class="pageTitle"><%=request.getAttribute('pageTitle')?:'Add Theme'%></h2>
+<div class="grid_12">
+	<h2 class="pageTitle"><%=request.getAttribute('pageTitle')?:'Add Theme'%></h2>
+</div>
 
-<nav>
-	<ul>
-		<a href="javascript://" id="submitForm"><li>Save</li> </a>
-		<% if (theme?.id){ %>
-		<a href="/theme/${theme?.id}"><li>Cancel</li> </a>
-		<% } else { %>
-		<a href="javascript://" id="cancelAdd"><li>Cancel</li> </a>
-		<% } %>
-	</ul>
-</nav>
-
-<div class="content">
+<div class="grid_11">
 
 	<form action="<%=request.getAttribute('action')?:'/theme/add'%>" method="post" id="addThemeForm">
 
@@ -110,5 +101,15 @@
 	</form>
 </div>
 
+<div id="actions" class="grid_1">
+	<ul>
+		<a href="javascript://" id="submitForm"><li>Save</li> </a>
+		<% if (theme?.id){ %>
+		<a href="/theme/${theme?.id}"><li>Cancel</li> </a>
+		<% } else { %>
+		<a href="javascript://" id="cancelAdd"><li>Cancel</li> </a>
+		<% } %>
+	</ul>
+</div>
 
 <% include '/templates/includes/footer.gtpl' %>

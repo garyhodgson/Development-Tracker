@@ -1,14 +1,15 @@
+import cache.MemcacheKeys;
+
 import com.google.appengine.api.NamespaceManager
 import static paging.pagingHelper.*
 import static enums.MemcacheKeys.*
-import app.MemcacheKeys
 import entity.Development
 
-def subdomain = request.properties.serverName.split(/\./).getAt(0)
+def subdomain = request.getServerName().split(/\./).getAt(0)
 
 //deal with GAE versions
 if (subdomain.isNumber()){
-	subdomain = request.properties.serverName.split(/\./).getAt(1)
+	subdomain = request.getServerName().split(/\./).getAt(1)
 }
 
 if (params.namespace){
@@ -32,8 +33,8 @@ if (NamespaceManager.get() != null && !NamespaceManager.get().isEmpty()){
 	request.latestKits = cacheManager.latestKits(0,2)
 	request.latestActivities = cacheManager.latestActivities(0,4)
 
-	forward "/templates/namespace/${NamespaceManager.get()}/index2.gtpl"
+	forward "/templates/namespace/${NamespaceManager.get()}/index.gtpl"
 	return
 }
 
-forward '/templates/namespace/default/index.gtpl'
+forward '/templates/namespace/3dprint/index.gtpl'

@@ -35,6 +35,14 @@
 			}
 		});
 		
+		jQuery('#cancelAdd').click(function(){
+			if (jQuery('#imageBlobKey').val() != ''){
+				window.location = "/kit/add/cancel/?continue=/&imageBlobKey="+jQuery('#imageBlobKey').val()
+			} else {
+				window.location = "/kits/latest"
+			}
+		})
+		
 		jQuery('#removePart').live('click', function(){
 			jQuery(this).parent().parent().remove();	
 		})
@@ -104,20 +112,21 @@
 	});
 </script>
 
-<h2 class="pageTitle"><%=request.getAttribute('pageTitle')?:'Add Kit'%></h2>
+<div class="grid_10 prefix_1 suffix_1">
+	<h2 class="pageTitle"><%=request.getAttribute('pageTitle')?:'Add Kit'%></h2>
+</div>
 
-<nav>
-	<ul>
-		<a href="javascript://" id="submitForm"><li>Save</li> </a>
-		<% if (kit?.id){ %>
-		<a href="/kit/${kit?.id}"><li>Cancel</li> </a>
+<div class="grid_2">
+	<div class="kit-thumbnail">
+		<% if (kit?.thumbnailServingUrl) { %>
+			<a class="nohint" href="${kit?.thumbnailServingUrl}" target="_blank"><img src="${kit?.thumbnailServingUrl}"></a>
 		<% } else { %>
-		<a href="javascript://" id="cancelAdd"><li>Cancel</li> </a>
+			<p class="noimage" >No Image Available</p>
 		<% } %>
-	</ul>
-</nav>
+	</div>
+</div>	
 
-<div class="content">
+<div class="grid_9">
 
 	<form action="<%=request.getAttribute('action')?:'/kit/add'%>" method="post" id="addKitForm">
 
@@ -191,5 +200,15 @@
 	</form>
 </div>
 
+<div id="actions" class="grid_1">
+	<ul>
+		<a href="javascript://" id="submitForm"><li>Save</li> </a>
+		<% if (kit?.id){ %>
+			<a href="/kit/${kit?.id}"><li>Cancel</li> </a>
+		<% } else { %>
+			<a href="javascript://" id="cancelAdd"><li>Cancel</li> </a>
+		<% } %>
+	</ul>
+</div>
 
 <% include '/templates/includes/footer.gtpl' %>

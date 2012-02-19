@@ -30,7 +30,8 @@ dao.ofy().put(theme)
 
 dao.ofy().put(new Activity(type:enums.ActivityType.NewTheme, title:"${theme.title}",by:theme.createdBy, created: new Date(), link :"/theme/${theme.id}"))
 
-cacheManager.refreshThemesCount()
+cacheManager.resetThemesCache()
+cacheManager.resetActivityCache()
 
 redirect "/theme/${theme.id}"
 

@@ -42,7 +42,8 @@ if (!(users.isUserAdmin() || kit.ownerUsername == userinfo.username)){
 
 dao.ofy().delete(kit)
 
-cacheManager.refreshKitCount()
+cacheManager.resetKitCache()
+cacheManager.resetActivityCache()
 
 request.session.message = "Kit deleted."
 redirect "/userinfo/${userinfo.username}"

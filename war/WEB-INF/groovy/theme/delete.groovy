@@ -50,7 +50,9 @@ dao.ofy().delete(theme)
 
 dao.ofy().put(new Activity(type:enums.ActivityType.ThemeDeleted, title:"${theme.title}",by:userinfo.username, created: new Date()))
 
-cacheManager.refreshThemesCount()
+cacheManager.resetThemesCache()
+cacheManager.resetActivityCache()
+
 
 request.session.message = "Theme deleted."
 redirect "/themes"

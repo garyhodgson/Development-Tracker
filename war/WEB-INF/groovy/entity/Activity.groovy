@@ -27,7 +27,7 @@ class Activity implements Serializable {
 			case DevelopmentDeleted:
 				return "${by} deleted development: ${title}"
 			case NewKit:
-				return "${by} add a new kit: ${title}"
+				return "${by} added a new kit: ${title}"
 			case KitUpdated:
 				return "${by} updated kit: ${title}"
 			case NewTheme:

@@ -346,21 +346,11 @@
 	});
 </script>
 
-<h2 class="pageTitle"><%=request.getAttribute('pageTitle')?:'Add Development'%></h2>
+<div class="grid_12">
+	<h2 class="pageTitle"><%=request.getAttribute('pageTitle')?:'Add Development'%></h2>
+</div>
 
-<nav>
-	<ul>
-		<a href="javascript://" id="submitForm"><li>Save</li> </a>
-		<% if (development?.id){ %>
-			<a href="/development/${development?.id}"><li>Cancel</li> </a>
-		<% } else { %>
-			<a href="javascript://" id="cancelAdd"><li>Cancel</li> </a>
-		<% } %>
-		<a href="/help/development/edit"><li>Help</li> </a>
-	</ul>
-</nav>
-
-<div class="content">
+<div class="grid_10">
 
 	<form action="<%=request.getAttribute('action')?:'/development/add'%>" method="post" id="addDevelopmentForm">
 
@@ -845,5 +835,15 @@
 	</form>
 </div>
 
+<div id="actions" class="grid_2">
+	<ul>
+		<a href="javascript://" id="submitForm"><li>Save</li> </a>
+		<% if (development?.id){ %>
+			<a href="/development/${development?.id}"><li>Cancel</li> </a>
+		<% } else { %>
+			<a href="javascript://" id="cancelAdd"><li>Cancel</li> </a>
+		<% } %>
+	</ul>
+</div>
 
 <% include '/templates/includes/footer.gtpl' %>
