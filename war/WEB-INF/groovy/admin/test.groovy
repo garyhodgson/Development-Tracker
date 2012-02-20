@@ -2,7 +2,9 @@ package admin
 
 import static development.developmentHelper.*
 import development.ThumbnailHelper
+import entity.Collaboration
 import entity.Development
+import enums.Role
 
 def txt = """<?xml version='1.0'?>
 <developments count='182' api-version='1'>
@@ -46,6 +48,7 @@ def txt = """<?xml version='1.0'?>
       <tag>RepStrap</tag>
     </tags>
   </development>
+
   <development id='28005' uri='http://reprap.development-tracker.info/development/28005'>
     <title>1X2 Shortcat</title>
     <created>Tue Aug 23 20:13:14 UTC 2011</created>
@@ -348,8 +351,14 @@ def developments = new XmlSlurper().parseText(txt)
 def developmentList = developments.development
 
 developmentList.each {
-	def d = new Development(title:it.title.text(), description:it.description.text(), status:enums.Status.valueOf(it.status.text()), imageURL:it.image.@url.text())
-	dao.ofy().put(d)
+	def d = new Development(title:it.title.text(),createdBy:'test', description:it.description.text(), status:enums.Status.valueOf(it.status.text()), imageURL:it.image.@url.text())
+	def developmentKey = dao.ofy().put(d)
+	def author = it.'**'.grep{ it.@role == 'Author' }[0]?.text()
+	if (author){
+		def c = new Collaboration(development:developmentKey, name:author, role:Role.Author)
+		dao.ofy().put(c)
+	}
+	
 	(new ThumbnailHelper()).generateThumbnail(null, [imageURL:it.image.@thumbnail.text()], d)
 }
 cacheManager.resetDevelopmentCache()

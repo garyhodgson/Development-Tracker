@@ -2,8 +2,7 @@ package cache
 
 import static enums.MemcacheKeys.*
 
-import com.google.appengine.api.memcache.LogAndContinueErrorHandler
-import com.google.appengine.api.memcache.StrictErrorHandler
+import com.google.appengine.api.taskqueue.RetryOptions
 import com.googlecode.objectify.ObjectifyService
 
 import entity.Activity
@@ -33,7 +32,7 @@ class CacheManager {
 		(memcache[Keys]?:[]).each { String memcacheKey ->
 			if (memcacheKey.startsWith(startOfKey)){
 				if (!memcache.delete(memcacheKey)){
-					println("Memcache failed to delete key: ${memcacheKey}")
+					println "Memcache failed to delete key: ${memcacheKey}"
 				} else {
 					forgetKey(memcacheKey)
 				}
@@ -46,7 +45,7 @@ class CacheManager {
 	}
 
 	public def allDevelopments(){
-		def memcacheKey = AllDevelopments.name()
+		String memcacheKey = AllDevelopments.name()
 		rememberKey(memcacheKey)
 		if (!memcache[memcacheKey]){
 			memcache[memcacheKey] = ofy.query(Development.class).order('title').list().sort{it.title.toLowerCase()}
@@ -55,8 +54,9 @@ class CacheManager {
 	}
 
 	public def resetDevelopmentCache(){
-		if (memcache.delete(AllDevelopments.name())){
-			forgetKey(AllDevelopments.name())
+		String memcacheKey = AllDevelopments.name()
+		if (memcache.delete(memcacheKey)){
+			forgetKey(memcacheKey)
 		}
 	}
 

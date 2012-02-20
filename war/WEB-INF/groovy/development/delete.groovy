@@ -1,8 +1,6 @@
 package development
 
 import com.googlecode.objectify.Key
-import com.googlecode.objectify.Objectify
-import com.googlecode.objectify.ObjectifyService
 
 import entity.Activity
 import entity.Collaboration
@@ -49,12 +47,17 @@ if (!mayEdit){
 	redirect "/development/${params.id}"
 	return
 }
+
+def thumbnailPathToDelete = development.thumbnailPath
+
 def keysToDelete = []
 keysToDelete += key
 keysToDelete += dao.ofy().query(Collaboration.class).ancestor(key).listKeys() 
 keysToDelete += dao.ofy().query(Relationship.class).ancestor(key).listKeys() 
 
 dao.ofy().delete(keysToDelete)
+
+(new ThumbnailHelper()).deleteThumbnail(thumbnailPathToDelete)
 
 dao.ofy().put(new Activity(type:enums.ActivityType.DevelopmentDeleted, title:"${development.title}",by:userinfo.username, created: new Date()))
 

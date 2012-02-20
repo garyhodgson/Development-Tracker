@@ -1,5 +1,6 @@
 package kit
 
+import development.ThumbnailHelper
 import entity.Kit
 
 if (!params.id){
@@ -40,7 +41,10 @@ if (!(users.isUserAdmin() || kit.ownerUsername == userinfo.username)){
 	return
 }
 
+(new ThumbnailHelper()).deleteThumbnail(kit.thumbnailPath)
+
 dao.ofy().delete(kit)
+
 
 cacheManager.resetKitCache()
 cacheManager.resetActivityCache()

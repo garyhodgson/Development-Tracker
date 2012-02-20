@@ -3,7 +3,7 @@
 /*  Sticky Footer Solution by Steve Hatcher http://stever.ca http://www.cssstickyfooter.com */
 html, body, #wrapper {height: 100%;}
 
-body > #wrapper { height: auto; min-height: 100%;}
+body > #wrapper { height: auto; min-height: 100%; min-width:800px;}
 
 @footer-height: 22px;
 @footer-vertical-margin: 2px;
@@ -133,8 +133,9 @@ input[type=text] {
 	border: 1px solid black;
 	margin-top: 40px;
 	text-align:center;
+	width: 100%;
 	img {
-		width: @thumbnail-size;
+		width: 100%;
 	}
 }
 
@@ -143,8 +144,9 @@ input[type=text] {
 	border: 1px solid black;
 	margin-top: 40px;
 	text-align:center;
+	width: @thumbnail-size;
 	img {
-		width: @thumbnail-size;
+		width: 100%;
 	}
 }
 
@@ -220,8 +222,8 @@ h1#branding {
 .signs {
 	margin-top: 5px;
 	padding: 5px 5px 2px 5px;	
-	text-align: left;
-	width: 150px;
+	text-align: center;
+	width: 100%;
 	border: 1px solid black;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
@@ -238,7 +240,7 @@ h1#branding {
 
 .notice {
 	margin-top: 5px;
-	width: 150px;
+	width: 100%;
 	padding: 5px;	
 	text-align: left;	
 	font-size: 0.7em;
@@ -320,6 +322,7 @@ h1#branding {
 		padding: 5px;
 		margin-bottom:5px;
 		list-style:none;
+		min-width: 70px;
 	}
 	li:hover {
 		background-color: @site-default-select;
@@ -694,6 +697,9 @@ ul.tabs {
 #searchDevelopmentForm {
 	#searchKey {
 		margin-top: 8px;
+	}
+	li {
+		text-align:center;
 	}
 }
 

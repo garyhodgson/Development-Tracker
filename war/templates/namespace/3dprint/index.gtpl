@@ -26,9 +26,10 @@ def subdomain = request.properties.serverName.split(/\./).getAt(0)
 						</h3>
 						<%
 							def status = (development.status && development.status == enums.Status.Other) ?  development.statusOther?:'None' : development.status?.title?:'None'
-							def userlink = development.createdBy ? "/userinfo/${development.createdBy}" : "#"
+							def author = development.hasProperty('author') ? development.author?:'[undefined]' : '[undefined]' 
 						%>
-						<p>by: <b><a href="${userlink}">${development.createdBy?:'Unknown'}</a></b>; status: <b>${status}</b></p>
+						
+						<p>by: <b>${author}</b>;&nbsp;&nbsp;status: <b>${status}</b></p>
 						
 						
 						
@@ -72,8 +73,8 @@ def subdomain = request.properties.serverName.split(/\./).getAt(0)
 				<%
 					request.latestThemes.each { theme -> 
 				%>
-				<h5><a href="/theme/${theme.id}">${theme.title}</a></h5>
-				<p>${theme.description?:''}</p>
+				<h5><a href="/theme/${theme.id}">${theme.title}</a> by ${theme.createdBy}</h5>
+				<p>${StringUtils.abbreviate(markdown.markdown(theme.description?:''),300)}</p>
 				<div class="clear"></div>
 				<hr>
 				<%
@@ -90,7 +91,7 @@ def subdomain = request.properties.serverName.split(/\./).getAt(0)
 				<%
 					request.latestKits.each { kit -> 
 				%>
-				<a href="/kit/${kit.id}"><h6>${kit.title}</h6></a>
+				<h6><a href="/kit/${kit.id}">${kit.title}</a> by ${kit.ownerUsername}</h6>
 				<% if (kit.thumbnailServingUrl){ %>
 					<img class="index-thumbnail" src="${kit.thumbnailServingUrl}" width="60" height="60" alt="${kit.title}" >
 				<% } %>

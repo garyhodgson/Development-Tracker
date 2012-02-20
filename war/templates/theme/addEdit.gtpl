@@ -67,8 +67,7 @@
 				<tr id="descriptionRow">
 					<td>Description</td>
 					<td><textarea rows="5" cols="47" id="description" name="description"><%=theme?.description?:'' %></textarea></td>
-					<td><span id="descriptionMessage"></span>
-					</td>
+					<td><a href="http://daringfireball.net/projects/markdown/syntax" target="_blank">Markdown</a> is accepted.<span id="descriptionMessage"></span></td>
 				</tr>
 				
 				<tr>

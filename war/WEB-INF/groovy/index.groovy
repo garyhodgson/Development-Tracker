@@ -1,8 +1,10 @@
-import cache.MemcacheKeys;
+import static enums.MemcacheKeys.*
+import static paging.pagingHelper.*
 
 import com.google.appengine.api.NamespaceManager
-import static paging.pagingHelper.*
-import static enums.MemcacheKeys.*
+import com.googlecode.objectify.Key
+
+import entity.Collaboration
 import entity.Development
 
 def subdomain = request.getServerName().split(/\./).getAt(0)
@@ -28,7 +30,20 @@ if (params.namespace){
 
 if (NamespaceManager.get() != null && !NamespaceManager.get().isEmpty()){
 	
-	request.latestDevelopments = cacheManager.latestDevelopments(0,4)
+	def latestDevs = cacheManager.latestDevelopments(0,4)
+	
+	
+	latestDevs.each { dev ->
+		def collaborators = dao.ofy().query(Collaboration.class).ancestor(dev).list()
+		
+		if (collaborators){
+			Development.metaClass.author = ""
+			dev.author = collaborators[0].name
+		}
+	}
+		
+	request.latestDevelopments = latestDevs
+	
 	request.latestThemes = cacheManager.latestThemes(0,2)
 	request.latestKits = cacheManager.latestKits(0,2)
 	request.latestActivities = cacheManager.latestActivities(0,4)
