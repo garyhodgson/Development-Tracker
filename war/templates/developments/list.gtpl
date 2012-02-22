@@ -11,7 +11,7 @@
 </div>
 
 <div class="grid_1 rss_link">
-	<a href="/developments/latest/feed.rss"><img src="/images/rss.png" alt="RSS Feed" /></a>
+	<a href="/developments/latest/feed.rss" title="RSS feed for latest developments"><img src="/images/rss.png" alt="RSS Feed" /></a>
 </div>
 
 <div class="grid_12">

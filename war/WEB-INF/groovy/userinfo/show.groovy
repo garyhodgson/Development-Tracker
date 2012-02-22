@@ -24,7 +24,9 @@ if (!userinfo){
 	return
 }
 
-userinfoKey = new Key(UserInfo.class, userinfo.userId)
+namespace.of("") {
+	userinfoKey = new Key(UserInfo.class, userinfo.userId)
+}
 
 request.userinfo = userinfo
 request.userDevelopments = dao.ofy().query(Development.class).filter('createdBy', params.username).order('title').list()

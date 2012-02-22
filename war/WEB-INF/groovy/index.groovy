@@ -2,10 +2,9 @@ import static enums.MemcacheKeys.*
 import static paging.pagingHelper.*
 
 import com.google.appengine.api.NamespaceManager
-import com.googlecode.objectify.Key
 
 import entity.Collaboration
-import entity.Development
+import enums.Role
 
 def subdomain = request.getServerName().split(/\./).getAt(0)
 
@@ -31,13 +30,11 @@ if (params.namespace){
 if (NamespaceManager.get() != null && !NamespaceManager.get().isEmpty()){
 	
 	def latestDevs = cacheManager.latestDevelopments(0,4)
-	
-	
+		
 	latestDevs.each { dev ->
-		def collaborators = dao.ofy().query(Collaboration.class).ancestor(dev).list()
+		def collaborators = dao.ofy().query(Collaboration.class).ancestor(dev).filter('role = ',Role.Author).list()
 		
 		if (collaborators){
-			Development.metaClass.author = ""
 			dev.author = collaborators[0].name
 		}
 	}

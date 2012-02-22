@@ -26,10 +26,9 @@ def subdomain = request.properties.serverName.split(/\./).getAt(0)
 						</h3>
 						<%
 							def status = (development.status && development.status == enums.Status.Other) ?  development.statusOther?:'None' : development.status?.title?:'None'
-							def author = development.hasProperty('author') ? development.author?:'[undefined]' : '[undefined]' 
 						%>
 						
-						<p>by: <b>${author}</b>;&nbsp;&nbsp;status: <b>${status}</b></p>
+						<p>by: <b>${development.author?:'[undefined]'}</b>;&nbsp;&nbsp;status: <b>${status}</b></p>
 						
 						
 						

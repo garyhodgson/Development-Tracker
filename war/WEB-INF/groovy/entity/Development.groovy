@@ -46,6 +46,8 @@ class Development implements Serializable {
 
 	@Transient
 	String imageBlobKey
+	@Transient
+	String author
 
 	def Development(){
 		created = new Date()
