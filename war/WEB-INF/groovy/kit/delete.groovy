@@ -1,5 +1,6 @@
 package kit
 
+import development.ThumbnailHelper
 import entity.Kit
 
 if (!params.id){
@@ -40,9 +41,13 @@ if (!(users.isUserAdmin() || kit.ownerUsername == userinfo.username)){
 	return
 }
 
+(new ThumbnailHelper()).deleteThumbnail(kit.thumbnailPath)
+
 dao.ofy().delete(kit)
 
-cacheManager.refreshKitCount()
+
+cacheManager.resetKitCache()
+cacheManager.resetActivityCache()
 
 request.session.message = "Kit deleted."
 redirect "/userinfo/${userinfo.username}"

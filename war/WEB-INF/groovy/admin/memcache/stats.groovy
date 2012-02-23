@@ -1,6 +1,6 @@
 package admin.memcache
 
-import app.MemcacheKeys
+import cache.MemcacheKeys;
 import static enums.MemcacheKeys.*
 
 html.html {
@@ -32,6 +32,13 @@ html.html {
 			p memcache.get(it)?.toString()
 		}
 
+		hr()
+		
+		memcache.get(Keys)?.each {
+			h2 it
+			p memcache.get(it)?.toString()
+		}
+		
 		hr()
 		
 	}

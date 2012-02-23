@@ -300,7 +300,7 @@
 			browse_button : 'pickFile',
 			container : 'fileUploadContainer',
 			max_file_size : '<%=AppProperties.THUMBNAIL_MAXSIZE?:5%>mb',
-			url : "<%=blobstore.createUploadUrl('/development/fileUpload.groovy')%>",
+			url : "<%=blobstore.createUploadUrl('/fileUpload.groovy')%>",
 			flash_swf_url : '/js/plupload/plupload.flash.swf',
 			filters : [
 				{title : "Image files", extensions : "jpg,gif,png"},
@@ -338,7 +338,8 @@
 			up.refresh(); // Reposition Flash/Silverlight
 		});
 
-		uploader.bind('FileUploaded', function(up, file, info) {		
+		uploader.bind('FileUploaded', function(up, file, info) {
+			console.log(info)
 			jQuery('#imageBlobKey').val(info.response);
 		});
 
@@ -346,21 +347,11 @@
 	});
 </script>
 
-<h2 class="pageTitle"><%=request.getAttribute('pageTitle')?:'Add Development'%></h2>
+<div class="grid_10 prefix_1">
+	<h2 class="pageTitle"><%=request.getAttribute('pageTitle')?:'Add Development'%></h2>
+</div>
 
-<nav>
-	<ul>
-		<a href="javascript://" id="submitForm"><li>Save</li> </a>
-		<% if (development?.id){ %>
-			<a href="/development/${development?.id}"><li>Cancel</li> </a>
-		<% } else { %>
-			<a href="javascript://" id="cancelAdd"><li>Cancel</li> </a>
-		<% } %>
-		<a href="/help/development/edit"><li>Help</li> </a>
-	</ul>
-</nav>
-
-<div class="content">
+<div class="grid_11">
 
 	<form action="<%=request.getAttribute('action')?:'/development/add'%>" method="post" id="addDevelopmentForm">
 
@@ -845,5 +836,15 @@
 	</form>
 </div>
 
+<div id="actions" class="grid_1">
+	<ul>
+		<a href="javascript://" id="submitForm"><li>Save</li> </a>
+		<% if (development?.id){ %>
+			<a href="/development/${development?.id}"><li>Cancel</li> </a>
+		<% } else { %>
+			<a href="javascript://" id="cancelAdd"><li>Cancel</li> </a>
+		<% } %>
+	</ul>
+</div>
 
 <% include '/templates/includes/footer.gtpl' %>

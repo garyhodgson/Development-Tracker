@@ -1,14 +1,11 @@
 <% include '/templates/includes/header.gtpl' %>
 
-<h2 class="pageTitle">User Infos</h2>
 
-<nav>
-	<ul>
-		<a href="/"><li>Home</li></a>
-	</ul>
-</nav>
+<div class="grid_10 prefix_1">
+	<h2 class="pageTitle">User Infos</h2>
+</div>
 
-<div class="content">
+<div class="grid_12">
 
 	<% if (request.userinfos != null) { %>
 

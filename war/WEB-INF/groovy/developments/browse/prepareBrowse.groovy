@@ -52,7 +52,7 @@ if (memcacheKey in memcache) {
 	}
 
 	values.each {
-		def count = dao.ofy().query(Development.class).filter(params.field, it.name()).countAll()
+		def count = dao.ofy().query(Development.class).filter(params.field, it.name()).count()
 		browseStats[it] = ['count':count]
 	}
 	memcache[memcacheKey] = browseStats

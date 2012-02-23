@@ -12,7 +12,6 @@ get "/403/", forward: "/templates/static/403.gtpl"
 get "/404/", forward: "/templates/static/404.gtpl"
 get "/error/", forward: "/templates/static/error.gtpl"
 get "/about", forward: "/templates/static/about.gtpl"
-get "/future", forward: "/templates/static/future.gtpl"
 get "/faq", forward: "/templates/static/faq.gtpl"
 get "/terms", forward: "/templates/static/terms.gtpl"
 get "/maintenance", forward: "/templates/static/maintenance.gtpl"
@@ -132,6 +131,9 @@ post "/userinfo/update", forward: "/userinfo/update.groovy"
 
 /* Kit */
 get "/kits", forward: "/kits/list.groovy"
+
+get "/kit/add/cancel/@imageBlobKey", forward:  "/kit/cancelAdd.groovy?imageBlobKey=@imageBlobKey"
+
 get "/kit/add",  forward: {
 	to "/kit/prepareAdd.groovy"
 	to("/templates/static/maintenance.gtpl").on(DATASTORE).not(ENABLED)

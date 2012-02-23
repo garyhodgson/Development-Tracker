@@ -24,7 +24,7 @@ def development = new Development(
 		subdomain:request.properties.serverName.split(/\./).getAt(0),
 		createdBy:session.userinfo.username)
 
-Objectify ofyTxn = ObjectifyService.beginTransaction();
+Objectify ofyTxn = ObjectifyService.beginTransaction()
 
 try {
 
@@ -80,7 +80,8 @@ try {
 
 dao.ofy().put(new Activity(type:enums.ActivityType.NewDevelopment, title:"${development.title}",by:development.createdBy, created: new Date(), link :"/development/${development.id}"))
 
-cacheManager.resetCache()
+cacheManager.resetDevelopmentCache()
+cacheManager.resetActivityCache()
 
 redirect "/development/${development.id}"
 

@@ -56,20 +56,15 @@
 	});
 </script>
 
-<h2 class="pageTitle"><%=request.pageTitle?:"Edit Userinfo"%></h2>
+<div class="grid_12">
+	<h2 class="pageTitle"><%=request.pageTitle?:"Edit Userinfo"%></h2>
+</div>
 
-<nav>
-	<ul>
-		<a href="javascript://" id="submitForm"><li>OK</li> </a>
-		<a href="/userinfo/<%=userinfo.username%>"><li>Cancel</li> </a>
-	</ul>
-</nav>
-
-<div class="userinfo-thumb left">
+<div class="userinfo-thumb grid_2">
 	<img id="gravatar" src="http://www.gravatar.com/avatar/${userinfo.getGravatarHash()}?s=150&d=mm" />
 </div>
 
-<div class="content thumbnailed">
+<div class="grid_9">
 
 	<form id="updateUserinfoForm" action="/userinfo/update" method="post">
 
@@ -153,6 +148,13 @@
 		<br />
 	</form>
 
+</div>
+
+<div id="actions" class="grid_1">
+	<ul>
+		<a href="javascript://" id="submitForm"><li>OK</li> </a>
+		<a href="/userinfo/<%=userinfo.username%>"><li>Cancel</li> </a>
+	</ul>
 </div>
 
 <% include '/templates/includes/footer.gtpl' %>

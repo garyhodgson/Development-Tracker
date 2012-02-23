@@ -35,6 +35,14 @@
 			}
 		});
 		
+		jQuery('#cancelAdd').click(function(){
+			if (jQuery('#imageBlobKey').val() != ''){
+				window.location = "/kit/add/cancel/"+jQuery('#imageBlobKey').val()
+			} else {
+				window.location = "/kits"
+			}
+		})
+		
 		jQuery('#removePart').live('click', function(){
 			jQuery(this).parent().parent().remove();	
 		})
@@ -59,7 +67,7 @@
 			browse_button : 'pickFile',
 			container : 'fileUploadContainer',
 			max_file_size : '<%=AppProperties.THUMBNAIL_MAXSIZE?:5%>mb',
-			url : "<%=blobstore.createUploadUrl('/development/fileUpload.groovy')%>",
+			url : "<%=blobstore.createUploadUrl('/fileUpload.groovy')%>",
 			flash_swf_url : '/js/plupload/plupload.flash.swf',
 			filters : [
 				{title : "Image files", extensions : "jpg,gif,png"},
@@ -104,20 +112,21 @@
 	});
 </script>
 
-<h2 class="pageTitle"><%=request.getAttribute('pageTitle')?:'Add Kit'%></h2>
+<div class="grid_10 prefix_1 suffix_1">
+	<h2 class="pageTitle"><%=request.getAttribute('pageTitle')?:'Add Kit'%></h2>
+</div>
 
-<nav>
-	<ul>
-		<a href="javascript://" id="submitForm"><li>Save</li> </a>
-		<% if (kit?.id){ %>
-		<a href="/kit/${kit?.id}"><li>Cancel</li> </a>
+<div class="grid_2">
+	<div class="kit-thumbnail">
+		<% if (kit?.thumbnailServingUrl) { %>
+			<a class="nohint" href="${kit?.thumbnailServingUrl}" target="_blank"><img src="${kit?.thumbnailServingUrl}"></a>
 		<% } else { %>
-		<a href="javascript://" id="cancelAdd"><li>Cancel</li> </a>
+			<p class="noimage" >No Image Available</p>
 		<% } %>
-	</ul>
-</nav>
+	</div>
+</div>	
 
-<div class="content">
+<div class="grid_9">
 
 	<form action="<%=request.getAttribute('action')?:'/kit/add'%>" method="post" id="addKitForm">
 
@@ -191,5 +200,15 @@
 	</form>
 </div>
 
+<div id="actions" class="grid_1">
+	<ul>
+		<a href="javascript://" id="submitForm"><li>Save</li> </a>
+		<% if (kit?.id){ %>
+			<a href="/kit/${kit?.id}"><li>Cancel</li> </a>
+		<% } else { %>
+			<a href="javascript://" id="cancelAdd"><li>Cancel</li> </a>
+		<% } %>
+	</ul>
+</div>
 
 <% include '/templates/includes/footer.gtpl' %>

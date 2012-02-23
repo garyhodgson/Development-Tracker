@@ -44,9 +44,9 @@ class securityFilter implements Filter {
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
+		
 		def namespace = NamespaceManager.get()
-		def serverName = request.properties.serverName
+		def serverName = request.getServerName()
 		def subdomain = serverName.split(/\./).getAt(0)
 		def requestURI = request.getRequestURI()
 		HttpSession session = ((HttpServletRequest) request).getSession(true);

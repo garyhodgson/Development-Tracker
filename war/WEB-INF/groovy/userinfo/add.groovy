@@ -16,7 +16,7 @@ def userinfo
 
 namespace.of("") {
 	
-	if (dao.ofy().query(UserInfo.class).filter('username', params.username).countAll() != 0) {
+	if (dao.ofy().query(UserInfo.class).filter('username', params.username).count() != 0) {
 		request.session.message = "Username already taken. Please choose another."
 		forward: "/templates/access/first.gtpl"
 		return

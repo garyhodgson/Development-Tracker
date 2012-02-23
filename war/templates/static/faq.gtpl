@@ -1,7 +1,14 @@
-
 <% include '/templates/includes/header.gtpl' %>
 
-<div class="directory bordered right">
+<div class="grid_2">
+	<div class="redirect-block bordered">
+		<h1>FAQ</h1>
+	</div>
+	<br />
+		<img width="100%" alt="Prusa Mendel" src="/images/PrusaMendel.png">
+</div>
+
+<div class="light-bordered grid_9 faq">
 	<p>
 		If the answer to your question is not below then please email <a href="mailto:${app.AppProperties.SUPPORT_EMAIL}">support</a>.
 	</p>
@@ -45,17 +52,5 @@
 	<br>
 
 </div>
-
-<div class="redirect-block bordered">
-	<h1>FAQ</h1>
-</div>
-
-<br>
-
-<div class="">
-	<img width="26%" alt="Prusa Mendel" src="/images/PrusaMendel.png">
-</div>
-
-<br clear="both">
 
 <% include '/templates/includes/footer.gtpl' %>

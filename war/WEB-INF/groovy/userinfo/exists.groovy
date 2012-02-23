@@ -7,6 +7,6 @@ if (!params.username){
 	return
 }
 namespace.of("") {
-	out << (dao.ofy().query(UserInfo.class).filter('username', params.username).countAll() != 0)
+	out << (dao.ofy().query(UserInfo.class).filter('username', params.username).count() != 0)
 }
 return

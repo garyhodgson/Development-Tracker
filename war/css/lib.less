@@ -1,0 +1,28 @@
+@site-default: yellow;
+@site-default-darker: orange;
+@site-default-select: orange;
+@large-rounded: 80px;
+@medium-rounded: 40px;
+@small-rounded: 20px;
+@thumbnail-size: 175px;
+
+.border-radius (@radius: 10px) {
+  border-radius: @radius;
+  -moz-border-radius: @radius;
+  -webkit-border-radius: @radius;
+}
+
+.bordered {
+	border: 15px solid black;
+	.border-radius(@large-rounded);
+}
+
+.light-bordered {
+	border: 5px solid black;
+	.border-radius(@medium-rounded);
+}
+
+.very-light-bordered {
+	border: 2px solid black;
+	.border-radius(@small-rounded);
+}

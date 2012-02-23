@@ -1,3 +1,3 @@
 
 
-cacheManager.resetCache()
+cacheManager.developmentCount()

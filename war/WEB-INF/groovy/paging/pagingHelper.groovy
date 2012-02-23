@@ -17,7 +17,7 @@ public static def createPaging(int totalCount, int limit, int offset, int result
 public static def getOffsetAndLimit(def params, def totalCount) {
 	def limit = AppProperties.PAGE_LIMIT
 	if (params.limit && params.limit.isNumber()){
-		limit = Math.min(params.limit as int, AppProperties.PAGE_LIMIT)
+		limit = Math.min(params.limit as int, totalCount)
 	}
 	def offset = 0
 	if (params.offset && params.offset.isNumber()){

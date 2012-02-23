@@ -34,51 +34,21 @@ jQuery(function() {
 });
 </script>
 
-<h2 class="pageTitle"><%=request.pageTitle?:"Development"%></h2>
+<div class="grid_10 prefix_1 suffix_1">
+	<h2 class="pageTitle"><%=request.pageTitle?:"Development"%></h2>
+</div>
 
-<nav>
-	<ul>
-		<a href="/developments/latest"><li>Developments</li> </a>
-		<br>
-		<% if (request.history?:false) { %> 
-			<a href="/development/<%=development.id%>"><li>Back</li> </a>
-			<br>
-		<% } %>		
-		<a href="/development/<%=development.id%>/watchers"><li>Watchers</li> </a> 
-		<% if (user && !request.history?:false) { %> 
-			<% if ((session.userinfo?.watchedDevelopments?:[]).contains(development.id)) { %>
-				<a href="/development/unwatch/<%=development.id%>"><li>Unwatch</li> </a> 
-			<% } else { %> 
-				<a href="/development/watch/<%=development.id%>"><li>Watch</li> </a> 
-			<% } %> <br> 
-		<% } %>		
-			
-		<% if (user && !request.history?:false) { %> 
-			<%if (users.isUserAdmin() || session.userinfo?.username == development.createdBy) { %>
-				<a href="/development/edit/<%=development.id%>"><li>Edit</li> </a>
-			<% } %> 
-		<% } %>		
-		
-		<a href="/development/<%=development.id%>/history"><li>History</li> </a>
-		<br>
-		<% if (user && !request.history?:false) { %> 
-			<%if (users.isUserAdmin() || session.userinfo?.username == development.createdBy) { %>
-				<a href="#" id="deleteDevelopment" rel="#confirm"><li>Delete</li> </a>
-			<% } %> 
-		<% } %>	
-	</ul>
-</nav>
-
-
-<div class="left">
-	<% if (development.thumbnailServingUrl){ %>
+<div class="grid_2">
 	<div class="development-thumb">
+	<% if (development.thumbnailServingUrl){ %>
 		<a class="nohint" href="${development.thumbnailServingUrl}" target="_blank"><img src="${development.thumbnailServingUrl}"></a>
-	</div>
+	<% } else { %>
+		<p class="noimage" >No Image Available</p>
 	<% } %>
+	</div>
+	
 	<% if (development.signs){ %>	
 		<%if (!development.thumbnailServingUrl){%>
-		<br><br>
 		<% } %>
 		<div class="signs">
 			<% development.signs.each { sign ->%>
@@ -86,13 +56,13 @@ jQuery(function() {
 			<% } %>
 		</div>
 	<% } %>
+	
 	<% if (development.notice){ %>
-	<div class="notice site-default-bg">${development.notice}</div>
+		<div class="notice site-default-bg">${development.notice}</div>
 	<% } %>
 </div>	
 
-
-<div class="content thumbnailed">
+<div class="grid_9">
 	<div id="tabs">
 		<ul class="tabs">
 			<li><a href="#core">Core</a></li>
@@ -111,8 +81,7 @@ jQuery(function() {
 				</tr>
 				<tr>
 					<td>Description</td>
-					<% 	def text = markdown.markdown(development.description?:'')	
-						def rows = text.length() < 512 ? 4 : 10 %>
+					<% 	def text = markdown.markdown(development.description?:'') %>
 					<td>${text}</td>
 				</tr>
 				<tr>
@@ -283,6 +252,37 @@ jQuery(function() {
 		</div>
 		
 	</div>
+</div>
+
+<div id="actions" class="grid_1">
+	<ul>
+		<% if (request.history?:false) { %> 
+			<a href="/development/<%=development.id%>"><li>Back</li> </a>
+			<br>
+		<% } %>		
+		<a href="/development/<%=development.id%>/watchers"><li>Watchers</li> </a> 
+		<% if (user && !request.history?:false) { %> 
+			<% if ((session.userinfo?.watchedDevelopments?:[]).contains(development.id)) { %>
+				<a href="/development/unwatch/<%=development.id%>"><li>Unwatch</li> </a> 
+			<% } else { %> 
+				<a href="/development/watch/<%=development.id%>"><li>Watch</li> </a> 
+			<% } %> <br> 
+		<% } %>		
+			
+		<% if (user && !request.history?:false) { %> 
+			<%if (users.isUserAdmin() || session.userinfo?.username == development.createdBy) { %>
+				<a href="/development/edit/<%=development.id%>"><li>Edit</li> </a>
+			<% } %> 
+		<% } %>		
+		
+		<a href="/development/<%=development.id%>/history"><li>History</li> </a>
+		<br>
+		<% if (user && !request.history?:false) { %> 
+			<%if (users.isUserAdmin() || session.userinfo?.username == development.createdBy) { %>
+				<a href="#" id="deleteDevelopment" rel="#confirm"><li>Delete</li> </a>
+			<% } %> 
+		<% } %>	
+	</ul>
 </div>
 
 <div id="confirm">

@@ -1,6 +1,7 @@
 package entity
 import javax.persistence.Id
 
+import static enums.ActivityType.*
 import enums.ActivityType
 
 class Activity implements Serializable {
@@ -13,4 +14,28 @@ class Activity implements Serializable {
 	Date created
 	String link
 	
+	@Override
+	public String toString() {
+		
+		switch (this.type) {
+			case NewDevelopment:
+				return "${by} created a new development: ${title}"
+			case DevelopmentUpdated:
+				return "${by} updated development: ${title}"
+			case NewUser:
+				return "New user: ${by}"
+			case DevelopmentDeleted:
+				return "${by} deleted development: ${title}"
+			case NewKit:
+				return "${by} added a new kit: ${title}"
+			case KitUpdated:
+				return "${by} updated kit: ${title}"
+			case NewTheme:
+				return "${by} created a new theme: ${title}"
+			case ThemeUpdated:
+				return "${by} updated theme: ${title}"
+			default:
+				return title
+		}
+	}
 }

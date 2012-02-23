@@ -1,4 +1,3 @@
-
 <% include '/templates/includes/header.gtpl' %>
 
 <script type="text/javascript" src="/js/md5.js"></script>
@@ -111,74 +110,81 @@
 	});
 </script>
 
-<h2 class="pageTitle">User Information</h2>
+<div class="grid_10 prefix_1">
+	<h2 class="pageTitle">User Information</h2>
+</div>
 
-<nav>
+<div class="userinfo-thumb grid_2">
+	<img id="gravatar" src="http://www.gravatar.com/avatar/null?s=150&d=mm" />
+</div>
+
+<div class="grid_9">
+
+	<form action="/userinfo/add" method="post" id="addUserinfoForm">
+		
+		<div class="">
+		
+			<p><strong>As this appears to be your first time using Development Tracker please take the time to fill in the following details.</strong></p>
+			
+			<% def userinfo = request.getAttribute('userinfo') %>
+			
+				<fieldset>
+					<legend>Your Details</legend>
+					<table border=0 cellspacing="0" cellpadding="5px">
+		
+						<tr>
+							<td>Username</td>
+							<td><input type="text" id="username" name="username"
+								value="<%=userinfo?userinfo.username:user.nickname.split('@')[0]%>"
+							></td>
+							<td id="usernameMessage"></td>
+						</tr>
+						<tr>
+							<td>Contact Email</td>
+							<td><input type="text" id="email" name="email" value="<%=userinfo?userinfo.email:user.email%>"></td>
+							<td id="emailMessage" class="field-help"></td>
+						</tr>
+		
+						<tr>
+							<td>Use Gravatar?</td>
+							<%def checked = (userinfo?userinfo.useGravatar:"true" == "true")? 'checked=checked':'' %>
+							<td><input type="checkbox" value="true" id="useGravatar" name="useGravatar" <%=checked %> /></td>
+							<td class="field-help">Allow the application to use <a href="http://www.gravatar.com/" target="_blank">Gravatar</a>
+								for your avatar image.</td>
+						</tr>
+					</table>
+				</fieldset>
+		
+				<br />
+				<div id="warnings"></div>
+				
+			
+		</div>
+		
+		<br clear="both">
+		
+		<fieldset>
+			<legend>Terms of Use</legend>
+			
+			<div class="termsofusewrapper" >
+				<% include '/templates/includes/termsOfUse.gtpl' %>
+			
+				<p><input type="checkbox" value="true" id="acceptTermsOfUse" name="acceptTermsOfUse"
+				<%=userinfo?.acceptTermsOfUse=='true'?'checked=checked':''%>> &nbsp;Accept Terms of Use</p>
+				<p id="acceptTermsOfUseMessage"></p>
+			</div>
+		</fieldset>
+	
+	</form>
+
+</div>
+
+<div id="actions" class="grid_1">
 	<ul>
 		<a href="javascript://" id="submitForm"><li>Submit</li> </a>
 		<a href="/access/logout"><li>Cancel</li> </a>
 
 	</ul>
-</nav>
-
-<div class="userinfo-thumb left">
-	<img id="gravatar" src="http://www.gravatar.com/avatar/null?s=150&d=mm" />
 </div>
-
-<form action="/userinfo/add" method="post" id="addUserinfoForm">
-
-<div class="content thumbnailed">
-
-	<p><strong>As this appears to be your first time using Development Tracker please take the time to fill in the following details.</strong></p>
-	
-	<% def userinfo = request.getAttribute('userinfo') %>
-	
-		<fieldset>
-			<legend>Your Details</legend>
-			<table border=0 cellspacing="0" cellpadding="5px">
-
-				<tr>
-					<td>Username</td>
-					<td><input type="text" id="username" name="username"
-						value="<%=userinfo?userinfo.username:user.nickname.split('@')[0]%>"
-					></td>
-					<td id="usernameMessage"></td>
-				</tr>
-				<tr>
-					<td>Contact Email</td>
-					<td><input type="text" id="email" name="email" value="<%=userinfo?userinfo.email:user.email%>"></td>
-					<td id="emailMessage" class="field-help"></td>
-				</tr>
-
-				<tr>
-					<td>Use Gravatar?</td>
-					<%def checked = (userinfo?userinfo.useGravatar:"true" == "true")? 'checked=checked':'' %>
-					<td><input type="checkbox" value="true" id="useGravatar" name="useGravatar" <%=checked %> /></td>
-					<td class="field-help">Allow the application to use <a href="http://www.gravatar.com/" target="_blank">Gravatar</a>
-						for your avatar image.</td>
-				</tr>
-			</table>
-		</fieldset>
-
-		<br />
-		<div id="warnings"></div>
-		
-	
-</div>
-
-<br clear="both">
-
-<fieldset>
-	<legend>Terms of Use</legend>
-	
-	<div style="border: 1px solid gray;overflow-y:scroll;height:200px" >
-	<% include '/templates/includes/termsOfUse.gtpl' %>
-	</div>
-	<p><input type="checkbox" value="true" id="acceptTermsOfUse" name="acceptTermsOfUse"
-				<%=userinfo?.acceptTermsOfUse=='true'?'checked=checked':''%>> &nbsp;Accept Terms of Use</p>
-				<p id="acceptTermsOfUseMessage"></p>
-</fieldset>
-
-</form>
 
 <% include '/templates/includes/htmlFooter.gtpl' %>

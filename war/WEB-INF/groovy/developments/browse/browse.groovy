@@ -38,7 +38,7 @@ if (params.value){
 	request.pageTitle = "Developments with field ${params.searchField}"
 }
 
-def totalCount = query.countAll()
+def totalCount = query.count()
 def (offset,limit) = getOffsetAndLimit(params, totalCount)
 
 request.developments = query.order('title').offset(offset).limit(limit).list()

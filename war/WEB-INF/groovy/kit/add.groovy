@@ -44,7 +44,8 @@ try {
 
 dao.ofy().put(new Activity(type:enums.ActivityType.NewKit, title:"${kit.title}",by:currentUsername, created: new Date(), link :"/kit/${kit.id}"))
 
-cacheManager.refreshKitCount()
+cacheManager.resetKitCache()
+cacheManager.resetActivityCache()
 
 redirect "/kit/${kit.id}"
 

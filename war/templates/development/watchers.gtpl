@@ -3,11 +3,53 @@
 
 <% include '/templates/includes/header.gtpl' %>
 
-<h2 class="pageTitle"><%=request.pageTitle?:"Development"%></h2>
+<div class="grid_10 prefix_1 suffix_1">
+	<h2 class="pageTitle"><%=request.pageTitle?:"Development"%></h2>
+</div>
 
-<nav>
+<div class="grid_2">
+	<div class="development-thumb">
+	<% if (development.thumbnailServingUrl){ %>
+		<a class="nohint" href="${development.thumbnailServingUrl}" target="_blank"><img src="${development.thumbnailServingUrl}"></a>
+	<% } else { %>
+		<p class="noimage" >No Image Available</p>
+	<% } %>
+	</div>
+	
+	<% if (development.signs){ %>	
+		<%if (!development.thumbnailServingUrl){%>
+		<% } %>
+		<div class="signs">
+			<% development.signs.each { sign ->%>
+				<img src="/images/signs/50/${sign.image}" title="${sign.title}">
+			<% } %>
+		</div>
+	<% } %>
+	
+	<% if (development.notice){ %>
+		<div class="notice site-default-bg">${development.notice}</div>
+	<% } %>
+</div>		
+
+<div class="grid_9">
+	<% if (developmentWatchers?.isEmpty()){ %>
+		<h3>Nobody is watching yet.</h3>
+	<% } else { %>
+	<table class="watchersTable">
+		<% developmentWatchers.each { watcher -> %>
+			<tr>
+				<td><a class="nohint" href="/userinfo/${watcher.username}"><img src="http://www.gravatar.com/avatar/${watcher.getGravatarHash()}?s=50&d=mm" />
+				<br>
+				${watcher.username}
+				</td>
+			</tr>
+		<% } %>
+	</table>
+	<% } %>	
+</div>
+
+<div id="actions" class="grid_1">
 	<ul>
-		<a href="/developments/latest"><li>Developments</li> </a>
 		<a href="/development/<%=development.id%>"><li>Back</li> </a> 
 		<br>
 		
@@ -22,30 +64,6 @@
 			<% } %> 
 		<% } %>		
 	</ul>
-</nav>
-
-<% if (development.imageURL){ %>
-<div class="development-thumb left">
-	<a class="nohint" href="/development/${development.id}"><img src="${development.imageURL}"></a>
-</div>
-<% } %>
-
-<div class="content ${(development.imageURL)?'thumbnailed':'' }"> 
-
-	<% if (developmentWatchers?.isEmpty()){ %>
-		<h3>Nobody watching yet.</h3>
-	<% } else { %>
-	<table>
-		<% developmentWatchers.each { watcher -> %>
-			<tr>
-				<td><a class="nohint" href="/userinfo/${watcher.username}"><img src="http://www.gravatar.com/avatar/${watcher.getGravatarHash()}?s=50&d=mm" /></a>
-				<a href="/userinfo/${watcher.username}">${watcher.username}</a>
-				</td>
-			</tr>
-		<% } %>
-	</table>
-	<% } %>
-
 </div>
 
 <% include '/templates/includes/footer.gtpl' %>
