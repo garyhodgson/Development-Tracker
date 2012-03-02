@@ -246,7 +246,9 @@
 		jQuery('input[name=sourceURL]').blur(function() {
 			var val = jQuery(this).val()
 
-			if (val != ""){
+			if (val == ""){
+				jQuery('#lookupDevelopment a').hide()
+			} else {
 				if (isEditing && (val != originalSourceURL)){
 					// do nothing
 				} else {
@@ -266,6 +268,7 @@
 					jQuery("select[name=source] option[value='RepRapWiki']").attr('selected', 'selected');
 				} else if (val.indexOf("thingiverse.com") != -1){
 					jQuery("select[name=source] option[value='Thingiverse']").attr('selected', 'selected');
+					jQuery('#lookupDevelopment a').show()					
 				}
 			}
 		})
@@ -344,6 +347,82 @@
 		});
 
 		jQuery("input[name=relationshipDescription]").autocomplete(autocompleteOptions);
+		
+		jQuery('#lookupDevelopment #ajax-loader').ajaxComplete(function() {
+			jQuery(this).hide();
+		})
+		
+		jQuery('#lookupDevelopment #ajax-loader').ajaxStart(function() {
+			jQuery(this).show();
+		})
+		
+		jQuery('#lookupDevelopment a').click(function(){
+			var val = jQuery('input[name=sourceURL]').val()
+			if (val != ""){
+				jQuery('#lookupMessage').text('')
+				jQuery.get('/development/lookup/' + encodeURIComponent(val),
+					function(data) {
+						console.log(data)
+						if (data == null){
+							jQuery('#lookupMessage').text('Unable to lookup for this URL.')
+							return
+						}
+						if (!data.development){
+							return
+						}
+						if (data.development.title && jQuery('#title').val() == ""){
+							jQuery('#title').val(data.development.title)
+						}
+						if (data.development.description && jQuery('#description').val() == ""){
+							jQuery('#description').val('"'+data.development.description+'"')
+						}
+						
+						if (data.development.author){
+							if (jQuery('#collaboratorTable tbody>tr:last #collaboratorName').val() == data.development.author 
+								&& jQuery('#collaboratorTable tbody>tr:last #collaboratorRole').val() == "Author"
+									){
+								
+							} else {
+								if (jQuery('#collaboratorTable tbody>tr:last #collaboratorName').val() != ""){
+									jQuery('#addCollaborator').click()
+								}								
+								jQuery('#collaboratorTable tbody>tr:last #collaboratorName').val(data.development.author)
+								jQuery('#collaboratorTable tbody>tr:last #collaboratorRole').val('Author')
+							}							
+						}
+						
+						if (data.development.license && jQuery('#license').val() == "Unknown"){
+							jQuery('#license').val(data.development.license)
+						}
+						
+						if (data.development.status && jQuery('input[name=status]:checked').val() == undefined){
+							jQuery('#status_'+data.development.status).attr('checked', true)
+						}
+						
+						if (data.development.derivatives){
+							jQuery.each(data.development.derivatives, function(index, value){
+								
+								if (jQuery('#relationshipTable #relationshipTo').filter(function() {return this.value==value.link}).size() == 0){
+									if (jQuery('#relationshipTable tbody>tr:last #relationshipTo').val() != ""){
+										jQuery('#addRelationship').click()
+									}
+									jQuery('#relationshipTable tbody>tr:last #relationshipTo').val(value.link)
+									jQuery('#relationshipTable tbody>tr:last #relationshipDescription').val(value.title)
+									jQuery('#relationshipTable tbody>tr:last #relationshipType').val('DerivedFrom')									
+								}
+								
+							});
+						}
+						if (data.development.image){
+							jQuery('#imageURL').val(data.development.image)
+						}
+						
+						jQuery('input[name=title]').blur()
+												
+					}, "json")				
+			}
+
+		});
 	});
 </script>
 
@@ -397,7 +476,10 @@
 						<tr id="sourceURLRow">
 							<td>URL</td>
 							<td><input type="text" id="sourceURL" name="sourceURL" value="<%=development?.sourceURL?:''%>" /></td>
-							<td><span id="sourceURLMessage"></span></td>
+							<td>
+								<div id="lookupDevelopment"><a href="javascript://">Lookup&hellip;</a>&nbsp;<img id="ajax-loader" src="/images/ajax-loader.gif"/><span id="lookupMessage"></span></div>
+								<span id="sourceURLMessage"></span>
+							</td>
 						</tr>
 
 						<tr id="sourceRow">

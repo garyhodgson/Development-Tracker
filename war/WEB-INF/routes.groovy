@@ -5,7 +5,6 @@ import static com.google.appengine.api.capabilities.CapabilityStatus.*
 all "/_ah/warmup", forward: "/warmupRequestHandler.groovy"
 all "/_ah/**", ignore: true
 
-
 get "/robots.txt", forward: "/robots.txt"
 get "/robots.txt/", forward: "/robots.txt"
 get "/403/", forward: "/templates/static/403.gtpl"
@@ -51,6 +50,7 @@ get "/development/add",  forward: {
 get "/development/add/cancel/@imageBlobKey", forward:  "/development/cancelAdd.groovy?imageBlobKey=@imageBlobKey"
 
 post "/development/add", forward:  "/development/add.groovy"
+get "/development/lookup/@url", forward: "/development/lookup.groovy?url=@url"
 get "/development/exists/@field/", forward: "/development/exists.groovy?field=@field&value="
 get "/development/exists/@field/@value", forward: "/development/exists.groovy?field=@field&value=@value"
 get "/development/edit/@id",  forward: {

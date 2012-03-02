@@ -33,6 +33,8 @@
 	<static-files>
         <include path="/robots.txt" expiration="7d" />
         <include path="/images/**.png" expiration="7d" />
+        <include path="/images/**.gif" expiration="7d" />
+        <include path="/images/**.jpg" expiration="7d" />
         <include path="/images/favicon.ico" expiration="7d" />
         <include path="/js/**.js" expiration="7d" />
         <include path="/css/**" />

@@ -52,7 +52,7 @@ xml.developments("count":devs.size(), "api-version":"1") {
 			if (rels){
 			connections("count":rels.size()) {
 				rels.each { c ->
-					connection(type:c.type, url:(c.to)?"${baseURL}/development/${c.to.name}": c.toUrl, c.description)					
+					connection(id:c.to?c.to.getName():'', type:c.type, url:(c.to)?"${baseURL}/development/${c.to.name}": c.toUrl, c.description)					
 				}
 			}			
 			}
