@@ -362,7 +362,6 @@
 				jQuery('#lookupMessage').text('')
 				jQuery.get('/development/lookup/' + encodeURIComponent(val),
 					function(data) {
-						console.log(data)
 						if (data == null){
 							jQuery('#lookupMessage').text('Unable to lookup for this URL.')
 							return
@@ -477,7 +476,7 @@
 							<td>URL</td>
 							<td><input type="text" id="sourceURL" name="sourceURL" value="<%=development?.sourceURL?:''%>" /></td>
 							<td>
-								<div id="lookupDevelopment"><a href="javascript://">Lookup&hellip;</a>&nbsp;<img id="ajax-loader" src="/images/ajax-loader.gif"/><span id="lookupMessage"></span></div>
+								<div id="lookupDevelopment"><a style="display:none" href="javascript://">Lookup&hellip;</a>&nbsp;<img id="ajax-loader" style="display:none" src="/images/ajax-loader.gif"/><span id="lookupMessage"></span></div>
 								<span id="sourceURLMessage"></span>
 							</td>
 						</tr>
