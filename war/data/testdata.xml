@@ -1,0 +1,378 @@
+<?xml version='1.0'?>
+<developments count='190' api-version='1'>
+  <development id='3012' uri='http://reprap.development-tracker.info/development/3012'>
+    <title>Mendel</title>
+    <created>Sun Aug 07 19:51:29 UTC 2011</created>
+    <createdBy>garyhodgson</createdBy>
+    <updated>Tue Aug 16 23:41:37 UTC 2011</updated>
+    <categories>
+      <category id='Printer'>Printer</category>
+    </categories>
+    <connections count='2'>
+      <connection type='Link' url='https://github.com/reprap/mendel'>Github Project</connection>
+      <connection type='EvolvedFrom' url='http://reprap.development-tracker.info/development/2008'>Darwin</connection>
+    </connections>
+    <description>The second, improved version of RepRap.</description>
+    <developmentType id='Printer'>Printer</developmentType>
+    <goals>
+      <goal id='Simplification'>Simplification</goal>
+    </goals>
+    <goalsDescription />
+    <license id='GPLv2'>The GNU General Public License v2</license>
+    <image url='http://reprap.org/mediawiki/images/thumb/1/1f/Mendel.jpg/520px-Mendel.jpg' thumbnail='http://lh6.ggpht.com/J-KF-Qy0f3TKqXRTiychG3yip5aT0NrEQ8v6UXZiJK-wrV-CdfMUWSCrQD-c4Wjo7eO9KKpM79900Fjj6GUnn1sGsNkZzaWpUg' />
+    <notice></notice>
+    <projectVendors>
+      <projectVendor id='RepRap'>RepRap</projectVendor>
+    </projectVendors>
+    <source url='http://reprap.org/wiki/Mendel'>RepRapWiki</source>
+    <specifications unit='Metric'>
+      <specification>
+        <name>Size</name>
+        <value>500 mm (W) x 400 mm (D) x 360 mm (H)</value>
+      </specification>
+      <specification>
+        <name>Build Envelope</name>
+        <value>200 mm (W) x 200 mm (D) x 140 mm (H)</value>
+      </specification>
+      <specification>
+        <name>Weight</name>
+        <value>7.0 kg</value>
+      </specification>
+    </specifications>
+    <signs />
+    <status id='Working'>Working</status>
+    <tags />
+  </development>
+  <development id='31005' uri='http://reprap.development-tracker.info/development/31005'>
+    <title>Mendel Heated Bed</title>
+    <created>Tue Aug 30 12:36:05 UTC 2011</created>
+    <createdBy>garyhodgson</createdBy>
+    <updated>Tue Aug 30 12:36:07 UTC 2011</updated>
+    <categories>
+      <category id='Printer'>Printer</category>
+    </categories>
+    <collaborators count='1'>
+      <collaborator role='Author'>Adrian Bowyer</collaborator>
+    </collaborators>
+    <connections count='1'>
+      <connection type='DesignedFor' url='http://reprap.development-tracker.info/development/3012'>Mendel</connection>
+    </connections>
+    <description>Mendel Dibond heated bed.</description>
+    <developmentType id='Part'>Part</developmentType>
+    <goals>
+      <goal id='Quality'>Quality</goal>
+      <goal id='Reliability'>Reliability</goal>
+    </goals>
+    <goalsDescription />
+    <license id='GPLv2'>The GNU General Public License v2</license>
+    <image url='http://reprap.org/mediawiki/images/thumb/7/71/Wired-up.jpg/190px-Wired-up.jpg' thumbnail='http://lh4.ggpht.com/EZ4seALJQS8h6gy8IPFA0FDxO69C_2ZUr7bv0p5x5lk9E8xJ-pWzuaSwBpu0bqjaTPCP1KUzi38f3hvUzKjyX3sDra4tFL35grI' />
+    <notice></notice>
+    <projectVendors>
+      <projectVendor id='RepRap'>RepRap</projectVendor>
+    </projectVendors>
+    <source url='http://reprap.org/wiki/Mendel_heated_bed'>RepRapWiki</source>
+    <specifications />
+    <signs />
+    <status id='Working'>Working</status>
+    <tags />
+  </development>
+  <development id='17006' uri='http://reprap.development-tracker.info/development/17006'>
+    <title>Mendel X Y axis accuracy doubling mod</title>
+    <created>Mon Aug 22 07:59:39 UTC 2011</created>
+    <createdBy>garyhodgson</createdBy>
+    <updated>Mon Aug 22 08:01:27 UTC 2011</updated>
+    <categories>
+      <category id='Printer'>Printer</category>
+    </categories>
+    <collaborators count='1'>
+      <collaborator role='Author'>madkite</collaborator>
+    </collaborators>
+    <connections count='2'>
+      <connection type='DesignedFor' url='http://reprap.development-tracker.info/development/3012'>Mendel</connection>
+      <connection type='Link' url='http://forums.reprap.org/read.php?2,85051'>Forum post discussing the mod</connection>
+    </connections>
+    <description>This mod doubles the X Y axis's accuracy on Reprap Mendel. It does this by creating a double pulley system. I have noticed that there is significantly less lash on my x axis now and everything seems to move more sharply. Another benefit is this mod allows your machine to run at exactly the same speed as before.</description>
+    <developmentType id='Part'>Part</developmentType>
+    <goals>
+      <goal id='Accuracy'>Accuracy</goal>
+      <goal id='Improvement'>Improvement</goal>
+    </goals>
+    <goalsDescription>Improve accuracy of Reprap Mendel.</goalsDescription>
+    <license id='CCBY'>Creative Commons Attribution</license>
+    <image url='http://thingiverse-production.s3.amazonaws.com/renders/e6/ca/66/e8/29/00009.MTS_snapshot_00.03_[2011.05.29_21.22.09_preview_medium.jpg' thumbnail='http://lh6.ggpht.com/R9XMWmeNhTgnAldPdN_c8Zzwa_sbOfJ8FtFSTT6JYc5W85bP0BCR9JawCxiLjzQtA4IImz6xnQzmI0K-kkRk9uu0ucR77hgncg' />
+    <notice></notice>
+    <projectVendors>
+      <projectVendor id='RepRap'>RepRap</projectVendor>
+    </projectVendors>
+    <source url='http://www.thingiverse.com/thing:8852'>Thingiverse</source>
+    <specifications />
+    <signs />
+    <status id='Working'>Working</status>
+    <tags>
+      <tag>Mendel</tag>
+    </tags>
+  </development>
+  <development id='123001' uri='http://reprap.development-tracker.info/development/123001'>
+    <title>Mendel90</title>
+    <created>Fri Dec 30 20:08:41 UTC 2011</created>
+    <createdBy>garyhodgson</createdBy>
+    <updated>Fri Dec 30 20:08:44 UTC 2011</updated>
+    <categories>
+      <category id='Printer'>Printer</category>
+    </categories>
+    <collaborators count='1'>
+      <collaborator role='Author'>Nophead</collaborator>
+    </collaborators>
+    <connections count='4'>
+      <connection type='EvolvedFrom' url='http://reprap.development-tracker.info/development/3012'>Mendel</connection>
+      <connection type='InspiredBy' url='http://reprap.development-tracker.info/development/7014'>Prusa Mendel</connection>
+      <connection type='Link' url='http://hydraraptor.blogspot.com/2011/12/mendel90-extruder.html'>Mendel90 extruder</connection>
+      <connection type='Link' url='http://hydraraptor.blogspot.com/2011/12/mendel90-axes.html'>Mendel90 axes</connection>
+    </connections>
+    <description>Nophead's redesign of the Mendel, aiming for a sturdier, more robust printer.</description>
+    <developmentType id='Printer'>Printer</developmentType>
+    <goals>
+      <goal id='Quality'>Quality</goal>
+      <goal id='Reliability'>Reliability</goal>
+      <goal id='Other'>Stability, Robustness</goal>
+    </goals>
+    <goalsDescription />
+    <license id='Unknown'>License Unknown</license>
+    <image url='http://2.bp.blogspot.com/-ScisRR21Q8g/Tvei-lKW7QI/AAAAAAAAF28/FPi84T6kCGs/s640/M90.JPG' thumbnail='http://lh4.ggpht.com/O-RpJoa9jROvLRRYZ9pQi2KnmqvjDRCWYa-oZ9KIs2EhqymIrm7sRUytAoQKigSiAaOfhv9Gb3KY83cGV0stI1rRVfBWaFjG' />
+    <notice></notice>
+    <projectVendors>
+      <projectVendor id='RepRap'>RepRap</projectVendor>
+    </projectVendors>
+    <source url='http://hydraraptor.blogspot.com/2011/12/mendel90.html'>Blog</source>
+    <specifications />
+    <signs />
+    <tags>
+      <tag>Mendel</tag>
+    </tags>
+  </development>
+  <development id='88001' uri='http://reprap.development-tracker.info/development/88001'>
+    <title>MendelMax</title>
+    <created>Tue Oct 18 06:35:59 UTC 2011</created>
+    <createdBy>garyhodgson</createdBy>
+    <updated>Tue Oct 18 06:36:03 UTC 2011</updated>
+    <categories>
+      <category id='Printer'>Printer</category>
+    </categories>
+    <collaborators count='1'>
+      <collaborator role='Author'>Maxbots</collaborator>
+    </collaborators>
+    <connections count='2'>
+      <connection type='DerivedFrom' url='http://reprap.development-tracker.info/development/7014'>Prusa Mendel</connection>
+      <connection type='Link' url='http://www.kludgineering.com/tikiwiki/tiki-index.php?page=MendelMax'>Dedicated Website</connection>
+    </connections>
+    <description>&amp;quot;MendelMax is a new RepRap 3d printer designed by Maxbots. It is a true reprap, using printed brackets, but instead of using threaded rod for the structural elements it uses inexpensive aluminum extrusions. This gives a huge increase in rigidity for a minimal extra cost (Self sourcing will cost about $50 more than a standard Prusa when purchased from the recommended suppliers). The required extrusions are available world wide from a variety of suppliers.&amp;quot;</description>
+    <developmentType id='Printer'>Printer</developmentType>
+    <goals>
+      <goal id='Other'>Ridgidity</goal>
+    </goals>
+    <goalsDescription />
+    <license id='GPLv2'>The GNU General Public License v2</license>
+    <image url='http://thingiverse-production.s3.amazonaws.com/renders/9d/3a/bb/8a/ea/IMGP3204_preview_medium.jpg' thumbnail='http://lh6.ggpht.com/_7CO5mBff1qLPSkCNTHkakygH8DJCLhL5CWbhLQmcapZFjPvDMl1zCJ37VsVLxxdoVQteWeAEfdLjcktah7gnzICB0u0o7S2nZ0' />
+    <notice></notice>
+    <projectVendors>
+      <projectVendor id='RepRap'>RepRap</projectVendor>
+    </projectVendors>
+    <source url='http://www.thingiverse.com/thing:12645'>Thingiverse</source>
+    <specifications />
+    <signs />
+    <status id='Working'>Working</status>
+    <tags />
+  </development>
+  <development id='30001' uri='http://reprap.development-tracker.info/development/30001'>
+    <title>Orca</title>
+    <created>Tue Aug 23 19:54:02 UTC 2011</created>
+    <createdBy>garyhodgson</createdBy>
+    <updated>Tue Aug 23 19:54:05 UTC 2011</updated>
+    <categories>
+      <category id='Commercial'>Commercial</category>
+      <category id='Printer'>Printer</category>
+    </categories>
+    <collaborators count='1'>
+      <collaborator role='Author'>Camiel Gubbels</collaborator>
+    </collaborators>
+    <connections count='3'>
+      <connection type='EvolvedFrom' url='http://reprap.development-tracker.info/development/3012'>Mendel</connection>
+      <connection type='Link' url='http://www.mendel-parts.com/downloads/stl/_ORCA/'>Mechanical Files</connection>
+      <connection type='Link' url='http://www.mendel-parts.com'>Main Web Shop - Mendel Parts</connection>
+    </connections>
+    <description>A cheap, not too heavy, but still robust 3D printer, easy to transport (grab it on the front X-bar at the sides..) and optimized for 1.75mm filament.</description>
+    <developmentType id='Printer'>Printer</developmentType>
+    <goals>
+      <goal id='Simplification'>Simplification</goal>
+      <goal id='Reliability'>Reliability</goal>
+    </goals>
+    <goalsDescription />
+    <license id='Unknown'>License Unknown</license>
+    <image url='http://www.mendel-parts.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/o/r/orca02_red02.jpg' thumbnail='http://lh6.ggpht.com/dualHC9dyxhh7HLCJNnPtDxQ0J7YUfIBCDobt3o_xtpTNgJTU4lWV0iMcIXq06jpJrur_T5EVpG40Pmztu5C7ESqBLkAvyN9' />
+    <notice></notice>
+    <projectVendors>
+      <projectVendor id='RepRap'>RepRap</projectVendor>
+    </projectVendors>
+    <source url='http://reprap.org/wiki/Orca'>RepRapWiki</source>
+    <specifications unit='Metric'>
+      <specification>
+        <name>Build Envelope</name>
+        <value>200mm (W) x 200mm (D) x 130mm (H)</value>
+      </specification>
+    </specifications>
+    <signs />
+    <status id='Working'>Working</status>
+    <tags />
+  </development>
+
+  <development id='7014' uri='http://reprap.development-tracker.info/development/7014'>
+    <title>Prusa Mendel</title>
+    <created>Sun Aug 07 19:45:55 UTC 2011</created>
+    <createdBy>garyhodgson</createdBy>
+    <updated>Mon Nov 21 20:55:55 UTC 2011</updated>
+    <categories>
+      <category id='Printer'>Printer</category>
+    </categories>
+    <collaborators count='1'>
+      <collaborator role='Author'>Josef Prusa</collaborator>
+    </collaborators>
+    <connections count='2'>
+      <connection type='EvolvedFrom' url='http://reprap.development-tracker.info/development/3012'>Mendel</connection>
+      <connection type='Link' url='http://reprap.development-tracker.info/development/7012'>Visual Assembly Instructions</connection>
+    </connections>
+    <description>The Prusa Mendel is a simpler remix of the original Mendel.</description>
+    <developmentType id='Printer'>Printer</developmentType>
+    <goals>
+      <goal id='Simplification'>Simplification</goal>
+    </goals>
+    <goalsDescription />
+    <license id='GPLv2'>The GNU General Public License v2</license>
+    <image url='http://reprap.org/mediawiki/images/thumb/4/4a/Assembled-prusa-mendel.jpg/190px-Assembled-prusa-mendel.jpg' thumbnail='http://lh5.ggpht.com/HoztWSy4cnCtqFLmwllcQMqYM54y7uXIwyPWFnDZMiK1AH0IK_Qaewo0VxcFjV96QSvrxZnQAbJy5Gv7cOMVxOherpVseCyTwwU' />
+    <notice></notice>
+    <projectVendors>
+      <projectVendor id='RepRap'>RepRap</projectVendor>
+    </projectVendors>
+    <source url='http://reprap.org/wiki/Prusa_Mendel'>RepRapWiki</source>
+    <specifications unit='Metric'>
+      <specification>
+        <name>Build Envelope</name>
+        <value>200 mm (W) x 200 mm (D) x 140 mm (H)</value>
+      </specification>
+    </specifications>
+    <signs />
+    <status id='Working'>Working</status>
+    <tags>
+      <tag>prusa</tag>
+    </tags>
+  </development>
+  <development id='90002' uri='http://reprap.development-tracker.info/development/90002'>
+    <title>Prusa Z motor mount and Coupling</title>
+    <created>Thu Oct 20 19:45:54 UTC 2011</created>
+    <createdBy>garyhodgson</createdBy>
+    <updated>Thu Oct 20 19:45:56 UTC 2011</updated>
+    <categories>
+      <category id='Movement'>Movement</category>
+    </categories>
+    <collaborators count='1'>
+      <collaborator role='Author'>Stu_Dkn</collaborator>
+    </collaborators>
+    <connections count='1'>
+      <connection type='DesignedFor' url='http://reprap.development-tracker.info/development/7014'>Prusa Mendel</connection>
+    </connections>
+    <description>&amp;quot;A revised Z motor mount with thrust bearing and coupling.
+
+I didn't like the idea of the weight of the x-axis pulling down on the motor shaft and the possibility of the coupling slipping (although nopheads redesign has worked perfectly).
+
+With this design all the weight is on the thrust bearing not the motor, and so far the threaded bar has run perfectly true giving some very nice prints.&amp;quot;</description>
+    <developmentType id='Part'>Part</developmentType>
+    <goals>
+      <goal id='Improvement'>Improvement</goal>
+    </goals>
+    <goalsDescription />
+    <license id='PD'>Public Domain</license>
+    <image url='http://thingiverse-production.s3.amazonaws.com/renders/65/38/86/e0/24/Fitted_preview_medium.jpg' thumbnail='http://lh5.ggpht.com/Wl8ZJ8lqIs0oLgMU_fnGc_cbbTLRF8cmp_w1AzuxAO_PVKL0cdY_A2G1QoVPkwanKP1mzJ6kUVTxs9UZJktGqy3mweUCy0A1hA' />
+    <notice></notice>
+    <projectVendors>
+      <projectVendor id='RepRap'>RepRap</projectVendor>
+    </projectVendors>
+    <source url='http://www.thingiverse.com/thing:11891'>Thingiverse</source>
+    <specifications />
+    <signs />
+    <status id='Working'>Working</status>
+    <tags />
+  </development>
+  <development id='51001' uri='http://reprap.development-tracker.info/development/51001'>
+    <title>RusRap</title>
+    <created>Mon Sep 12 17:31:48 UTC 2011</created>
+    <createdBy>garyhodgson</createdBy>
+    <updated>Mon Sep 12 17:36:36 UTC 2011</updated>
+    <categories>
+      <category id='Printer'>Printer</category>
+    </categories>
+    <collaborators count='1'>
+      <collaborator role='Author'>skb-kiparis</collaborator>
+    </collaborators>
+    <connections count='1'>
+      <connection type='DerivedFrom' url='http://reprap.development-tracker.info/development/7014'>Prusa Mendel</connection>
+    </connections>
+    <description>Aka: 3D &amp;#1087;&amp;#1088;&amp;#1080;&amp;#1085;&amp;#1090;&amp;#1077;&amp;#1088; RusRap
+
+&amp;quot;Bring to your attention the domestic counterpart to the popular, and most importantly, a portable 3D-printer RepRap - RusRap. Our printer is a modified version of Prusa.&amp;quot; (via Google Translate)</description>
+    <developmentType id='Printer'>Printer</developmentType>
+    <goals>
+      <goal id='Other'>Availability</goal>
+    </goals>
+    <goalsDescription />
+    <license id='Unknown'>License Unknown</license>
+    <image url='http://www.skb-kiparis.ru/images/_MG_8953.JPG' thumbnail='http://lh6.ggpht.com/XiZvV-y7enR3BWEdLWIlRRQcI-HZTYhgb0w8rV7kUigX713LGG2lWNw4iKT-0HKeeytbQqO07ZDjZql_70hDMxoB1cmfgi-zyg' />
+    <notice></notice>
+    <projectVendors>
+      <projectVendor id='RepRap'>RepRap</projectVendor>
+    </projectVendors>
+    <source url='http://www.skb-kiparis.ru/products/RusRap'>Other</source>
+    <specifications unit='Metric'>
+      <specification>
+        <name>Build Envelope</name>
+        <value>200mm (W) x 200mm (D) x 150mm (H)</value>
+      </specification>
+    </specifications>
+    <signs />
+    <status id='Working'>Working</status>
+    <tags />
+  </development>
+   <development id='26004' uri='http://reprap.development-tracker.info/development/26004'>
+    <title>Yet Another Prusa Mendel Z Coupling</title>
+    <created>Wed Aug 24 10:38:48 UTC 2011</created>
+    <createdBy>garyhodgson</createdBy>
+    <updated>Wed Aug 24 10:53:50 UTC 2011</updated>
+    <categories>
+      <category id='Printer'>Printer</category>
+    </categories>
+    <collaborators count='1'>
+      <collaborator role='Author'>nophead</collaborator>
+    </collaborators>
+    <connections count='3'>
+      <connection type='Link' url='http://www.thingiverse.com/thing:9622'>Thingiverse Link</connection>
+      <connection type='DerivedFrom' url='http://reprap.development-tracker.info/development/29005'>Prusa Mendel PLA Coupling</connection>
+      <connection type='DesignedFor' url='http://reprap.development-tracker.info/development/7014'>Prusa Mendel</connection>
+    </connections>
+    <description>Couples a 5mm motor shaft to an 8mm threaded rod, ensuring they are coaxial, but allowing some angular movement if the rod is not straight.</description>
+    <developmentType id='Part'>Part</developmentType>
+    <goals>
+      <goal id='Reliability'>Reliability</goal>
+      <goal id='Improvement'>Improvement</goal>
+    </goals>
+    <goalsDescription />
+    <license id='GPLv2'>The GNU General Public License v2</license>
+    <image url='http://thingiverse-production.s3.amazonaws.com/renders/af/9c/ad/20/b6/z-axis_preview_medium.jpg' thumbnail='http://lh3.ggpht.com/PHyszSPCmpFsNTA3d8AhYY-o70fwAOLTHAdYvhheFF_D435SzsU-BdQjVVMZBrz2xvdDHR6tLhYKvyrySNvcIqIcCyjsGC9m9PE' />
+    <notice></notice>
+    <projectVendors>
+      <projectVendor id='RepRap'>RepRap</projectVendor>
+    </projectVendors>
+    <source url='http://hydraraptor.blogspot.com/2011/06/yet-another-prusa-z-coupling.html'>Blog</source>
+    <specifications />
+    <signs />
+    <status id='Working'>Working</status>
+    <tags />
+  </development>
+  </developments>

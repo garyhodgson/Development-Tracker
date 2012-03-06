@@ -14,8 +14,6 @@ import entity.Development
 import entity.Relationship
 import enums.Source
 
-
-
 if (!params.id){
 	request.session.message = "No Id given."
 	redirect '/developments'
@@ -46,9 +44,9 @@ try {
 			request.reverseRelationships << [type:rel.type, development:dev]			
 		}		 
 	}
-	 
 	
 	request.collaborations = dao.ofy().query(Collaboration.class).ancestor(developmentKey).list()
+	
 } catch (NotFoundException nfe){
 	request.session.message = "No development with id ${params.id} found."
 	redirect '/developments'

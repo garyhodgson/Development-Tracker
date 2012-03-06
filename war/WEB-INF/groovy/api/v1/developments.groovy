@@ -1,17 +1,15 @@
 package api.v1
 
-import static development.developmentHelper.*
 import static enums.MemcacheKeys.*
-
-import com.googlecode.objectify.Key
-
 import entity.Collaboration
 import entity.Development
 import entity.Relationship
 import enums.*
+import com.googlecode.objectify.Key
 import groovy.xml.MarkupBuilder
 
 def devs = cacheManager.allDevelopments()
+def devsHash = cacheManager.allDevelopmentsHash()
 def collaborations = dao.ofy().query(Collaboration.class).list()
 def relationships = dao.ofy().query(Relationship.class).list()
 
@@ -24,7 +22,7 @@ xml.mkp.xmlDeclaration(version:'1.0')
 xml.setOmitEmptyAttributes(true)
 xml.setOmitNullAttributes(true)
 
-xml.developments("count":devs.size(), "api-version":"1") {
+xml.developments("count":devs.size(), "api-version":"1", "hash":devsHash) {
 	
 	devs.each { d ->
 		
@@ -42,21 +40,34 @@ xml.developments("count":devs.size(), "api-version":"1") {
 			
 			def collabs = collaborations.findAll { it.development == developmentKey }
 			if (collabs){
-			collaborators("count":collabs.size()) {
-				collabs.each { c ->
-					collaborator(role:c.role, c.name)
+				collaborators("count":collabs.size()) {
+					collabs.each { c ->
+						collaborator(role:c.role, c.name)
+					}
 				}
-			}
-			}
-			def rels = relationships.findAll { it.from == developmentKey }
-			if (rels){
-			connections("count":rels.size()) {
-				rels.each { c ->
-					connection(id:c.to?c.to.getName():'', type:c.type, url:(c.to)?"${baseURL}/development/${c.to.name}": c.toUrl, c.description)					
-				}
-			}			
 			}
 			
+			def rels = relationships.findAll { it.from == developmentKey }
+			if (rels){
+				connections("count":rels.size()) {
+					rels.each { c ->
+						connection(type:c.type.title, to:(c.to)?c.to.id:'', url:(c.to)?"${baseURL}/development/${c.to.id}": c.toUrl, c.description)					
+					}
+				}			
+			}
+			
+			def reverseRels = relationships.findAll { it.to == developmentKey }	
+			if (reverseRels){
+				reverseConnections("count":reverseRels.size()) {
+					reverseRels.each { c ->
+						def reverseDev = devs.find { it.id == c.from.getId() }
+						if (reverseDev){
+							reverseConnection(type:c.type.reverseTitle, from:reverseDev.id, url:"${baseURL}/development/${reverseDev.id}", reverseDev.title)
+						}
+					}
+				}
+			}
+
 			description(d.description)
 			if (d.developmentType) {
 				if (d.developmentType == DevelopmentType.Other){
@@ -84,7 +95,6 @@ xml.developments("count":devs.size(), "api-version":"1") {
 			}
 			image(url: d.imageURL, thumbnail:d.thumbnailServingUrl)
 			notice(d.notice?:'')
-			image(url: d.imageURL, thumbnail:d.thumbnailServingUrl)
 			projectVendors{
 				d.projectVendor?.each {
 					if (it == ProjectVendor.Other){

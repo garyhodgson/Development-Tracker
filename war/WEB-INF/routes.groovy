@@ -39,7 +39,6 @@ get "/developments/browse/@field",  forward: "/developments/browse/prepareBrowse
 get "/developments/@searchField/@value",  forward: "/developments/browse/browse.groovy?searchField=@searchField&value=@value"
 get "/developments/@searchField",  forward: "/developments/browse/browse.groovy?searchField=@searchField"
 
-
 /* Development */
 get "/development/add",  forward: {
 	to "/development/prepareAdd.groovy"
@@ -67,6 +66,7 @@ get "/development/sync/@id",  forward: "/sync/controller.groovy?id=@id"
 get "/development/@id/watchers",  forward: "/development/watchers.groovy?id=@id"
 get "/development/@id/history",  forward: "/history/history.groovy?id=@id"
 get "/development/@id/history/@changeHistoryId",  forward: "/history/history.groovy?id=@id&changeHistoryId=@changeHistoryId"
+get "/development/@id/graph",  forward: "/development/graph.groovy?id=@id"
 get "/development/@id",  forward: "/development/show.groovy?id=@id"
 
 
@@ -98,7 +98,6 @@ get "/admin/memcache/clear", forward: "/admin/memcache/clear.groovy"
 get "/admin/memcache/stats", forward: "/admin/memcache/stats.groovy"
 
 get "/admin/upload", forward: "/templates/admin/upload.gtpl"
-
 get "/admin/@target",  forward: "/admin/@target.groovy"
 
 /* Access */

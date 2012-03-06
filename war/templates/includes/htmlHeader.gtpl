@@ -22,6 +22,7 @@
 	<link rel="stylesheet/less" type="text/css" href="/css/nav.less">
 	<script type="text/javascript" src="/js/less.min.js"></script>
 	
+	<script type="text/javascript" src="/js/modernizr.min.js"></script>
 	<script type="text/javascript" src="/js/jquery-1.6.2.min.js"></script>	
 	<script type="text/javascript" src="/js/jquery-ui-1.8.16.custom.min.js"></script>
 	<script type="text/javascript" src="/js/jquery-fluid16.js"></script>

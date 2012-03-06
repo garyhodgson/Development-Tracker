@@ -2,7 +2,8 @@ package cache
 
 import static enums.MemcacheKeys.*
 
-import com.google.appengine.api.taskqueue.RetryOptions
+import java.security.MessageDigest
+
 import com.googlecode.objectify.ObjectifyService
 
 import entity.Activity
@@ -15,7 +16,7 @@ import groovyx.gaelyk.GaelykBindings
 class CacheManager {
 
 	def ofy = ObjectifyService.begin()
-
+	
 	private def rememberKey(String key){
 		def keys = memcache[Keys]?:[]as Set<String>
 		keys << key
@@ -49,14 +50,29 @@ class CacheManager {
 		rememberKey(memcacheKey)
 		if (!memcache[memcacheKey]){
 			memcache[memcacheKey] = ofy.query(Development.class).order('title').list().sort{it.title.toLowerCase()}
-		}		
+		}	
+		
+		
 		return  memcache[memcacheKey]
 	}
-
+	
+	public def allDevelopmentsHash(){
+		String memcacheKey = AllDevelopmentsHash.name()
+		if (!memcache[memcacheKey]){
+			memcache[memcacheKey] = getMD5(allDevelopments().toString())
+			rememberKey(memcacheKey)
+		}
+		return memcache[memcacheKey]
+	}
+	
 	public def resetDevelopmentCache(){
 		String memcacheKey = AllDevelopments.name()
 		if (memcache.delete(memcacheKey)){
 			forgetKey(memcacheKey)
+		}
+		
+		if (memcache.delete(AllDevelopmentsHash.name())){
+			forgetKey(AllDevelopmentsHash.name())
 		}
 	}
 
@@ -125,5 +141,18 @@ class CacheManager {
 		return memcache[memcacheKey] ?:
 		(memcache[memcacheKey] = ofy.query(Theme.class).order('-created').offset(offset).limit(limit).list())
 	}
+	
+	
+	private def getMD5(String s) {
+		MessageDigest digest = MessageDigest.getInstance("MD5")
+		byte[] ds = digest.digest(s.toString().getBytes())
+		StringBuffer hexString = new StringBuffer();
+		for (int i=0;i<ds.length;i++) {
+			hexString.append(Integer.toHexString(0xFF & ds[i]));
+		}
+		return hexString.toString()
+	}
+	
+	
 }
 

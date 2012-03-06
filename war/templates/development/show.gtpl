@@ -277,6 +277,8 @@ jQuery(function() {
 		
 		<a href="/development/<%=development.id%>/history"><li>History</li> </a>
 		<br>
+		<a href="/development/<%=development.id%>/graph"><li>Graph</li> </a>
+		<br>
 		<% if (user && !request.history?:false) { %> 
 			<%if (users.isUserAdmin() || session.userinfo?.username == development.createdBy) { %>
 				<a href="#" id="deleteDevelopment" rel="#confirm"><li>Delete</li> </a>
