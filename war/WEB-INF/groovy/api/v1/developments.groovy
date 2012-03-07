@@ -51,7 +51,8 @@ xml.developments("count":devs.size(), "api-version":"1", "hash":devsHash) {
 			if (rels){
 				connections("count":rels.size()) {
 					rels.each { c ->
-						connection(type:c.type.title, to:(c.to)?c.to.getName():'', url:(c.to)?"${baseURL}/development/${c.to.getName()}": c.toUrl, c.description)					
+						def ref = (c.to) ? c.to.id?:'' : ''
+						connection(type:c.type.title, to:ref, url:(c.to)?"${baseURL}/development/${ref}": c.toUrl, c.description)					
 					}
 				}			
 			}
@@ -60,7 +61,9 @@ xml.developments("count":devs.size(), "api-version":"1", "hash":devsHash) {
 			if (reverseRels){
 				reverseConnections("count":reverseRels.size()) {
 					reverseRels.each { c ->
-						def reverseDev = devs.find { it.id == c.from.getName() }
+						def ref = (c.from) ? c.from.id?:'' : ''
+						
+						def reverseDev = devs.find { it.id.toString() == ref.toString() }
 						if (reverseDev){
 							reverseConnection(type:c.type.reverseTitle, from:reverseDev.id, url:"${baseURL}/development/${reverseDev.id}", reverseDev.title)
 						}

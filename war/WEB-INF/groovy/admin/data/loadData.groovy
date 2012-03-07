@@ -8,8 +8,8 @@ import entity.Relationship
 import enums.Role
 
 /*
-//def txt = new File('data/testdata.xml').getText()
-def txt = new File('data/reprap.development-tracker.info-developments.xml').getText()
+def txt = new File('data/testdata.xml').getText()
+//def txt = new File('data/reprap.development-tracker.info-developments.xml').getText()
 
 def developments = new XmlSlurper().parseText(txt)
 

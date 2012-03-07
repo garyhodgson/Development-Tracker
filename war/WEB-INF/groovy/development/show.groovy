@@ -32,7 +32,7 @@ try {
 	request.development = dao.ofy().get(developmentKey)
 	request.relationships = dao.ofy().query(Relationship.class).ancestor(developmentKey).list()
 
-	def reverseRelationships = dao.ofy().query(Relationship.class).filter("to", new Key(Development.class, params.id)).list()
+	def reverseRelationships = dao.ofy().query(Relationship.class).filter("to", developmentKey).list()
 	if (reverseRelationships){
 		
 		def reverseDevs = dao.ofy().get( reverseRelationships.collect { it.from } ).values()

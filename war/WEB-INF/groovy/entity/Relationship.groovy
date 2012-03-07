@@ -23,6 +23,6 @@ class Relationship implements Serializable {
 	
 	@Override
 	String toString() {
-		return "${type.title} ${description} (${to?to.name:toUrl})"
+		return "${type.title} ${description} (${to?to.id:toUrl})"
 	}
 }

@@ -170,7 +170,7 @@ jQuery(function() {
 					<td >${r.type.title}</td>
 					<td >
 						<% if (r.to){ %>
-							<a href="/development/${r.to.name}">${r.description?:'Link'}</a>
+							<a href="/development/${r.to.id}">${r.description?:'Link'}</a>
 						<% } else if (r.toUrl.startsWith('http')) { %>
 							<a href="${r.toUrl}" target="_blank">${r.description?:'Link'}</a>
 						<% } else { %>

@@ -6,8 +6,8 @@ import entity.Development
 import entity.Relationship
 
 /*
-//def txt = new File('data/testdata.xml').getText()
-def txt = new File('data/reprap.development-tracker.info-developments.xml').getText()
+def txt = new File('data/testdata.xml').getText()
+//def txt = new File('data/reprap.development-tracker.info-developments.xml').getText()
 
 def developments = new XmlSlurper().parseText(txt)
 
@@ -27,7 +27,7 @@ developmentList.each {
 		def r = new Relationship(from:developmentKey, toUrl:url, 'type':type, description:title)
 
 		if (url.startsWith("http://reprap.development-tracker.info/development/")){
-			def toId = (url.substring(url.lastIndexOf("/")+1)) as Long
+			def toId = (url.substring(url.lastIndexOf("/")+1))
 			r.to = new Key(Development.class, toId)			
 		}		
 		

@@ -32,7 +32,7 @@ public static void processRelationships(def relationships, def params, def fromD
 			def to = (params.relationshipTo instanceof String) ? params.relationshipTo : params.relationshipTo[i]
 			if (to){
 				if (to.isLong()){
-					r.to = new Key(Development.class, to)
+					r.to = new Key(Development.class, to as Long)
 				} else {
 					r.toUrl = to
 				}

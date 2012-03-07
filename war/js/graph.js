@@ -101,6 +101,10 @@ jQuery(document).ready(function () {
 		jQuery('#details').html('<a href="'+dev.attr('uri')+'"><h5>'+dev.find('title').text()+'</h5></a><img src="'+dev.find('image').attr('thumbnail')+'"/><p>'+dev.find('description').text()+'</p>')
 	}
 	
+	function showMissingDetail(title, id){
+		jQuery('#details').html('<a href="/development/'+id+'"><h5>'+title+'</h5></a>')
+	}
+	
 	
 	function showDev(graph){
 		
@@ -134,7 +138,7 @@ jQuery(document).ready(function () {
 	}
 	
 	function loadAndDisplay(){
-		jQuery('#vis-load').show();
+		jQuery("#vis-load").dialog('open')
 		jQuery.get('/api/v1/developments', function (data) {
 			developments = jQuery(data)
 			if (Modernizr.localstorage) {
@@ -143,8 +147,21 @@ jQuery(document).ready(function () {
     		}
 			
     		display()
-        }).complete(function(){jQuery('#vis-load').hide();});		
+        }).complete(function(){
+        	jQuery("#vis-load").dialog('close')
+        	});		
 	}
+	
+	jQuery("#vis-load").dialog({ 
+		autoOpen: false,
+		dialogClass:'',
+		position: 'center',
+		modal: true,
+		height: 'auto',
+		resizable: false,
+		title: ' ',
+		closeText: ''
+	});
 	
 	function beginAddNodesLoop(graph) {
     	
@@ -164,12 +181,20 @@ jQuery(document).ready(function () {
     	loadAndDisplay()
     }
 
-    function imageClickHandler(evt) {
+    function imageClickHandler(evt) {    	
         if (2 == evt.detail) {
-            location = "/development/"+evt.srcElement.getAttribute('id')+"/graph"
+            location = "/development/"+evt.target.getAttribute('id')+"/graph"
         } else {
-        	var dev = developments.find('development[id='+evt.srcElement.id+']')
-        	showDetail(dev)
+        	var dev = developments.find('development[id='+evt.target.id+']')
+        	if (dev.length > 0){
+        		showDetail(dev)
+        	} else {
+        		var title = '[Unknown]'
+        		if (evt.target.getElementsByTagName("title").length > 0){
+        			title = evt.target.getElementsByTagName("title")[0].text()
+        		}        		
+        		showMissingDetail(title, evt.target.id)
+        	}        	
         }
     }
     
@@ -258,7 +283,7 @@ jQuery(document).ready(function () {
             }
             
         } else {
-            x = Viva.Graph.svg('rect').attr('width', 40).attr('height', 40).attr('fill', '#888')
+            x = Viva.Graph.svg('rect').attr('width', 40).attr('height', 40).attr('fill', '#888').attr('id', node.id)
         }
 
         if (node.data && node.data.title) {

@@ -738,7 +738,7 @@
 							
 							<td>
 							<% if (r.to) { %>
-								<input class="linkURL" type="text" id="relationshipTo" name="relationshipTo" value="${r.to.name}" />
+								<input class="linkURL" type="text" id="relationshipTo" name="relationshipTo" value="${r.to.id}" />
 							<%} else { %>
 								<input class="linkURL" type="text" id="relationshipTo" name="relationshipTo" value="${r.toUrl?:''}" />
 							<% } %>

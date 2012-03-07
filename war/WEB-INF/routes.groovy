@@ -19,6 +19,7 @@ get "/favicon.ico", redirect: "/images/favicon.ico"
 
 /* API */
 get "/api/@version/developments", forward: "/api/@version/developments.groovy"
+get "/api/@version/development/@id", forward: "/api/@version/development.groovy?id=@id"
 
 /* Developments */
 get "/developments",  forward: "/developments/list.groovy"
