@@ -5,8 +5,6 @@ jQuery(document).ready(function () {
 	function showAll(graph){
 		developments.find('development').each(function (i, v) {
             var dev = jQuery(this);
-            
-            //console.log(dev);
 
             var title = dev.find('title').text();
             var image = dev.find('image')
@@ -19,8 +17,6 @@ jQuery(document).ready(function () {
                 title: title,
                 uri: uri
             });
-            //graph.addNode(createdby, {	thumbnail : 'http://www.gravatar.com/avatar/55502f40dc8b7c769880b10874abc9d0?s=175&d=mm', title : createdby});
-            //graph.addLink(id, createdby, { type: "CreatedBy" });
         });
 		
 		developments.find('development').each(function (i, v) {
@@ -29,7 +25,6 @@ jQuery(document).ready(function () {
             var connections = dev.find('connection')
             connections.each(function (j, c) {
                 var conn = jQuery(this);
-                //console.log(conn)
                 var toNodeId = conn.attr('to')
                 if (toNodeId != undefined) {
                     var toNode = graph.getNode(toNodeId)

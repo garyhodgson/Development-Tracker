@@ -26,7 +26,7 @@ xml.developments("count":devs.size(), "api-version":"1", "hash":devsHash) {
 	
 	devs.each { d ->
 		
-		def developmentKey = new Key(Development.class, d.id)
+		def developmentKey = new Key(Development.class, d.id as Long)
 		
 		development(id:"${d.id}", uri:"${baseURL}/development/${d.id}") {
 
@@ -51,7 +51,7 @@ xml.developments("count":devs.size(), "api-version":"1", "hash":devsHash) {
 			if (rels){
 				connections("count":rels.size()) {
 					rels.each { c ->
-						connection(type:c.type.title, to:(c.to)?c.to.id:'', url:(c.to)?"${baseURL}/development/${c.to.id}": c.toUrl, c.description)					
+						connection(type:c.type.title, to:(c.to)?c.to.getName():'', url:(c.to)?"${baseURL}/development/${c.to.getName()}": c.toUrl, c.description)					
 					}
 				}			
 			}
@@ -60,7 +60,7 @@ xml.developments("count":devs.size(), "api-version":"1", "hash":devsHash) {
 			if (reverseRels){
 				reverseConnections("count":reverseRels.size()) {
 					reverseRels.each { c ->
-						def reverseDev = devs.find { it.id == c.from.getId() }
+						def reverseDev = devs.find { it.id == c.from.getName() }
 						if (reverseDev){
 							reverseConnection(type:c.type.reverseTitle, from:reverseDev.id, url:"${baseURL}/development/${reverseDev.id}", reverseDev.title)
 						}
