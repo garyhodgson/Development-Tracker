@@ -3,7 +3,13 @@ jQuery(document).ready(function () {
 	var developments
 	
 	function showAll(graph){
-		developments.find('development').each(function (i, v) {
+		var devs = developments.find('development')
+		var count = devs.length
+		if (!confirm("Loading all developments ("+count+") may result in poor performance. Continue?")){
+			return
+		}
+		
+		devs.each(function (i, v) {
             var dev = jQuery(this);
 
             var title = dev.find('title').text();
@@ -19,7 +25,7 @@ jQuery(document).ready(function () {
             });
         });
 		
-		developments.find('development').each(function (i, v) {
+		devs.each(function (i, v) {
             var dev = jQuery(this);
             var id = dev.attr('id');
             var connections = dev.find('connection')
@@ -45,6 +51,7 @@ jQuery(document).ready(function () {
 	}
 
 	function showConnections(graph, dev, level){
+
 		if (level == 0) {
 			return 
 		}
@@ -63,6 +70,7 @@ jQuery(document).ready(function () {
 		                uri: conn.attr('url')
 		            });
 		        	showConnections(graph, toDev, level-1)
+		        	showReverseConnections(graph, toDev, level-1)
 		        }
 		        graph.addLink(id, conn.attr('to'), {
 		            type: conn.attr('type')
@@ -72,6 +80,7 @@ jQuery(document).ready(function () {
 	}
 	
 	function showReverseConnections(graph, dev, level){
+
 		if (level == 0) {
 			return 
 		}
@@ -89,6 +98,7 @@ jQuery(document).ready(function () {
 		                uri: conn.attr('url')
 		            });
 		        	showConnections(graph, fromDev, level-1)
+		        	showReverseConnections(graph, fromDev, level-1)
 		        }
 		        graph.addLink(id, conn.attr('from'), {
 		            type: conn.attr('type')
