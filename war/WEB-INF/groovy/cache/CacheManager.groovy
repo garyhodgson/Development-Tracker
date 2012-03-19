@@ -56,6 +56,15 @@ class CacheManager {
 		return  memcache[memcacheKey]
 	}
 	
+	public def allDevelopmentsLastUpdated(){
+		String memcacheKey = AllDevelopmentsLastUpdated.name()
+		if (!memcache[memcacheKey]){
+			memcache[memcacheKey] = allDevelopments().sort{ it.updated }.last().updated.format( 'yyyyMMddHHmmssS')
+			rememberKey(memcacheKey)
+		}
+		return memcache[memcacheKey]
+	}
+	
 	public def allDevelopmentsHash(){
 		String memcacheKey = AllDevelopmentsHash.name()
 		if (!memcache[memcacheKey]){
@@ -71,6 +80,9 @@ class CacheManager {
 			forgetKey(memcacheKey)
 		}
 		
+		if (memcache.delete(AllDevelopmentsLastUpdated.name())){
+			forgetKey(AllDevelopmentsLastUpdated.name())
+		}
 		if (memcache.delete(AllDevelopmentsHash.name())){
 			forgetKey(AllDevelopmentsHash.name())
 		}
@@ -142,7 +154,6 @@ class CacheManager {
 		(memcache[memcacheKey] = ofy.query(Theme.class).order('-created').offset(offset).limit(limit).list())
 	}
 	
-	
 	private def getMD5(String s) {
 		MessageDigest digest = MessageDigest.getInstance("MD5")
 		byte[] ds = digest.digest(s.toString().getBytes())
@@ -152,7 +163,5 @@ class CacheManager {
 		}
 		return hexString.toString()
 	}
-	
-	
 }
 

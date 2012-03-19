@@ -12,6 +12,7 @@ public enum Goal {
 	Necessity("Necessity", "Simply needed."),
 	Quality("Quality", "Improving Quality."),
 	Reliability("Reliability", "Producing consistent, repeatable results."),
+	Reprapability("Reprapability", "Leading to self-replication."),
 	Reproducability("Reproducability", "Easier to reproduce."),
 	Simplification("Simplification", "Reducing complexity."),
 	Size("Size", "Smaller, or bigger."),

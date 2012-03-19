@@ -8,8 +8,15 @@ import enums.*
 import com.googlecode.objectify.Key
 import groovy.xml.MarkupBuilder
 
-def devs = cacheManager.allDevelopments()
+def clientLastUpdated = null
+if (params.lastUpdated && params.lastUpdated != "0"){
+	clientLastUpdated = Date.parse('yyyyMMddHHmmssS',params.lastUpdated)
+}
+
+def devs = clientLastUpdated ? cacheManager.allDevelopments().findAll {it.updated > clientLastUpdated } : cacheManager.allDevelopments()
+
 def devsHash = cacheManager.allDevelopmentsHash()
+
 def collaborations = dao.ofy().query(Collaboration.class).list()
 def relationships = dao.ofy().query(Relationship.class).list()
 
@@ -22,7 +29,9 @@ xml.mkp.xmlDeclaration(version:'1.0')
 xml.setOmitEmptyAttributes(true)
 xml.setOmitNullAttributes(true)
 
-xml.developments("count":devs.size(), "api-version":"1", "hash":devsHash) {
+def lastUpdated = (devs.size() == 0) ? params.lastUpdated : devs.sort{ it.updated }.last().updated.format( 'yyyyMMddHHmmssS')
+
+xml.developments("count":devs.size(), "api-version":"1", "updated":lastUpdated, "hash":devsHash) {
 	
 	devs.each { d ->
 		
@@ -52,7 +61,7 @@ xml.developments("count":devs.size(), "api-version":"1", "hash":devsHash) {
 				connections("count":rels.size()) {
 					rels.each { c ->
 						def ref = (c.to) ? c.to.id?:'' : ''
-						connection(type:c.type.title, to:ref, url:(c.to)?"${baseURL}/development/${ref}": c.toUrl, c.description)					
+						connection(id:c.id,type:c.type.title, to:ref, url:(c.to)?"${baseURL}/development/${ref}": c.toUrl, c.description)					
 					}
 				}			
 			}
@@ -65,7 +74,7 @@ xml.developments("count":devs.size(), "api-version":"1", "hash":devsHash) {
 						
 						def reverseDev = devs.find { it.id.toString() == ref.toString() }
 						if (reverseDev){
-							reverseConnection(type:c.type.reverseTitle, from:reverseDev.id, url:"${baseURL}/development/${reverseDev.id}", reverseDev.title)
+							reverseConnection(id:c.id, type:c.type.reverseTitle, from:reverseDev.id, url:"${baseURL}/development/${reverseDev.id}", reverseDev.title)
 						}
 					}
 				}

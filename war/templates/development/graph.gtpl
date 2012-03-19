@@ -5,6 +5,7 @@
 <script type="text/javascript" src="/js/vivagraph.min.js"></script>
 
 <script type="text/javascript">
+	var allDevelopmentsLastUpdated = '<%=request.allDevelopmentsLastUpdated%>'
 	var allDevelopmentsHash = '<%=request.allDevelopmentsHash%>'
 	var targetDevelopmentId = <%=request.id%>
 </script>

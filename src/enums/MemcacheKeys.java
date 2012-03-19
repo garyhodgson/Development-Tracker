@@ -9,6 +9,7 @@ public enum MemcacheKeys {
 	
 	AllDevelopments,
 	AllDevelopmentsHash,
+	AllDevelopmentsLastUpdated,
 	
 	TotalDevelopmentCount,
 	LatestDevelopments,

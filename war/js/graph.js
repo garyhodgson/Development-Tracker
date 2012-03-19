@@ -2,6 +2,117 @@ jQuery(document).ready(function () {
 	
 	var developments
 	
+	function beginAddNodesLoop(graph) {
+    	
+    	if (Modernizr.localstorage) {
+   			localDevs = localStorage.getItem("developments")
+   			
+   	    	if (localDevs != undefined){
+   	    		developments = jQuery(jQuery.parseXML(localDevs))
+   	    		
+   	    		var lastUpdated = developments.find('developments').attr('updated')
+    			var hash = developments.find('developments').attr('hash')
+   	    		
+					if (lastUpdated != undefined && lastUpdated == allDevelopmentsLastUpdated){
+						
+						if (hash != undefined && allDevelopmentsHash == hash){
+							display()
+							return
+						} else {
+							// reset developments for full update
+							developments = null
+							localStorage.removeItem("developments")
+							lastUpdated = 0
+						}	
+					}   	    			
+   	    	} 
+    	}
+    	
+    	loadAndDisplay(lastUpdated)
+    }
+	
+	function loadAndDisplay(lastUpdated){
+		jQuery("#vis-load").dialog('open')
+		
+		if (lastUpdated == undefined){
+			lastUpdated = 0
+		}
+		jQuery.get('/api/v1/developments/'+lastUpdated, function (data) {
+			var newDevelopments = jQuery(data)
+
+			if (newDevelopments.find('developments').attr('updated') != lastUpdated){
+				
+				localDevsString = localStorage.getItem("developments")
+
+				if (localDevsString != undefined){
+					
+					var localDevs = jQuery.parseXML(localDevsString)
+					
+					newDevelopments.find('development').each(function(){
+						var newDev = jQuery(this);
+						var oldDev = jQuery(localDevs).find('development[id='+newDev.attr('id')+']')
+						
+						if (oldDev == undefined){
+							jQuery(localDevs).find('developments').append(newDev)
+						} else {
+							oldDev.replaceWith(newDev)
+						}
+					});
+					jQuery(localDevs).find('developments').attr('updated', newDevelopments.find('developments').attr('updated'))
+					developments = jQuery(localDevs)
+					
+					if (Modernizr.localstorage) {
+			        	var xmlstr = (new XMLSerializer()).serializeToString(localDevs);
+			        	localStorage.setItem("developments",xmlstr)
+		    		}
+					
+				} else {
+					developments = newDevelopments
+					if (Modernizr.localstorage) {
+			        	var xmlstr = data.xml ? data-xml : (new XMLSerializer()).serializeToString(data);
+			        	localStorage.setItem("developments",xmlstr)
+		    		}
+				}
+				
+			} 
+			display()
+        }, "xml").complete(function(){
+        	jQuery("#vis-load").dialog('close')
+        });
+	}
+	
+	function display(){
+		if (targetDevelopmentId == null){
+	    	showAll(graph)
+		} else {
+			showDev(graph)	
+		}
+	}
+	
+	function showDev(graph){
+		
+		var dev = developments.find('development[id='+targetDevelopmentId+']')
+		
+		var id = dev.attr('id');
+		var title = dev.find('title').text();
+		var image = dev.find('image')
+		var thumbnail = image.attr('thumbnail')
+		var createdby = dev.find('createdBy').text();
+		var uri = dev.attr('uri');
+		
+		graph.addNode(id, {
+		    thumbnail: thumbnail,
+		    title: title,
+		    uri: uri,
+		    isRoot: true
+		});
+		var connectionsLimit = jQuery('#connectionsRange').val()
+		var connectionsShown = new Array()
+		showConnections(graph,dev, connectionsLimit, connectionsShown)		
+		showReverseConnections(graph,dev, connectionsLimit, connectionsShown)
+		showDetail(dev)
+	}
+	
 	function showAll(graph){
 		var devs = developments.find('development')
 		var count = devs.length
@@ -49,8 +160,8 @@ jQuery(document).ready(function () {
         });
 		
 	}
-
-	function showConnections(graph, dev, level){
+	
+	function showConnections(graph, dev, level, connectionsShown){
 
 		if (level == 0) {
 			return 
@@ -60,7 +171,7 @@ jQuery(document).ready(function () {
 		dev.find('connection').each(function (j, c) {
 		    var conn = jQuery(this);
 		    var toNodeId = conn.attr('to')
-		    if (toNodeId != undefined && toNodeId != targetDevelopmentId) {
+		    if (toNodeId != undefined && toNodeId != id) {
 		        var toNode = graph.getNode(toNodeId)
 		        if (toNode == undefined) {
 		        	var toDev = developments.find('development[id='+toNodeId+']')
@@ -69,17 +180,20 @@ jQuery(document).ready(function () {
 		                title: conn.text(),
 		                uri: conn.attr('url')
 		            });
-		        	showConnections(graph, toDev, level-1)
-		        	showReverseConnections(graph, toDev, level-1)
+		        	showConnections(graph, toDev, level-1, connectionsShown)
+		        	showReverseConnections(graph, toDev, level-1, connectionsShown)
 		        }
-		        graph.addLink(id, conn.attr('to'), {
-		            type: conn.attr('type')
-		        });
+		        //if (connectionsShown.indexOf(conn.attr('id')) == -1){
+			        graph.addLink(id, conn.attr('to'), {
+			            type: conn.attr('type')
+			        });
+			    //    connectionsShown.push(conn.attr('id'))		        	
+		        //}
 		    }
 		   });
 	}
 	
-	function showReverseConnections(graph, dev, level){
+	function showReverseConnections(graph, dev, level, connectionsShown){
 
 		if (level == 0) {
 			return 
@@ -88,7 +202,7 @@ jQuery(document).ready(function () {
 		dev.find('reverseConnection').each(function (j, c) {
 		    var conn = jQuery(this);
 		    var fromNodeId = conn.attr('from')
-		    if (fromNodeId != undefined) {
+		    if (fromNodeId != undefined && fromNodeId != id) {
 		        var fromNode = graph.getNode(fromNodeId)
 		        if (fromNode == undefined) {
 		        	var fromDev = developments.find('development[id='+fromNodeId+']')
@@ -97,12 +211,15 @@ jQuery(document).ready(function () {
 		                title: conn.text(),
 		                uri: conn.attr('url')
 		            });
-		        	showConnections(graph, fromDev, level-1)
-		        	showReverseConnections(graph, fromDev, level-1)
+		        	showConnections(graph, fromDev, level-1, connectionsShown)
+		        	showReverseConnections(graph, fromDev, level-1, connectionsShown)
 		        }
-		        graph.addLink(id, conn.attr('from'), {
-		            type: conn.attr('type')
-		        });
+		        //if (connectionsShown.indexOf(conn.attr('id')) == -1){
+			        graph.addLink(id, conn.attr('from'), {
+			            type: conn.attr('type')
+			        });
+			    //    connectionsShown.push(conn.attr('id'))		       
+		        //}
 		    }
 		   });		
 	}
@@ -114,54 +231,7 @@ jQuery(document).ready(function () {
 	function showMissingDetail(title, id){
 		jQuery('#details').html('<a href="/development/'+id+'"><h5>'+title+'</h5></a>')
 	}
-	
-	
-	function showDev(graph){
 		
-		var dev = developments.find('development[id='+targetDevelopmentId+']')
-		
-		var id = dev.attr('id');
-		var title = dev.find('title').text();
-		var image = dev.find('image')
-		var thumbnail = image.attr('thumbnail')
-		var createdby = dev.find('createdBy').text();
-		var uri = dev.attr('uri');
-		
-		graph.addNode(id, {
-		    thumbnail: thumbnail,
-		    title: title,
-		    uri: uri,
-		    isRoot: true
-		});
-		var connectionsLimit = jQuery('#connectionsRange').val()
-		showConnections(graph,dev, connectionsLimit)		
-		showReverseConnections(graph,dev, connectionsLimit)
-		showDetail(dev)
-	}
-
-	function display(){
-		if (targetDevelopmentId == null){
-	    	showAll(graph)
-		} else {
-			showDev(graph)	
-		}
-	}
-	
-	function loadAndDisplay(){
-		jQuery("#vis-load").dialog('open')
-		jQuery.get('/api/v1/developments', function (data) {
-			developments = jQuery(data)
-			if (Modernizr.localstorage) {
-	        	var xmlstr = data.xml ? data.xml : (new XMLSerializer()).serializeToString(data);
-	        	localStorage.setItem("developments",xmlstr)
-    		}
-			
-    		display()
-        }).complete(function(){
-        	jQuery("#vis-load").dialog('close')
-        	});		
-	}
-	
 	jQuery("#vis-load").dialog({ 
 		autoOpen: false,
 		dialogClass:'',
@@ -173,23 +243,7 @@ jQuery(document).ready(function () {
 		closeText: ''
 	});
 	
-	function beginAddNodesLoop(graph) {
-    	
-    	if (Modernizr.localstorage) {
-   			localDevs = localStorage.getItem("developments")
-   			
-   	    	if (localDevs != undefined){
-   	    		developments = jQuery(jQuery.parseXML(localDevs))
-   	    		
-   	    		var hash = developments.find('developments').attr('hash')
-   	    		if (hash != undefined && hash == allDevelopmentsHash){
-   	   	    		display()
-   	   	    		return   	    			
-   	    		}
-   	    	} 
-    	}
-    	loadAndDisplay()
-    }
+	
 
     function imageClickHandler(evt) {    	
         if (2 == evt.detail) {

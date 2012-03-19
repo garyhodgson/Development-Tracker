@@ -2,6 +2,20 @@
 <% 	include '/templates/includes/htmlHeader.gtpl' 
 	def hideAccess = ["/templates/access/login.gtpl", "/templates/access/first.gtpl"].contains(request.requestURI)
 %>
+
+<script>
+
+jQuery(function() {	
+	jQuery('#searchButton').click(function(){
+		var searchKey = jQuery('#searchKey').val()
+		if (searchKey != ''){
+			location = "/developments/search/"+searchKey	
+		}
+	})
+});
+
+</script>
+
 <div id="wrapper">
 	<div class="container_12" id="header">
 
@@ -124,10 +138,10 @@
 				<li class="secondary">
 					<div class="block" id="search">
 			
-						<form action="/developments/search" method="post" id="searchDevelopmentForm" class="search">
+						<form id="searchDevelopmentForm" class="search">
 							<p>
 								<input class="search text" id="searchKey" name="searchKey" type="text" />
-								<input class="search button" value="Search" type="submit" />
+								<input id="searchButton" class="search button" value="Search" type="button" />
 							</p>
 						</form>
 					</div>
