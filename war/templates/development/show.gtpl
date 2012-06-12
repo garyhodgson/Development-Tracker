@@ -3,7 +3,6 @@
 	def relationships = request.getAttribute('relationships')
 	def reverseRelationships = request.getAttribute('reverseRelationships')
 	def collaborations = request.getAttribute('collaborations')
-	def supplementary = request.getAttribute('supplementary')
 %>
 <% include '/templates/includes/header.gtpl' %>
 
@@ -69,7 +68,6 @@ jQuery(function() {
 			<li><a href="#connections">Connections <span class="heading-count">(${relationships?.size()?:0}/${reverseRelationships?.size()?:0})</span></a></li>
 			<li><a href="#collaborators">Collaborators <span class="heading-count">(${collaborations?.size()?:0})</span></a></li>
 			<li><a href="#specification">Specification <span class="heading-count">(${development.specificationName?.size()?:0})</span></a></li>
-			<li><a href="#more">More <span class="heading-count">(${supplementary?.values()?.size()?:0})</span></a></li>
 		</ul>
 
 		<div class="development" id="core">
@@ -238,19 +236,7 @@ jQuery(function() {
 			<% } %>
 			</table>
 		</div>
-		
-		
-		<div id="more" class="development">
-			<table border=0 cellspacing="0" cellpadding="5px">
-			<% supplementary?.each { %>
-				<tr>
-					<td>${it.key}</td>
-			   		<td>${it.value}</td>
-			   	</tr>
-			<% } %>
-			</table>
-		</div>
-		
+				
 	</div>
 </div>
 

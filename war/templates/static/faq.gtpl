@@ -13,11 +13,19 @@
 		If the answer to your question is not below then please email <a href="mailto:${app.AppProperties.SUPPORT_EMAIL}">support</a>.
 	</p>
 	<br>
+	<p class="faq-question">What is a Kit?</p>
+	<p class="faq-answer">Kits are way of telling the world about your particular printer or printers. It allows you to describe your setup, add a photo, and list the components that go to make it up.</p>
+	<br>
+	
+	<p class="faq-question">What is a Theme?</p>
+	<p class="faq-answer">Themes are a way of grouping a collection of developments together that have something in common.  
+	A way of connecting developments together which is looser than using links, and more focussed than using categories or tags.</p>
+	<br>
 
 	<p class="faq-question">How much does it cost to use Development Tracker?</p>
 	<p class="faq-answer">The application has been written as a contribution to the community and at this time is offered as a free service. This will hopefully continue as long
-		as it remains viable. The service runs on Google App Engine which has a generous allowance of resources for small scale applications. Should these quotas be reached, and costs
-		introduced, then it may be necessary to investigate ways of financing the ongoing running of the application. However, the main aim of the application at the time of writing is
+		as it remains viable. The service runs on Google App Engine which has an allowance of resources for small scale applications. Should these quotas be reached then the functionality or 
+		availability of the application may be affected. However, the main aim of the application at the time of writing is
 		to provide a useful service to the community, and not to generate money.</p>
 	<br>
 

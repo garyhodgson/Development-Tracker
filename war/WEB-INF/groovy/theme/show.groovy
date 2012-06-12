@@ -3,8 +3,6 @@ package theme
 
 import cache.MemcacheKeys;
 
-import com.github.api.v2.services.GitHubServiceFactory
-import com.github.api.v2.services.RepositoryService
 import com.google.appengine.api.memcache.Expiration
 import com.googlecode.objectify.Key
 import com.googlecode.objectify.NotFoundException

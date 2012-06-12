@@ -5,12 +5,23 @@
 
 <script>
 
-jQuery(function() {	
-	jQuery('#searchButton').click(function(){
+jQuery(function() {
+	
+	function search(){
 		var searchKey = jQuery('#searchKey').val()
 		if (searchKey != ''){
 			location = "/developments/search/"+searchKey	
 		}
+	}
+	
+	
+	jQuery('#searchButton').click(function(){
+		search()
+	})
+	
+	jQuery('#searchDevelopmentForm').submit(function(){
+		search()
+		return false
 	})
 });
 

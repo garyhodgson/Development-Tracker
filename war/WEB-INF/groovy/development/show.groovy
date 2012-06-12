@@ -2,9 +2,6 @@ package development
 
 import cache.MemcacheKeys
 
-import com.github.api.v2.services.GitHubException
-import com.github.api.v2.services.GitHubServiceFactory
-import com.github.api.v2.services.RepositoryService
 import com.google.appengine.api.memcache.Expiration
 import com.googlecode.objectify.Key
 import com.googlecode.objectify.NotFoundException
@@ -53,48 +50,6 @@ try {
 	return
 }
 
-if (request.development.source == Source.Github){
-	request.supplementary = getGithubSupplementary(request.development.sourceURL);
-}
-
 request.pageTitle = request.development.title
 
 forward '/templates/development/show.gtpl'
-
-def getGithubSupplementary(def url){
-	/*Only match URLs that follow the format: https://github.com/<user>/<project>, i.e. not wiki's or issue pages*/
-	def m =  url =~ /https:\/\/github.com\/([^\/]*)\/([^\/]*)/
-	if (!m.matches() || m[0].size() != 3 ) return null
-
-	//check memcache first
-	def memcacheKey = "${MemcacheKeys.GITHUB_SUPPLEMENTARY}:${m[0][1]}-${m[0][2]}"
-	if (memcache[memcacheKey]) {
-		return memcache[memcacheKey]
-	}
-
-	RepositoryService service = GitHubServiceFactory.newInstance().createRepositoryService()
-	def repo = null
-	try {
-		repo = service.getRepository(m[0][1], m[0][2])
-	} catch (GitHubException ghe){
-		log.warning("Attempt to get repository for github supplementary data failed: ${m[0][1]}, ${m[0][2]} - ${ghe.getLocalizedMessage()}")
-	}
-	if (repo == null){
-		return null
-	}
-
-	def supplementary = [:]
-	supplementary.Owner = repo.owner
-	supplementary.Description = repo.description
-	supplementary.Created = prettyTime.format(repo.createdAt)
-	if (repo.homepage) supplementary.Homepage = repo.homepage
-	if (repo.fork && repo.parent) supplementary.'Forked From' = repo.parent
-	supplementary.Watchers = repo.watchers
-	if (repo.forks) supplementary.Forks = repo.forks
-	supplementary.'Last Pushed' = prettyTime.format(repo.pushedAt)
-	if (repo.hasIssues) supplementary.'Open Issues' = repo.openIssues
-
-	memcache.put(memcacheKey.toString(), supplementary, Expiration.byDeltaSeconds(86400)) // 24hrs
-	
-	return supplementary
-}

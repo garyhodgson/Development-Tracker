@@ -15,9 +15,16 @@ if (!params.username){
 
 UserInfo userinfo
 def userinfoKey
-namespace.of("") {
-	userinfo = dao.ofy().query(UserInfo.class).filter('username', params.username).get()
+
+
+if (request.session.userinfo && request.session.userinfo.username == params.username){
+	userinfo = request.session.userinfo
+} else {
+	namespace.of("") {
+		userinfo = dao.ofy().query(UserInfo.class).filter('username', params.username).get()
+	}
 }
+
 if (!userinfo){
 	request.session.message = "Unable to find user with username ${params.username}."
 	redirect '/userinfos'

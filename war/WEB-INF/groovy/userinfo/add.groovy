@@ -56,4 +56,6 @@ mail.sendToAdmins from: AppProperties.ADMIN_EMAIL,
 
 request.session.userinfo = userinfo
 
+cacheManager.resetActivityCache()
+
 redirect "/userinfo/${params.username}"
