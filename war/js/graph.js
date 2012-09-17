@@ -10,71 +10,34 @@ jQuery(document).ready(function () {
    	    	if (localDevs != undefined){
    	    		developments = jQuery(jQuery.parseXML(localDevs))
    	    		
-   	    		var lastUpdated = developments.find('developments').attr('updated')
     			var hash = developments.find('developments').attr('hash')
    	    		
-					if (lastUpdated != undefined && lastUpdated == allDevelopmentsLastUpdated){
-						
-						if (hash != undefined && allDevelopmentsHash == hash){
-							display()
-							return
-						} else {
-							// reset developments for full update
-							developments = null
-							localStorage.removeItem("developments")
-							lastUpdated = 0
-						}	
-					}   	    			
+				if (hash && allDevelopmentsHash == hash){
+					console.log("displaying")
+					display()
+					return
+				} else {
+					console.log("resetting")
+					// reset developments for full update
+					developments = null
+					localStorage.removeItem("developments")
+				}		
    	    	} 
     	}
     	
-    	loadAndDisplay(lastUpdated)
+    	loadAndDisplay()
     }
 	
-	function loadAndDisplay(lastUpdated){
+	function loadAndDisplay(){
 		jQuery("#vis-load").dialog('open')
 		
-		if (lastUpdated == undefined){
-			lastUpdated = 0
-		}
-		jQuery.get('/api/v1/developments/'+lastUpdated, function (data) {
-			var newDevelopments = jQuery(data)
-
-			if (newDevelopments.find('developments').attr('updated') != lastUpdated){
-				
-				localDevsString = localStorage.getItem("developments")
-
-				if (localDevsString != undefined){
-					
-					var localDevs = jQuery.parseXML(localDevsString)
-					
-					newDevelopments.find('development').each(function(){
-						var newDev = jQuery(this);
-						var oldDev = jQuery(localDevs).find('development[id='+newDev.attr('id')+']')
-						
-						if (oldDev == undefined){
-							jQuery(localDevs).find('developments').append(newDev)
-						} else {
-							oldDev.replaceWith(newDev)
-						}
-					});
-					jQuery(localDevs).find('developments').attr('updated', newDevelopments.find('developments').attr('updated'))
-					developments = jQuery(localDevs)
-					
-					if (Modernizr.localstorage) {
-			        	var xmlstr = (new XMLSerializer()).serializeToString(localDevs);
-			        	localStorage.setItem("developments",xmlstr)
-		    		}
-					
-				} else {
-					developments = newDevelopments
-					if (Modernizr.localstorage) {
-			        	var xmlstr = data.xml ? data-xml : (new XMLSerializer()).serializeToString(data);
-			        	localStorage.setItem("developments",xmlstr)
-		    		}
-				}
-				
-			} 
+		jQuery.get('/api/v1/graph', function (data) {
+			developments = jQuery(data)
+			if (Modernizr.localstorage) {
+	        	var xmlstr = data.xml ? data-xml : (new XMLSerializer()).serializeToString(data);
+	        	localStorage.setItem("developments",xmlstr)
+    		}
+			
 			display()
         }, "xml").complete(function(){
         	jQuery("#vis-load").dialog('close')

@@ -1,7 +1,5 @@
 package development
 
-import cache.MemcacheKeys
-
 import com.google.appengine.api.memcache.Expiration
 import com.googlecode.objectify.Key
 import com.googlecode.objectify.NotFoundException

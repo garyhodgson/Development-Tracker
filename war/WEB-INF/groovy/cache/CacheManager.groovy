@@ -86,6 +86,9 @@ class CacheManager {
 		if (memcache.delete(AllDevelopmentsHash.name())){
 			forgetKey(AllDevelopmentsHash.name())
 		}
+		if (memcache.delete(BrowseStatsTags.name())){
+			forgetKey(BrowseStatsTags.name())
+		}
 	}
 
 	public def developmentCount(){

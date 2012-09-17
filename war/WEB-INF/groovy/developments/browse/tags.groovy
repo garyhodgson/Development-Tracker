@@ -2,6 +2,7 @@ package developments.browse
 
 import static enums.MemcacheKeys.*
 
+
 def tags = [:]
 
 if (BrowseStatsTags in memcache) {

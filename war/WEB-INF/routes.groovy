@@ -18,6 +18,7 @@ get "/blog", redirect: app.AppProperties.BLOG_ADDRESS
 get "/favicon.ico", redirect: "/images/favicon.ico"
 
 /* API */
+get "/api/@version/graph", forward: "/api/@version/graph.groovy?lastUpdated=0"
 get "/api/@version/developments", forward: "/api/@version/developments.groovy?lastUpdated=0"
 get "/api/@version/developments/@lastUpdated", forward: "/api/@version/developments.groovy?lastUpdated=@lastUpdated"
 get "/api/@version/development/@id", forward: "/api/@version/development.groovy?id=@id"

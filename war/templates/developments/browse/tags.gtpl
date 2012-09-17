@@ -8,8 +8,8 @@
 	
 	<div class="grid_9">
 		<div class="directory bordered">
-			<% request.tags?.sort().each { tag, count ->  %>
-			<a href="/developments/tags/${tag}"><li>${tag}&nbsp;&nbsp;<span class="heading-count">(${count})</span></li></a>
+			<% request.tags?.sort({it.key.toLowerCase()}).each { tag, count ->  %>
+			<a class="nohintatall" href="/developments/tags/${tag}"><li class="hover-link" style="display: inline-block;">${tag}&nbsp;&nbsp;<span class="heading-count">(${count})</span></li></a>
 			<% } %>
 		</div>
 	</div>

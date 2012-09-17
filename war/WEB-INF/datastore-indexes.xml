@@ -62,4 +62,5 @@
         <property name="developmentType" direction="asc"/>
         <property name="title" direction="asc"/>
     </datastore-index>
+    
 </datastore-indexes>
