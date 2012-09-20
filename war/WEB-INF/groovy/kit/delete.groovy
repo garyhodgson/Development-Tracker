@@ -17,26 +17,26 @@ if (!params.id.isLong()){
 
 if (!users.isUserLoggedIn()){
 	request.session.message = "Must be logged in to delete."
-	redirect "/templates/access/login.gtpl?continue=/kit/${params.id}"
+	redirect "/templates/access/login.gtpl?continue=/setup/${params.id}"
 	return
 }
 
 def userinfo = session.userinfo
 if (!userinfo){
 	request.session.message = "Unable to identify user. Please contact <a href=\"mailto:${app.AppProperties.SUPPORT_EMAIL}\">support</a>."
-	redirect "/kit/${params.id}"
+	redirect "/setup/${params.id}"
 	return
 }
 
 def kit = dao.ofy().find(Kit.class, params.id as Long);
 if (!kit) {
-	request.session.message = "Unable to find kit with id: ${params.id}"
+	request.session.message = "Unable to find setup with id: ${params.id}"
 	redirect "/userinfo/${userinfo.username}"
 	return
 }
 
 if (!(users.isUserAdmin() || kit.ownerUsername == userinfo.username)){
-	request.session.message = "You do not have permission to delete this Kit."
+	request.session.message = "You do not have permission to delete this setup."
 	redirect "/userinfo/${userinfo.username}"
 	return
 }
@@ -49,5 +49,5 @@ dao.ofy().delete(kit)
 cacheManager.resetKitCache()
 cacheManager.resetActivityCache()
 
-request.session.message = "Kit deleted."
+request.session.message = "Setup deleted."
 redirect "/userinfo/${userinfo.username}"

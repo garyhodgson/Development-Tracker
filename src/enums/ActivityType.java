@@ -9,8 +9,8 @@ public enum ActivityType {
 	NewTheme("New Theme"),
 	ThemeUpdated("Theme Updated"),
 	ThemeDeleted("Theme Deleted"),
-	NewKit("New Kit"),
-	KitUpdated("Kit Updated");
+	NewKit("New Setup"),
+	KitUpdated("Setup Updated");
 	
 	protected String title = null;
 

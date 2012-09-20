@@ -79,7 +79,7 @@
 			<% if (request.kits) { %>
 			<br>
 			<fieldset>
-				<legend>My Kit</legend>
+				<legend>My Setup</legend>
 				<table border=0 cellspacing="0" cellpadding="5px">
 					<% request.kits?.each { kit -> %>
 					<tr>
@@ -88,11 +88,11 @@
 							<a class="nohint" href="${kit.thumbnailServingUrl}" target="_blank"><img width="100px" src="${kit.thumbnailServingUrl}"></a>
 						</td>
 						<% } %>
-						<td class="value-column"><a href="/kit/${kit.id}">${kit.title}</a></td>
+						<td class="value-column"><a href="/setup/${kit.id}">${kit.title}</a></td>
 						
 						<% if (users.isUserLoggedIn() && (users.isUserAdmin() || session.userinfo.username == kit.ownerUsername)) { %>
 							<td  class="linkAction"><input class="action" type="button"
-								onclick="javascript:location='/kit/edit/<%=kit.id%>'" value="Edit"
+								onclick="javascript:location='/setup/edit/<%=kit.id%>'" value="Edit"
 							>
 							</td>
 						<% } else { %>
@@ -165,7 +165,7 @@
 	<div id="actions" class="grid_1">
 		<ul>
 			<a href="/userinfo/edit/<%=userinfo.username%>"><li>Edit</li></a>
-			<a href="/kit/add"><li>Add Kit</li></a>
+			<a href="/setup/add"><li>Add Setup</li></a>
 		</ul>
 	</div>
 	<% } %>	

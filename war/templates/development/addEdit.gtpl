@@ -332,7 +332,7 @@
 		});
 
 		uploader.bind('Error', function(up, err) {
-			if (err.code = plupload.FILE_SIZE_ERROR){
+			if (err.code == plupload.FILE_SIZE_ERROR){
 				alert("File is too large. Limit is <%=AppProperties.THUMBNAIL_MAXSIZE%>Mb");
 			} else {
 				alert(err.message);

@@ -131,11 +131,9 @@ get "/userinfo/@username", forward: "/userinfo/show.groovy?username=@username"
 post "/userinfo/update", forward: "/userinfo/update.groovy"
 
 
-/* Kit */
+/* Kit  Setup (Kit left for old links) */
 get "/kits", forward: "/kits/list.groovy"
-
 get "/kit/add/cancel/@imageBlobKey", forward:  "/kit/cancelAdd.groovy?imageBlobKey=@imageBlobKey"
-
 get "/kit/add",  forward: {
 	to "/kit/prepareAdd.groovy"
 	to("/templates/static/maintenance.gtpl").on(DATASTORE).not(ENABLED)
@@ -151,7 +149,22 @@ post "/kit/update", forward: "/kit/update.groovy"
 get "/kit/delete/@id",  forward: "/kit/delete.groovy?id=@id"
 get "/kit/@id",  forward: "/kit/show.groovy?id=@id"
 
-
+get "/setups", forward: "/kits/list.groovy"
+get "/setup/add/cancel/@imageBlobKey", forward:  "/kit/cancelAdd.groovy?imageBlobKey=@imageBlobKey"
+get "/setup/add",  forward: {
+	to "/kit/prepareAdd.groovy"
+	to("/templates/static/maintenance.gtpl").on(DATASTORE).not(ENABLED)
+	to("/templates/static/maintenance.gtpl").on(DATASTORE_WRITE).not(ENABLED)
+}
+post "/setup/add", forward:  "/kit/add.groovy"
+get "/setup/edit/@id",  forward: {
+	to "/kit/prepareEdit.groovy?id=@id"
+	to("/templates/static/maintenance.gtpl").on(DATASTORE).not(ENABLED)
+	to("/templates/static/maintenance.gtpl").on(DATASTORE_WRITE).not(ENABLED)
+}
+post "/setup/update", forward: "/kit/update.groovy"
+get "/setup/delete/@id",  forward: "/kit/delete.groovy?id=@id"
+get "/setup/@id",  forward: "/kit/show.groovy?id=@id"
 
 /* Userinfos */
 get "/userinfos", forward: "/userinfos/list.groovy"

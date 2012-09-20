@@ -29,7 +29,7 @@ jQuery(function() {
 </script>
 
 <div class="grid_10 prefix_1 suffix_1">
-	<h2 class="pageTitle"><%=request.pageTitle?:"Kit: " + kit.title%></h2>
+	<h2 class="pageTitle"><%=request.pageTitle?:"Setup: " + kit.title%></h2>
 </div>
 
 <div class="grid_3">
@@ -60,7 +60,7 @@ jQuery(function() {
 		<br>
 		<% if (user) { %>
 		<%if (users.isUserAdmin() || session.userinfo.username == kit.ownerUsername) { %>
-		<a href="/kit/edit/<%=kit.id%>"><li>Edit</li> </a>
+		<a href="/setup/edit/<%=kit.id%>"><li>Edit</li> </a>
 		<br>
 		<a href="#" id="deleteKit" rel="#confirm"><li>Delete</li> </a>
 		<% } %>
@@ -71,7 +71,7 @@ jQuery(function() {
 
 
 <div id="confirm">
-	<p>Are you sure you wish to delete kit ${kit.id}?</p>
+	<p>Are you sure you wish to delete setup ${kit.id}?</p>
 </div>
 
 <br class="clear">

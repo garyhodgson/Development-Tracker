@@ -13,8 +13,8 @@
 		If the answer to your question is not below then please email <a href="mailto:${app.AppProperties.SUPPORT_EMAIL}">support</a>.
 	</p>
 	<br>
-	<p class="faq-question">What is a Kit?</p>
-	<p class="faq-answer">Kits are way of telling the world about your particular printer or printers. It allows you to describe your setup, add a photo, and list the components that go to make it up.</p>
+	<p class="faq-question">What is a Setup (was previously called Kit)?</p>
+	<p class="faq-answer">Setups are way of telling the world about your particular printer or printers. It allows you to describe your hardware, add a photo, and list the components that go to make it up.</p>
 	<br>
 	
 	<p class="faq-question">What is a Theme?</p>

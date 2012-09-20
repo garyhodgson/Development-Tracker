@@ -98,14 +98,14 @@ jQuery(function() {
 					</ul>
 				</li>
 				<li>
-					<a href="#">Kits</a>
+					<a href="#">Setups</a>
 					<ul>
 						<li>
-							<a href="/kits">Latest</a>
+							<a href="/setups">Latest</a>
 						</li>
 						<% if (users.isUserLoggedIn()) {%>
 						<li>
-							<a href="/kit/add">New...</a>
+							<a href="/setup/add">New...</a>
 						</li>
 						<% } %>
 					</ul>

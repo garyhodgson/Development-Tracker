@@ -26,11 +26,11 @@ try {
 	}
 } catch (NotFoundException nfe){
 	log.severe nfe.getLocalizedMessage()
-	request.session.message = "No kit with id ${params.id} found."
+	request.session.message = "No setup with id ${params.id} found."
 	redirect "/"
 	return
 }
 
-request.pageTitle = request.kit.title
+request.pageTitle = "Setup: "+request.kit.title
 
 forward '/templates/kit/show.gtpl'

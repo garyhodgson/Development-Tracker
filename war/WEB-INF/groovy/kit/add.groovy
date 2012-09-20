@@ -7,7 +7,7 @@ import entity.Activity
 import entity.Kit
 
 if (!users.isUserLoggedIn()){
-	request.session.message = "Must be logged in to add a kit."
+	request.session.message = "Must be logged in to add a setup."
 	forward "/templates/access/login.gtpl?continue=/kit/add"
 	return
 }
@@ -47,7 +47,7 @@ dao.ofy().put(new Activity(type:enums.ActivityType.NewKit, title:"${kit.title}",
 cacheManager.resetKitCache()
 cacheManager.resetActivityCache()
 
-redirect "/kit/${kit.id}"
+redirect "/setup/${kit.id}"
 
 
 

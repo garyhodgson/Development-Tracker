@@ -24,7 +24,7 @@ if (!params.id.isLong()){
 
 if (!users.isUserLoggedIn()){
 	request.session.message = "Must be logged in to update a theme."
-	forward "/templates/access/login.gtpl?continue=/kit/edit/${params.id}"
+	forward "/templates/access/login.gtpl?continue=/setup/edit/${params.id}"
 	return
 }
 
@@ -37,14 +37,14 @@ if (!userinfo){
 
 def kit = dao.ofy().get(Kit.class, params.id as Long)
 if (!kit) {
-	request.session.message = "Unable to find kit with Id ${params.id}."
+	request.session.message = "Unable to find setup with Id ${params.id}."
 	redirect '/'
 	return
 }
 
 if (!users.isUserAdmin() && kit.ownerUsername != userinfo.username){
-	request.session.message = "You do not have permission to edit this kit."
-	redirect "/kit/${params.id}"
+	request.session.message = "You do not have permission to edit this setup."
+	redirect "/setup/${params.id}"
 	return
 }
 
@@ -88,6 +88,6 @@ dao.ofy().put(new Activity(type:enums.ActivityType.KitUpdated, title:"${kit.titl
 cacheManager.resetKitCache()
 cacheManager.resetActivityCache()
 
-redirect "/kit/${kit.id}"
+redirect "/setup/${kit.id}"
 
 

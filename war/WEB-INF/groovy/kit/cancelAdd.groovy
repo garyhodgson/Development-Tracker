@@ -12,4 +12,4 @@ if (params.imageBlobKey){
 	}
 }
 
-redirect '/kits'
+redirect '/setups'

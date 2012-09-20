@@ -43,13 +43,13 @@ try {
 		request.parts = dao.ofy().get(Development.class, keys)?.values()
 	}
 } catch (NotFoundException nfe){
-	request.session.message = "No kit with id ${params.id} found."
+	request.session.message = "No Setup with id ${params.id} found."
 	redirect "/userinfo/${userinfo.username}"
 	return
 }
 
 
-request.pageTitle = "Edit Kit: ${request.kit.title}"
-request.action="/kit/update"
+request.pageTitle = "Edit Setup: ${request.kit.title}"
+request.action="/setup/update"
 
 forward '/templates/kit/addEdit.gtpl'

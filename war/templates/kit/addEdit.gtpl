@@ -6,7 +6,9 @@
 %>
 
 <% include '/templates/includes/header.gtpl' %>
+
 <script type="text/javascript" src="/js/plupload/plupload.full.js"></script>
+
 <script>
 	jQuery(function() {
 		jQuery('#submitForm').click(function() {
@@ -37,9 +39,9 @@
 		
 		jQuery('#cancelAdd').click(function(){
 			if (jQuery('#imageBlobKey').val() != ''){
-				window.location = "/kit/add/cancel/"+jQuery('#imageBlobKey').val()
+				window.location = "/setup/add/cancel/"+jQuery('#imageBlobKey').val()
 			} else {
-				window.location = "/kits"
+				window.location = "/setups"
 			}
 		})
 		
@@ -68,13 +70,13 @@
 			container : 'fileUploadContainer',
 			max_file_size : '<%=AppProperties.THUMBNAIL_MAXSIZE?:5%>mb',
 			url : "<%=blobstore.createUploadUrl('/fileUpload.groovy')%>",
-			flash_swf_url : '/js/plupload/plupload.flash.swf',
 			filters : [
 				{title : "Image files", extensions : "jpg,gif,png"},
 			]
 		});
 		
 		uploader.bind('Init', function(up, params) {
+	        jQuery('#filelist').html("<div>Current runtime: " + params.runtime + "</div>");
 			jQuery('#fileUploadContainer').show();
 		});
 
@@ -96,7 +98,7 @@
 		});
 
 		uploader.bind('Error', function(up, err) {
-			if (err.code = plupload.FILE_SIZE_ERROR){
+			if (err.code == plupload.FILE_SIZE_ERROR){
 				alert("File is too large. Limit is <%=AppProperties.THUMBNAIL_MAXSIZE%>Mb");
 			} else {
 				alert(err.message);
@@ -113,7 +115,7 @@
 </script>
 
 <div class="grid_10 prefix_1 suffix_1">
-	<h2 class="pageTitle"><%=request.getAttribute('pageTitle')?:'Add Kit'%></h2>
+	<h2 class="pageTitle"><%=request.getAttribute('pageTitle')?:'Add Setup'%></h2>
 </div>
 
 <div class="grid_2">
@@ -128,7 +130,7 @@
 
 <div class="grid_9">
 
-	<form action="<%=request.getAttribute('action')?:'/kit/add'%>" method="post" id="addKitForm">
+	<form action="<%=request.getAttribute('action')?:'/setup/add'%>" method="post" id="addKitForm">
 
 		<div id="descriptions">
 			<input type="hidden" id="id" name="id" value="<%=kit?.id %>">
@@ -204,7 +206,7 @@
 	<ul>
 		<a href="javascript://" id="submitForm"><li>Save</li> </a>
 		<% if (kit?.id){ %>
-			<a href="/kit/${kit?.id}"><li>Cancel</li> </a>
+			<a href="/setup/${kit?.id}"><li>Cancel</li> </a>
 		<% } else { %>
 			<a href="javascript://" id="cancelAdd"><li>Cancel</li> </a>
 		<% } %>

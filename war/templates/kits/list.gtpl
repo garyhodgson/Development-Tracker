@@ -7,7 +7,7 @@
 </script>
 
 <div class="grid_10 prefix_1 suffix_1">
-	<h2 class="pageTitle"><%=request.pageTitle?:"Kits"%></h2>
+	<h2 class="pageTitle"><%=request.pageTitle?:"Setups"%></h2>
 </div>
 
 <div class="grid_12">
@@ -20,7 +20,7 @@
 		</tr>
 		<% request.kits?.each { kit -> %>
 		<tr>
-			<td width="30%"><a href="/kit/${kit.id}">${kit.title}</a></td>
+			<td width="30%"><a href="/setup/${kit.id}">${kit.title}</a></td>
 			<td width="40%" class="list-smaller-text">${kit.description? org.apache.commons.lang.StringUtils.abbreviate(kit.description, 200) : ''}</td>
 			<td width="20%"><a href="/userinfo/${kit.ownerUsername}">${kit.ownerUsername}</a></td>
 			<td width="10%" class="list-smaller-text">${kit.parts?.size()?:0}</td>

@@ -16,7 +16,7 @@ def resultsetCount = request.kits?.size()?:0
 
 request.paging = createPaging(totalCount, limit, offset, resultsetCount)
 
-request.pageTitle = "Kits"
-request.session.route = "/kits"
+request.pageTitle = "Setups"
+request.session.route = "/setups"
 
 forward '/templates/kits/list.gtpl'
