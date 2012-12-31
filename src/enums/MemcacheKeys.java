@@ -11,6 +11,8 @@ public enum MemcacheKeys {
 	AllDevelopmentsHash,
 	AllDevelopmentsLastUpdated,
 	
+	ThingTrackerCache,
+	
 	TotalDevelopmentCount,
 	LatestDevelopments,
 	

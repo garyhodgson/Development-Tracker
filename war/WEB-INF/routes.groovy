@@ -23,6 +23,8 @@ get "/api/@version/developments", forward: "/api/@version/developments.groovy?la
 get "/api/@version/developments/@lastUpdated", forward: "/api/@version/developments.groovy?lastUpdated=@lastUpdated"
 get "/api/@version/development/@id", forward: "/api/@version/development.groovy?id=@id"
 
+get "/thingtracker", forward: "/api/thingtracker.groovy"
+
 /* Developments */
 get "/developments",  forward: "/developments/list.groovy"
 get "/developments/latest",  forward: "/developments/latest.groovy"

@@ -52,7 +52,6 @@ class CacheManager {
 			memcache[memcacheKey] = ofy.query(Development.class).order('title').list().sort{it.title.toLowerCase()}
 		}	
 		
-		
 		return  memcache[memcacheKey]
 	}
 	
@@ -89,6 +88,8 @@ class CacheManager {
 		if (memcache.delete(BrowseStatsTags.name())){
 			forgetKey(BrowseStatsTags.name())
 		}
+		
+		memcache.delete(ThingTrackerCache.name())
 	}
 
 	public def developmentCount(){
